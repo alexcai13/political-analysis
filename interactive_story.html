@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Congress Voting Atlas</title>
+  <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist-min@2.35.2/plotly.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Sans:wght@400;500;600&display=swap");
+
+    :root {
+      --bg-1: #101820;
+      --bg-2: #183447;
+      --bg-3: #29485f;
+      --text: #f4efe3;
+      --muted: #c8d8e6;
+      --card: rgba(10, 20, 30, 0.55);
+      --border: rgba(244, 239, 227, 0.18);
+      --accent-a: #f46036;
+      --accent-b: #2e9cca;
+      --accent-c: #9fd356;
+      --accent-d: #ffd166;
+      --hero-progress: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      background: transparent;
+      color: var(--text);
+      font-family: "IBM Plex Sans", "Trebuchet MS", sans-serif;
+      overflow-x: hidden;
+    }
+
+    @keyframes move {
+      100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+      }
+    }
+
+    .background {
+      position: fixed;
+      width: 100vw;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      background: #000000;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .background span {
+      width: 11vmin;
+      height: 11vmin;
+      border-radius: 11vmin;
+      backface-visibility: hidden;
+      position: absolute;
+      animation: move;
+      animation-duration: 27s;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+
+    .background span:nth-child(1) {
+      color: #ff004c;
+      top: 57%;
+      left: 32%;
+      animation-duration: 202s;
+      animation-delay: -79s;
+      transform-origin: -2vw -9vh;
+      box-shadow: -22vmin 0 3.360359523991788vmin currentColor;
+    }
+    .background span:nth-child(2) {
+      color: #224dce;
+      top: 29%;
+      left: 89%;
+      animation-duration: 63s;
+      animation-delay: -31s;
+      transform-origin: -12vw 7vh;
+      box-shadow: 22vmin 0 3.6186459665515325vmin currentColor;
+    }
+    .background span:nth-child(3) {
+      color: #224dce;
+      top: 20%;
+      left: 51%;
+      animation-duration: 105s;
+      animation-delay: -180s;
+      transform-origin: 17vw 4vh;
+      box-shadow: 22vmin 0 3.1257820890858046vmin currentColor;
+    }
+    .background span:nth-child(4) {
+      color: #ff004c;
+      top: 5%;
+      left: 88%;
+      animation-duration: 40s;
+      animation-delay: -74s;
+      transform-origin: -12vw -15vh;
+      box-shadow: 22vmin 0 3.2081844192038713vmin currentColor;
+    }
+    .background span:nth-child(5) {
+      color: #ff004c;
+      top: 95%;
+      left: 12%;
+      animation-duration: 184s;
+      animation-delay: -83s;
+      transform-origin: -18vw 19vh;
+      box-shadow: 22vmin 0 3.1592053859894467vmin currentColor;
+    }
+    .background span:nth-child(6) {
+      color: #ff004c;
+      top: 32%;
+      left: 13%;
+      animation-duration: 235s;
+      animation-delay: -190s;
+      transform-origin: -12vw -15vh;
+      box-shadow: 22vmin 0 3.489698401078699vmin currentColor;
+    }
+    .background span:nth-child(7) {
+      color: #ff004c;
+      top: 25%;
+      left: 45%;
+      animation-duration: 21s;
+      animation-delay: -95s;
+      transform-origin: 18vw 19vh;
+      box-shadow: -22vmin 0 3.6710280962839303vmin currentColor;
+    }
+    .background span:nth-child(8) {
+      color: #ff004c;
+      top: 60%;
+      left: 51%;
+      animation-duration: 191s;
+      animation-delay: -28s;
+      transform-origin: -20vw 11vh;
+      box-shadow: -22vmin 0 2.891403427287603vmin currentColor;
+    }
+    .background span:nth-child(9) {
+      color: #ff004c;
+      top: 63%;
+      left: 57%;
+      animation-duration: 222s;
+      animation-delay: -66s;
+      transform-origin: -7vw -18vh;
+      box-shadow: -22vmin 0 3.5283658479265148vmin currentColor;
+    }
+    .background span:nth-child(10) {
+      color: #ff004c;
+      top: 65%;
+      left: 29%;
+      animation-duration: 45s;
+      animation-delay: -212s;
+      transform-origin: -11vw -19vh;
+      box-shadow: -22vmin 0 3.5020878205715364vmin currentColor;
+    }
+    .background span:nth-child(11) {
+      color: #224dce;
+      top: 10%;
+      left: 99%;
+      animation-duration: 8s;
+      animation-delay: -168s;
+      transform-origin: -8vw -12vh;
+      box-shadow: -22vmin 0 3.2836515748548303vmin currentColor;
+    }
+    .background span:nth-child(12) {
+      color: #ff004c;
+      top: 62%;
+      left: 97%;
+      animation-duration: 223s;
+      animation-delay: -199s;
+      transform-origin: -15vw -18vh;
+      box-shadow: 22vmin 0 2.8560505031916286vmin currentColor;
+    }
+    .background span:nth-child(13) {
+      color: #224dce;
+      top: 100%;
+      left: 84%;
+      animation-duration: 63s;
+      animation-delay: -122s;
+      transform-origin: 3vw 8vh;
+      box-shadow: -22vmin 0 3.2375286961178786vmin currentColor;
+    }
+    .background span:nth-child(14) {
+      color: #224dce;
+      top: 96%;
+      left: 91%;
+      animation-duration: 213s;
+      animation-delay: -60s;
+      transform-origin: 12vw -13vh;
+      box-shadow: 22vmin 0 3.2088173594413525vmin currentColor;
+    }
+    .background span:nth-child(15) {
+      color: #ff004c;
+      top: 88%;
+      left: 8%;
+      animation-duration: 150s;
+      animation-delay: -228s;
+      transform-origin: -1vw -20vh;
+      box-shadow: -22vmin 0 3.337548849631892vmin currentColor;
+    }
+    .background span:nth-child(16) {
+      color: #ff004c;
+      top: 5%;
+      left: 81%;
+      animation-duration: 220s;
+      animation-delay: -213s;
+      transform-origin: -24vw 24vh;
+      box-shadow: 22vmin 0 2.9360801846266495vmin currentColor;
+    }
+    .background span:nth-child(17) {
+      color: #ff004c;
+      top: 51%;
+      left: 82%;
+      animation-duration: 165s;
+      animation-delay: -73s;
+      transform-origin: 18vw 18vh;
+      box-shadow: -22vmin 0 3.131805226287112vmin currentColor;
+    }
+    .background span:nth-child(18) {
+      color: #ff004c;
+      top: 45%;
+      left: 8%;
+      animation-duration: 28s;
+      animation-delay: -3s;
+      transform-origin: 12vw 7vh;
+      box-shadow: 22vmin 0 2.94279375153506vmin currentColor;
+    }
+    .background span:nth-child(19) {
+      color: #224dce;
+      top: 45%;
+      left: 15%;
+      animation-duration: 190s;
+      animation-delay: -98s;
+      transform-origin: 9vw -7vh;
+      box-shadow: 22vmin 0 3.6832665562470757vmin currentColor;
+    }
+    .background span:nth-child(20) {
+      color: #224dce;
+      top: 27%;
+      left: 50%;
+      animation-duration: 172s;
+      animation-delay: -59s;
+      transform-origin: -6vw -23vh;
+      box-shadow: 22vmin 0 2.8373047888081477vmin currentColor;
+    }
+    .background span:nth-child(21) {
+      color: #224dce;
+      top: 16%;
+      left: 17%;
+      animation-duration: 153s;
+      animation-delay: -2s;
+      transform-origin: 0vw 1vh;
+      box-shadow: 22vmin 0 3.7011017842636362vmin currentColor;
+    }
+    .background span:nth-child(22) {
+      color: #224dce;
+      top: 45%;
+      left: 28%;
+      animation-duration: 17s;
+      animation-delay: -92s;
+      transform-origin: -3vw 24vh;
+      box-shadow: -22vmin 0 2.9330962170281785vmin currentColor;
+    }
+    .background span:nth-child(23) {
+      color: #ff004c;
+      top: 10%;
+      left: 66%;
+      animation-duration: 224s;
+      animation-delay: -10s;
+      transform-origin: -15vw -4vh;
+      box-shadow: -22vmin 0 3.214292139638626vmin currentColor;
+    }
+    .background span:nth-child(24) {
+      color: #ff004c;
+      top: 12%;
+      left: 100%;
+      animation-duration: 93s;
+      animation-delay: -81s;
+      transform-origin: 5vw -23vh;
+      box-shadow: 22vmin 0 3.445362060672709vmin currentColor;
+    }
+    .background span:nth-child(25) {
+      color: #ff004c;
+      top: 50%;
+      left: 48%;
+      animation-duration: 109s;
+      animation-delay: -213s;
+      transform-origin: -19vw 1vh;
+      box-shadow: 22vmin 0 3.3879203480572855vmin currentColor;
+    }
+
+    .shell {
+      width: min(1150px, 92vw);
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero {
+      min-height: 114vh;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.9rem, 9vw, 7.8rem);
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      line-height: 0.9;
+      text-transform: uppercase;
+      font-family: "Fraunces", Georgia, serif;
+      text-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      opacity: 0;
+      transform: translate3d(0, 70px, 0) scale(0.94);
+      filter: blur(7px);
+      transition: opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 1100ms cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 900ms cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: transform, opacity;
+    }
+
+    .hero .title-main {
+      display: block;
+      font-size: 1.2em;
+      transform: translateY(-0.16em);
+      margin-bottom: 0.06em;
+    }
+
+    .hero .title-sub {
+      display: block;
+    }
+
+    body.loaded .hero h1 {
+      opacity: calc(1 - var(--hero-progress));
+      transform: translate3d(0, calc(var(--hero-progress) * -170px), 0)
+                 scale(calc(1 - var(--hero-progress) * 0.1));
+      filter: blur(calc(var(--hero-progress) * 9px));
+    }
+
+    .hero p {
+      display: none;
+    }
+
+    .note {
+      display: none;
+    }
+
+    .metrics {
+      display: none;
+    }
+
+    .metric {
+      border: 1px solid var(--border);
+      background: rgba(6, 18, 28, 0.55);
+      border-radius: 999px;
+      padding: 0.48rem 0.82rem;
+      font-size: 0.84rem;
+      color: #dfeaf5;
+      letter-spacing: 0.02em;
+    }
+
+    .chart-wrap {
+      position: sticky;
+      top: 1.1rem;
+      height: min(72vh, 760px);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: linear-gradient(140deg, rgba(6, 14, 22, 0.14), rgba(20, 39, 57, 0.1));
+      backdrop-filter: blur(4px);
+      padding: 0.75rem;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+    }
+
+    .chart {
+      width: 100%;
+      height: 100%;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .scrolly {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 10rem;
+    }
+
+    .story {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      padding: 0.2rem 0;
+    }
+
+    .card {
+      min-height: 44vh;
+      border: 1px solid var(--border);
+      background: rgba(7, 14, 23, 0.16);
+      backdrop-filter: blur(3px);
+      border-radius: 20px;
+      padding: 1.35rem 1.25rem;
+      opacity: 0.2;
+      transform: translateY(36px) scale(0.985);
+      transition: opacity 500ms ease, transform 650ms cubic-bezier(0.16, 1, 0.3, 1), border-color 500ms ease;
+      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.23);
+    }
+
+    .card.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      border-color: rgba(243, 239, 228, 0.5);
+    }
+
+    .kicker {
+      margin: 0;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffddb1;
+      font-size: 0.76rem;
+    }
+
+    .card h2 {
+      margin: 0.35rem 0 0.75rem;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.1;
+      font-family: "Fraunces", Georgia, serif;
+    }
+
+    .card p {
+      margin: 0;
+      color: #d8e4ee;
+      line-height: 1.58;
+      font-size: 1.05rem;
+    }
+
+    .legend {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 0.9rem 0 0;
+      color: #d7e2ed;
+      font-size: 0.9rem;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      display: inline-block;
+      margin-right: 0.4rem;
+      vertical-align: middle;
+    }
+
+    .footer {
+      padding: 2.5rem 0 4.2rem;
+      color: #d2deea;
+      text-align: center;
+      opacity: 0.86;
+    }
+
+    .error {
+      border: 1px solid rgba(255, 120, 120, 0.5);
+      background: rgba(100, 20, 20, 0.3);
+      color: #ffe2e2;
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      margin-top: 1rem;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 980px) {
+      .scrolly {
+        grid-template-columns: 1fr;
+      }
+
+      .chart-wrap {
+        position: relative;
+        top: auto;
+        height: 62vh;
+      }
+
+      .card {
+        min-height: 36vh;
+      }
+
+      .hero h1 {
+        font-size: clamp(2.4rem, 13vw, 4.9rem);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="background" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <main class="shell">
+    <section class="hero">
+      <div>
+        <h1><span class="title-main">Congress Voting Atlas</span><span class="title-sub">119th Congress</span></h1>
+        <div id="load-error" class="error" hidden></div>
+      </div>
+    </section>
+
+    <section class="scrolly" aria-label="House voting story">
+      <div class="chart-wrap">
+        <div id="house-chart" class="chart"></div>
+      </div>
+      <div class="story">
+        <article class="card observe" data-target="house" data-focus="all">
+          <p class="kicker">House</p>
+          <h2>House baseline map</h2>
+          <p>This projection compresses many roll call votes into two visual axes. Nearby points tended to vote similarly across the chamber.</p>
+          <div class="legend">
+            <span><span class="dot" style="background:#3a86ff"></span>Democratic</span>
+            <span><span class="dot" style="background:#ff6b35"></span>Republican</span>
+            <span><span class="dot" style="background:#7ef7b2"></span>Other</span>
+          </div>
+        </article>
+        <article class="card observe" data-target="house" data-focus="dem">
+          <p class="kicker">House</p>
+          <h2>House focus: Democratic bloc</h2>
+          <p>As this card enters, Democratic members are highlighted while the rest fade, making cluster shape and spread easier to read.</p>
+        </article>
+        <article class="card observe" data-target="house" data-focus="rep">
+          <p class="kicker">House</p>
+          <h2>House focus: Republican bloc</h2>
+          <p>You can compare compactness and separation from other groups as the emphasis shifts across the map.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="scrolly" aria-label="Senate voting story">
+      <div class="chart-wrap">
+        <div id="senate-chart" class="chart"></div>
+      </div>
+      <div class="story">
+        <article class="card observe" data-target="senate" data-focus="all">
+          <p class="kicker">Senate</p>
+          <h2>Senate baseline map</h2>
+          <p>The same vote-to-vector process is repeated for senators. Members with fewer than 100 cast votes are removed before normalization.</p>
+        </article>
+        <article class="card observe" data-target="senate" data-focus="dem">
+          <p class="kicker">Senate</p>
+          <h2>Senate focus: Democratic senators</h2>
+          <p>As you scroll, color and opacity transitions highlight one party at a time to reveal internal variance.</p>
+        </article>
+        <article class="card observe" data-target="senate" data-focus="rep">
+          <p class="kicker">Senate</p>
+          <h2>Senate focus: Republican senators</h2>
+          <p>These transitions make it easier to inspect overlap and polarization without changing the projection itself.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="footer">
+      Browser-native analysis with Plotly, CSV parsing, SVD projection, and scroll choreography.
+    </section>
+  </main>
+
+  <script>
+    const PARTY_COLORS = {
+      dem: "#3a86ff",
+      rep: "#ff6b35",
+      other: "#7ef7b2"
+    };
+
+    function voteToNumeric(code) {
+      if ([1, 2, 3].includes(code)) return 1;
+      if ([4, 5, 6].includes(code)) return -1;
+      return 0;
+    }
+
+    function classifyParty(partyCode) {
+      if (partyCode === 100) return "dem";
+      if (partyCode === 200) return "rep";
+      return "other";
+    }
+
+    function parseCsv(path) {
+      return fetch(path)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP " + response.status + " while loading " + path);
+          }
+          return response.text();
+        })
+        .then((text) => {
+          const cleaned = text.replace(/^\uFEFF/, "");
+          const result = Papa.parse(cleaned, {
+            header: true,
+            dynamicTyping: true,
+            skipEmptyLines: "greedy"
+          });
+
+          const fatal = (result.errors || []).find((err) => err.code !== "TooFewFields" && err.code !== "TooManyFields");
+          if (fatal) {
+            throw new Error(fatal.message + " (" + path + ")");
+          }
+
+          return result.data.filter((row) => row && Object.keys(row).length > 0);
+        });
+    }
+
+    function dot(a, b) {
+      let sum = 0;
+      for (let i = 0; i < a.length; i++) sum += a[i] * b[i];
+      return sum;
+    }
+
+    function norm(v) {
+      return Math.sqrt(dot(v, v));
+    }
+
+    function matVecMul(M, v) {
+      const out = new Array(M.length).fill(0);
+      for (let i = 0; i < M.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < v.length; j++) sum += M[i][j] * v[j];
+        out[i] = sum;
+      }
+      return out;
+    }
+
+    function outer(v) {
+      const out = Array.from({ length: v.length }, () => new Array(v.length).fill(0));
+      for (let i = 0; i < v.length; i++) {
+        for (let j = 0; j < v.length; j++) out[i][j] = v[i] * v[j];
+      }
+      return out;
+    }
+
+    function subtractScaledOuter(M, scale, v) {
+      const vvT = outer(v);
+      const out = Array.from({ length: M.length }, () => new Array(M.length).fill(0));
+      for (let i = 0; i < M.length; i++) {
+        for (let j = 0; j < M.length; j++) out[i][j] = M[i][j] - scale * vvT[i][j];
+      }
+      return out;
+    }
+
+    function powerIterationSymmetric(M, iterations = 120) {
+      const n = M.length;
+      let v = Array.from({ length: n }, () => Math.random() - 0.5);
+      let vNorm = norm(v) || 1;
+      v = v.map((x) => x / vNorm);
+
+      for (let k = 0; k < iterations; k++) {
+        const Mv = matVecMul(M, v);
+        const mNorm = norm(Mv) || 1;
+        v = Mv.map((x) => x / mNorm);
+      }
+
+      const Mv = matVecMul(M, v);
+      const eigenvalue = dot(v, Mv);
+      return { eigenvalue, eigenvector: v };
+    }
+
+    function pca2D(centered) {
+      const n = centered.length;
+      const d = centered[0].length;
+      const cov = Array.from({ length: d }, () => new Array(d).fill(0));
+
+      for (let r = 0; r < n; r++) {
+        const row = centered[r];
+        for (let i = 0; i < d; i++) {
+          const ri = row[i];
+          if (ri === 0) continue;
+          for (let j = 0; j < d; j++) cov[i][j] += ri * row[j];
+        }
+      }
+
+      const scale = 1 / Math.max(1, n - 1);
+      for (let i = 0; i < d; i++) {
+        for (let j = 0; j < d; j++) cov[i][j] *= scale;
+      }
+
+      const e1 = powerIterationSymmetric(cov);
+      const deflated = subtractScaledOuter(cov, e1.eigenvalue, e1.eigenvector);
+      const e2 = powerIterationSymmetric(deflated);
+
+      const coords = centered.map((row) => [dot(row, e1.eigenvector), dot(row, e2.eigenvector)]);
+      return coords;
+    }
+
+    function buildChamberProjection(votes, members, chamber) {
+      const chamberVotes = votes.filter((v) => v.chamber === chamber);
+      const chamberMembers = members.filter((m) => m.chamber === chamber);
+
+      const rollSet = new Set();
+      const byLegislator = new Map();
+
+      for (const row of chamberVotes) {
+        const icpsr = row.icpsr;
+        const roll = row.rollnumber;
+        const numericVote = voteToNumeric(row.cast_code);
+
+        if (icpsr == null || roll == null) continue;
+        rollSet.add(roll);
+
+        if (!byLegislator.has(icpsr)) byLegislator.set(icpsr, new Map());
+        byLegislator.get(icpsr).set(roll, numericVote);
+      }
+
+      const rollNumbers = Array.from(rollSet).sort((a, b) => a - b);
+      const rollIndex = new Map(rollNumbers.map((r, idx) => [r, idx]));
+
+      const vectors = [];
+      const keptIcpsr = [];
+
+      for (const [icpsr, rollMap] of byLegislator.entries()) {
+        const vec = new Array(rollNumbers.length).fill(0);
+        let nonZeroCount = 0;
+
+        for (const [roll, value] of rollMap.entries()) {
+          const idx = rollIndex.get(roll);
+          if (idx === undefined) continue;
+          vec[idx] = value;
+          if (value !== 0) nonZeroCount += 1;
+        }
+
+        if (nonZeroCount >= 100) {
+          const norm = Math.sqrt(vec.reduce((acc, x) => acc + x * x, 0));
+          const safeNorm = norm || 1;
+          vectors.push(vec.map((x) => x / safeNorm));
+          keptIcpsr.push(icpsr);
+        }
+      }
+
+      if (vectors.length < 3) {
+        throw new Error(chamber + " does not have enough legislators with >= 100 votes to compute PCA.");
+      }
+
+      const featureCount = vectors[0].length;
+      const means = new Array(featureCount).fill(0);
+
+      for (const vec of vectors) {
+        for (let j = 0; j < featureCount; j++) {
+          means[j] += vec[j];
+        }
+      }
+
+      for (let j = 0; j < featureCount; j++) {
+        means[j] /= vectors.length;
+      }
+
+      const centered = vectors.map((vec) => vec.map((x, j) => x - means[j]));
+      const coords = pca2D(centered);
+
+      const memberByIcpsr = new Map(chamberMembers.map((m) => [m.icpsr, m]));
+
+      return keptIcpsr.map((icpsr, idx) => {
+        const member = memberByIcpsr.get(icpsr) || {};
+        const party = classifyParty(member.party_code);
+        return {
+          icpsr,
+          x: coords[idx][0],
+          y: coords[idx][1],
+          party,
+          party_code: member.party_code,
+          bioname: member.bioname || "Unknown"
+        };
+      });
+    }
+
+    function chartTrace(data) {
+      return {
+        type: "scattergl",
+        mode: "markers",
+        x: data.map((d) => d.x),
+        y: data.map((d) => d.y),
+        text: data.map((d) => d.bioname),
+        customdata: data.map((d) => [d.party, d.party_code, d.icpsr]),
+        marker: {
+          color: data.map((d) => PARTY_COLORS[d.party] || PARTY_COLORS.other),
+          size: data.map(() => 8),
+          opacity: data.map(() => 0.82),
+          line: { width: 0 }
+        },
+        hovertemplate:
+          "<b>%{text}</b><br>ICPSR: %{customdata[2]}<br>Party Code: %{customdata[1]}<br>PC1: %{x:.3f}<br>PC2: %{y:.3f}<extra></extra>"
+      };
+    }
+
+    function drawChart(targetId, data, title) {
+      const layout = {
+        title: {
+          text: title,
+          font: { size: 24, color: "#f4e9d7", family: "Fraunces, Georgia, serif" },
+          x: 0.03
+        },
+        paper_bgcolor: "rgba(0,0,0,0)",
+        plot_bgcolor: "rgba(0,0,0,0)",
+        margin: { l: 60, r: 25, t: 70, b: 55 },
+        xaxis: {
+          title: "PC1",
+          gridcolor: "rgba(255,255,255,0.08)",
+          zerolinecolor: "rgba(255,255,255,0.15)",
+          color: "#dce7f0"
+        },
+        yaxis: {
+          title: "PC2",
+          gridcolor: "rgba(255,255,255,0.08)",
+          zerolinecolor: "rgba(255,255,255,0.15)",
+          color: "#dce7f0"
+        },
+        showlegend: false,
+        hoverlabel: {
+          bgcolor: "#0f2031",
+          bordercolor: "rgba(255,255,255,0.3)",
+          font: { color: "#f6f2e8" }
+        }
+      };
+
+      const config = {
+        responsive: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ["select2d", "lasso2d", "toImage"]
+      };
+
+      return Plotly.newPlot(targetId, [chartTrace(data)], layout, config);
+    }
+
+    function focusGroup(targetId, focus) {
+      const graph = document.getElementById(targetId);
+      const trace = graph.data[0];
+      const partyList = trace.customdata.map((row) => row[0]);
+
+      const opacities = partyList.map((party) => {
+        if (focus === "all") return 0.82;
+        return party === focus ? 0.95 : 0.12;
+      });
+
+      const sizes = partyList.map((party) => {
+        if (focus === "all") return 8;
+        return party === focus ? 10 : 6;
+      });
+
+      Plotly.restyle(graph, { "marker.opacity": [opacities], "marker.size": [sizes] }, [0]);
+    }
+
+    function setScrollObservers() {
+      const cards = document.querySelectorAll(".observe");
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            const el = entry.target;
+            if (entry.isIntersecting) {
+              el.classList.add("in-view");
+              const target = el.dataset.target;
+              const focus = el.dataset.focus || "all";
+              focusGroup(target + "-chart", focus);
+            } else {
+              el.classList.remove("in-view");
+            }
+          }
+        },
+        {
+          root: null,
+          threshold: 0.5
+        }
+      );
+
+      cards.forEach((card) => observer.observe(card));
+    }
+
+    function showError(message) {
+      const box = document.getElementById("load-error");
+      box.hidden = false;
+      box.innerHTML =
+        "Could not load local CSV data. " +
+        "Open this project through a local server (for example: <b>python3 -m http.server</b>) and then visit this page over http.<br><br>Details: " +
+        message;
+    }
+
+    function setHeroAnimation() {
+      const maxScroll = 430;
+      const update = () => {
+        const progress = Math.max(0, Math.min(1, window.scrollY / maxScroll));
+        document.documentElement.style.setProperty("--hero-progress", progress.toFixed(3));
+      };
+
+      requestAnimationFrame(() => {
+        document.body.classList.add("loaded");
+        update();
+      });
+
+      window.addEventListener("scroll", update, { passive: true });
+      window.addEventListener("resize", update);
+    }
+
+    async function init() {
+      setHeroAnimation();
+
+      try {
+        const [votes, members] = await Promise.all([
+          parseCsv("data/HS119_votes.csv"),
+          parseCsv("data/HS119_members.csv")
+        ]);
+
+        const houseData = buildChamberProjection(votes, members, "House");
+        const senateData = buildChamberProjection(votes, members, "Senate");
+
+        await drawChart("house-chart", houseData, "House Voting Space");
+        await drawChart("senate-chart", senateData, "Senate Voting Space");
+
+        setScrollObservers();
+      } catch (err) {
+        console.error(err);
+        showError(err.message || String(err));
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
