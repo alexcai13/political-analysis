@@ -295,7 +295,7 @@
     }
 
     .shell {
-      width: min(1150px, 92vw);
+      width: min(1340px, 95vw);
       margin: 0 auto;
       position: relative;
       z-index: 2;
@@ -372,12 +372,12 @@
     .chart-wrap {
       position: sticky;
       top: 1.1rem;
-      height: min(72vh, 760px);
+      height: min(82vh, 880px);
       border-radius: 24px;
-      border: 1px solid var(--border);
-      background: linear-gradient(140deg, rgba(6, 14, 22, 0.14), rgba(20, 39, 57, 0.1));
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(145deg, rgba(5, 12, 19, 0.82), rgba(12, 24, 37, 0.92));
       backdrop-filter: blur(4px);
-      padding: 0.75rem;
+      padding: 0.9rem;
       box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
     }
 
@@ -386,11 +386,13 @@
       height: 100%;
       border-radius: 18px;
       overflow: hidden;
+      background: linear-gradient(180deg, #0b1621 0%, #102235 100%);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
     .scrolly {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.35fr 0.65fr;
       gap: 1.5rem;
       align-items: start;
       margin-bottom: 10rem;
@@ -487,7 +489,7 @@
       .chart-wrap {
         position: relative;
         top: auto;
-        height: 62vh;
+        height: 68vh;
       }
 
       .card {
@@ -553,7 +555,7 @@
         <article class="card observe" data-target="senate" data-focus="all">
           <p class="kicker">Senate</p>
           <h2>Senate baseline map</h2>
-          <p>The same vote-to-vector process is repeated for senators. Members with fewer than 100 cast votes are removed before normalization.</p>
+          <p>The same vote-to-vector process is repeated for senators. Members with fewer than 100 cast votes are removed before normalization, and independents are grouped with Democrats in the Senate views.</p>
         </article>
         <article class="card observe" data-target="senate" data-focus="dem">
           <p class="kicker">Senate</p>
@@ -590,6 +592,12 @@
       if (partyCode === 100) return "dem";
       if (partyCode === 200) return "rep";
       return "other";
+    }
+
+    function classifyMemberParty(member) {
+      if (!member) return "other";
+      if (member.chamber === "Senate" && member.party_code === 328) return "dem";
+      return classifyParty(member.party_code);
     }
 
     function parseCsv(path) {
@@ -766,7 +774,7 @@
 
       return keptIcpsr.map((icpsr, idx) => {
         const member = memberByIcpsr.get(icpsr) || {};
-        const party = classifyParty(member.party_code);
+        const party = classifyMemberParty(member);
         return {
           icpsr,
           x: coords[idx][0],
@@ -793,7 +801,7 @@
           line: { width: 0 }
         },
         hovertemplate:
-          "<b>%{text}</b><br>ICPSR: %{customdata[2]}<br>Party Code: %{customdata[1]}<br>PC1: %{x:.3f}<br>PC2: %{y:.3f}<extra></extra>"
+          "<b>%{text}</b><br>Party: %{customdata[0]}<br>ICPSR: %{customdata[2]}<br>PC1: %{x:.3f}<br>PC2: %{y:.3f}<extra></extra>"
       };
     }
 
@@ -804,54 +812,109 @@
           font: { size: 24, color: "#f4e9d7", family: "Fraunces, Georgia, serif" },
           x: 0.03
         },
-        paper_bgcolor: "rgba(0,0,0,0)",
-        plot_bgcolor: "rgba(0,0,0,0)",
-        margin: { l: 60, r: 25, t: 70, b: 55 },
+        paper_bgcolor: "#09131d",
+        plot_bgcolor: "#112235",
+        margin: { l: 22, r: 18, t: 68, b: 18 },
+        hovermode: "closest",
         xaxis: {
-          title: "PC1",
+          title: "",
           gridcolor: "rgba(255,255,255,0.08)",
           zerolinecolor: "rgba(255,255,255,0.15)",
-          color: "#dce7f0"
+          color: "#dce7f0",
+          showticklabels: false,
+          ticks: "",
+          fixedrange: false,
+          automargin: false
         },
         yaxis: {
-          title: "PC2",
+          title: "",
           gridcolor: "rgba(255,255,255,0.08)",
           zerolinecolor: "rgba(255,255,255,0.15)",
-          color: "#dce7f0"
+          color: "#dce7f0",
+          showticklabels: false,
+          ticks: "",
+          fixedrange: false,
+          automargin: false
         },
         showlegend: false,
         hoverlabel: {
-          bgcolor: "#0f2031",
-          bordercolor: "rgba(255,255,255,0.3)",
-          font: { color: "#f6f2e8" }
+          bgcolor: "#07111b",
+          bordercolor: "rgba(255,255,255,0.18)",
+          font: { color: "#f6f2e8", size: 14 },
+          align: "left"
         }
       };
 
       const config = {
         responsive: true,
         displaylogo: false,
-        modeBarButtonsToRemove: ["select2d", "lasso2d", "toImage"]
+        modeBarButtonsToRemove: ["select2d", "lasso2d", "toImage"],
+        scrollZoom: true
       };
 
       return Plotly.newPlot(targetId, [chartTrace(data)], layout, config);
     }
 
+    function getPartyFilter(focus, chamber) {
+      if (focus === "dem") {
+        return (party, partyCode) => party === "dem" || (chamber === "Senate" && partyCode === 328);
+      }
+      if (focus === "rep") {
+        return (party) => party === "rep";
+      }
+      return () => true;
+    }
+
+    function getAxisRange(values, paddingRatio) {
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const span = Math.max(max - min, 0.001);
+      const padding = span * paddingRatio;
+      return [min - padding, max + padding];
+    }
+
     function focusGroup(targetId, focus) {
       const graph = document.getElementById(targetId);
+      if (!graph || !graph.data || !graph.data[0]) return;
+
       const trace = graph.data[0];
+      const chamber = targetId.indexOf("senate") !== -1 ? "Senate" : "House";
       const partyList = trace.customdata.map((row) => row[0]);
+      const partyCodes = trace.customdata.map((row) => row[1]);
+      const xValues = trace.x || [];
+      const yValues = trace.y || [];
+      const filter = getPartyFilter(focus, chamber);
+      const selected = partyList.map((party, idx) => filter(party, partyCodes[idx]));
 
-      const opacities = partyList.map((party) => {
+      const focusIndices = selected
+        .map((isSelected, idx) => (isSelected ? idx : -1))
+        .filter((idx) => idx >= 0);
+
+      const opacities = selected.map((isSelected) => {
         if (focus === "all") return 0.82;
-        return party === focus ? 0.95 : 0.12;
+        return isSelected ? 0.95 : 0.12;
       });
 
-      const sizes = partyList.map((party) => {
+      const sizes = selected.map((isSelected) => {
         if (focus === "all") return 8;
-        return party === focus ? 10 : 6;
+        return isSelected ? 10 : 6;
       });
+
+      const relayout = {};
+      if (focus === "all" || focusIndices.length === 0) {
+        relayout["xaxis.autorange"] = true;
+        relayout["yaxis.autorange"] = true;
+      } else {
+        const focusedX = focusIndices.map((idx) => xValues[idx]);
+        const focusedY = focusIndices.map((idx) => yValues[idx]);
+        relayout["xaxis.range"] = getAxisRange(focusedX, 0.18);
+        relayout["yaxis.range"] = getAxisRange(focusedY, 0.18);
+        relayout["xaxis.autorange"] = false;
+        relayout["yaxis.autorange"] = false;
+      }
 
       Plotly.restyle(graph, { "marker.opacity": [opacities], "marker.size": [sizes] }, [0]);
+      Plotly.relayout(graph, relayout);
     }
 
     function setScrollObservers() {
