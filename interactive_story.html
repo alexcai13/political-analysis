@@ -538,7 +538,8 @@
       display: block;
     }
 
-    .chamber-control {
+    .chamber-control,
+    .polarization-control {
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -647,7 +648,7 @@
   <main class="shell">
     <section class="hero">
       <div>
-        <h1><span class="title-main">Congress Voting Atlas</span></h1>
+        <h1><span class="title-main">Congress Atlas</span></h1>
         <div id="load-error" class="error" hidden></div>
       </div>
     </section>
@@ -669,6 +670,14 @@
             </label>
             <span class="chamber-label">Senate</span>
           </div>
+          <div class="polarization-control" hidden>
+            <span class="chamber-label">All Time</span>
+            <label class="toggle-switch">
+              <input class="polarization-toggle" type="checkbox" onclick="switchPolarizationMode(this)">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="chamber-label">Modern</span>
+          </div>
         </div>
         <div class="chart-section">
           <div class="tab-content active" data-tab-content="overall">
@@ -688,15 +697,8 @@
           </div>
           <div class="tab-content" data-tab-content="polarization">
             <div class="polarization-shell">
-              <div class="tab-buttons" style="margin-bottom: 0; border-bottom: none;">
-                <button class="tab-button active" data-polarization-tab="all-time" onclick="switchPolarizationTab(event, this)">All-time</button>
-                <button class="tab-button" data-polarization-tab="modern" onclick="switchPolarizationTab(event, this)">Modern</button>
-              </div>
-              <p class="polarization-note">All-time tracks the notebook’s congress-by-congress polarization line. Modern tracks Democrat-Republican centroid distance starting in the 1970s.</p>
-              <div class="polarization-summary" id="house-polarization-summary"></div>
-              <div class="chart-wrap polarization-chart-wrap"><div id="house-polarization-variance-chart" class="chart"></div></div>
-              <div class="chart-wrap polarization-chart-wrap secondary"><div id="house-polarization-explained-chart" class="chart"></div></div>
-              <div class="chart-wrap polarization-chart-wrap" style="display:none;"><div id="house-polarization-modern-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap polarization-all-time-wrap"><div id="house-polarization-variance-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap polarization-modern-wrap" style="display:none;"><div id="house-polarization-modern-chart" class="chart"></div></div>
             </div>
           </div>
         </div>
@@ -718,6 +720,14 @@
             </label>
             <span class="chamber-label">Senate</span>
           </div>
+          <div class="polarization-control" hidden>
+            <span class="chamber-label">All Time</span>
+            <label class="toggle-switch">
+              <input class="polarization-toggle" type="checkbox" onclick="switchPolarizationMode(this)">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="chamber-label">Modern</span>
+          </div>
         </div>
         <div class="chart-section">
           <div class="tab-content active" data-tab-content="overall">
@@ -737,15 +747,8 @@
           </div>
           <div class="tab-content" data-tab-content="polarization">
             <div class="polarization-shell">
-              <div class="tab-buttons" style="margin-bottom: 0; border-bottom: none;">
-                <button class="tab-button active" data-polarization-tab="all-time" onclick="switchPolarizationTab(event, this)">All-time</button>
-                <button class="tab-button" data-polarization-tab="modern" onclick="switchPolarizationTab(event, this)">Modern</button>
-              </div>
-              <p class="polarization-note">All-time tracks the notebook’s congress-by-congress polarization line. Modern tracks Democrat-Republican centroid distance starting in the 1970s.</p>
-              <div class="polarization-summary" id="senate-polarization-summary"></div>
-              <div class="chart-wrap polarization-chart-wrap"><div id="senate-polarization-variance-chart" class="chart"></div></div>
-              <div class="chart-wrap polarization-chart-wrap secondary"><div id="senate-polarization-explained-chart" class="chart"></div></div>
-              <div class="chart-wrap polarization-chart-wrap" style="display:none;"><div id="senate-polarization-modern-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap polarization-all-time-wrap"><div id="senate-polarization-variance-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap polarization-modern-wrap" style="display:none;"><div id="senate-polarization-modern-chart" class="chart"></div></div>
             </div>
           </div>
         </div>
@@ -804,6 +807,7 @@
       
       button.classList.add("active");
       section.querySelector(`[data-tab-content="${tabName}"]`).classList.add("active");
+      syncSectionControls(section);
 
       requestAnimationFrame(() => {
         const stage = document.querySelector(".chamber-stage");
@@ -820,50 +824,55 @@
           } else {
             renderPolarizationTab(section).then(() => {
               renderedPolarizationSections.add(section.id);
+              applyPolarizationMode(section);
             });
           }
         }
       });
     }
 
-    function switchPolarizationTab(event, button) {
-      event.preventDefault();
-      const tabName = button.dataset.polarizationTab;
-      const shell = button.closest(".polarization-shell");
+    function syncSectionControls(section) {
+      const activeTab = section.querySelector(".tab-button.active")?.dataset.tab;
+      const chamberControl = section.querySelector(".chamber-control");
+      const polarizationControl = section.querySelector(".polarization-control");
+      const isPolarization = activeTab === "polarization";
 
-      shell.querySelectorAll("[data-polarization-tab]").forEach((tabButton) => {
-        tabButton.classList.remove("active");
-      });
+      if (chamberControl) chamberControl.hidden = isPolarization;
+      if (polarizationControl) polarizationControl.hidden = !isPolarization;
+    }
 
-      button.classList.add("active");
+    function applyPolarizationMode(section) {
+      if (!section) return;
 
-      const allTimeWraps = shell.querySelectorAll(".polarization-chart-wrap");
-      const primary = allTimeWraps[0];
-      const secondary = allTimeWraps[1];
-      const modern = allTimeWraps[2];
+      const shell = section.querySelector(".polarization-shell");
+      const toggle = section.querySelector(".polarization-toggle");
+      if (!shell || !toggle) return;
 
-      if (tabName === "all-time") {
-        if (primary) primary.style.display = "block";
-        if (secondary) secondary.style.display = "block";
-        if (modern) modern.style.display = "none";
-      } else {
-        if (primary) primary.style.display = "none";
-        if (secondary) secondary.style.display = "none";
-        if (modern) modern.style.display = "block";
-      }
+      const allTime = shell.querySelector(".polarization-all-time-wrap");
+      const modern = shell.querySelector(".polarization-modern-wrap");
+      const showModern = toggle.checked;
+
+      if (allTime) allTime.style.display = showModern ? "none" : "block";
+      if (modern) modern.style.display = showModern ? "block" : "none";
 
       requestAnimationFrame(() => {
-        const section = button.closest(".section-block");
         const stage = document.querySelector(".chamber-stage");
-        if (section && stage) {
+        if (stage) {
           stage.style.setProperty("--chamber-stage-height", `${Math.ceil(section.getBoundingClientRect().height)}px`);
         }
-        if (tabName === "all-time") {
-          resizePolarizationTab(section);
-        } else {
-          const prefix = section.id === "house-section" ? "house" : "senate";
-          Plotly.Plots.resize(`${prefix}-polarization-modern-chart`);
-        }
+        resizePolarizationTab(section);
+      });
+    }
+
+    function switchPolarizationMode(toggle) {
+      const checked = toggle.checked;
+
+      document.querySelectorAll(".polarization-toggle").forEach((input) => {
+        input.checked = checked;
+      });
+
+      document.querySelectorAll(".chamber-section").forEach((section) => {
+        applyPolarizationMode(section);
       });
     }
 
@@ -1466,13 +1475,11 @@
 
       const prefix = section.id === "house-section" ? "house" : "senate";
       const mainId = `${prefix}-polarization-variance-chart`;
-      const secondaryId = `${prefix}-polarization-explained-chart`;
       const modernId = `${prefix}-polarization-modern-chart`;
 
       const mainTarget = document.getElementById(mainId);
-      const secondaryTarget = document.getElementById(secondaryId);
       const modernTarget = document.getElementById(modernId);
-      if (!mainTarget || !secondaryTarget || !modernTarget) return;
+      if (!mainTarget || !modernTarget) return;
 
       const mainPlot = buildPolarizationTrace(
         polarizationSummary,
@@ -1482,31 +1489,11 @@
         true
       );
 
-      const secondaryPlot = buildPolarizationTrace(
-        polarizationSummary,
-        "pc1_explained_variance",
-        "#3a86ff",
-        "PCA Explained Variance",
-        false
-      );
-
       await Plotly.newPlot(mainTarget, mainPlot.data, mainPlot.layout, mainPlot.config);
-      await Plotly.newPlot(secondaryTarget, secondaryPlot.data, secondaryPlot.layout, secondaryPlot.config);
 
       const modernData = modernPolarizationSummary;
       const modernTrace = buildModernPolarizationTrace(modernData);
       await Plotly.newPlot(modernTarget, modernTrace.data, modernTrace.layout, modernTrace.config);
-
-      const summaryTarget = document.getElementById(`${prefix}-polarization-summary`);
-      if (summaryTarget) {
-        const first = polarizationSummary[0];
-        const last = polarizationSummary[polarizationSummary.length - 1];
-        summaryTarget.innerHTML = `
-          <div class="polarization-stat"><span class="polarization-stat-label">Congress span</span><span class="polarization-stat-value">${first.congress} to ${last.congress}</span></div>
-          <div class="polarization-stat"><span class="polarization-stat-label">Years covered</span><span class="polarization-stat-value">${first.year_label} to ${last.year_label}</span></div>
-          <div class="polarization-stat"><span class="polarization-stat-label">Latest legislators</span><span class="polarization-stat-value">${last.num_legislators}</span></div>
-        `;
-      }
     }
 
     function buildModernPolarizationTrace(summary) {
@@ -1581,9 +1568,12 @@
     function resizePolarizationTab(section) {
       const prefix = section.id === "house-section" ? "house" : "senate";
       const mainId = `${prefix}-polarization-variance-chart`;
-      const secondaryId = `${prefix}-polarization-explained-chart`;
-      Plotly.Plots.resize(mainId);
-      Plotly.Plots.resize(secondaryId);
+      const modernId = `${prefix}-polarization-modern-chart`;
+      const showModern = !!section.querySelector(".polarization-toggle")?.checked;
+      const target = document.getElementById(showModern ? modernId : mainId);
+      if (target && target.data) {
+        Plotly.Plots.resize(target);
+      }
     }
 
     function getAxisRange(values, paddingRatio) {
