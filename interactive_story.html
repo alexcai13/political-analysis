@@ -295,7 +295,7 @@
     }
 
     .shell {
-      width: min(1340px, 95vw);
+      width: min(1500px, 96vw);
       margin: 0 auto;
       position: relative;
       z-index: 2;
@@ -390,78 +390,89 @@
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     }
 
-    .scrolly {
+    .section-block {
+      margin-bottom: 5rem;
+    }
+
+    .chamber-stage {
+      position: relative;
+      min-height: var(--chamber-stage-height, 1900px);
+    }
+
+    .chart-section {
       display: grid;
-      grid-template-columns: 1.35fr 0.65fr;
-      gap: 1.5rem;
-      align-items: start;
-      margin-bottom: 10rem;
+      gap: 1.2rem;
     }
 
-    .story {
-      display: flex;
-      flex-direction: column;
-      gap: 1.25rem;
-      padding: 0.2rem 0;
+    .chart-wide {
+      width: 100%;
     }
 
-    .card {
-      min-height: 44vh;
+    .chart-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1.2rem;
+    }
+
+    .chart-grid .chart-wrap,
+    .chart-wide .chart-wrap {
+      position: relative;
+      top: auto;
+      width: 100%;
+      height: min(72vh, 760px);
+    }
+
+    .polarization-shell {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .polarization-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+    }
+
+    .polarization-stat {
       border: 1px solid var(--border);
-      background: rgba(7, 14, 23, 0.16);
-      backdrop-filter: blur(3px);
-      border-radius: 20px;
-      padding: 1.35rem 1.25rem;
-      opacity: 0.2;
-      transform: translateY(36px) scale(0.985);
-      transition: opacity 500ms ease, transform 650ms cubic-bezier(0.16, 1, 0.3, 1), border-color 500ms ease;
-      box-shadow: 0 14px 44px rgba(0, 0, 0, 0.23);
+      border-radius: 16px;
+      background: rgba(6, 18, 28, 0.45);
+      padding: 0.9rem 1rem;
     }
 
-    .card.in-view {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      border-color: rgba(243, 239, 228, 0.5);
-    }
-
-    .kicker {
-      margin: 0;
+    .polarization-stat-label {
+      display: block;
+      color: #a8b5c5;
+      font-size: 0.74rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: #ffddb1;
-      font-size: 0.76rem;
+      margin-bottom: 0.35rem;
     }
 
-    .card h2 {
-      margin: 0.35rem 0 0.75rem;
-      font-size: clamp(1.35rem, 2.5vw, 2rem);
-      line-height: 1.1;
-      font-family: "Fraunces", Georgia, serif;
+    .polarization-stat-value {
+      display: block;
+      color: #f4efe3;
+      font-size: 1.18rem;
+      font-weight: 600;
+      line-height: 1.15;
     }
 
-    .card p {
+    .polarization-note {
+      color: #c8d8e6;
+      font-size: 0.93rem;
+      line-height: 1.6;
       margin: 0;
-      color: #d8e4ee;
-      line-height: 1.58;
-      font-size: 1.05rem;
     }
 
-    .legend {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin: 0.9rem 0 0;
-      color: #d7e2ed;
-      font-size: 0.9rem;
+    .polarization-chart-wrap {
+      position: relative;
+      top: auto;
+      width: 100%;
+      height: min(52vh, 620px);
     }
 
-    .dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      display: inline-block;
-      margin-right: 0.4rem;
-      vertical-align: middle;
+    .polarization-chart-wrap.secondary {
+      height: min(36vh, 420px);
     }
 
     .footer {
@@ -481,19 +492,141 @@
       line-height: 1.5;
     }
 
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      min-width: 0;
+    }
+
+    .tab-button {
+      padding: 0.75rem 1.2rem;
+      background: transparent;
+      border: none;
+      color: #a8b5c5;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 200ms, border-color 200ms;
+      text-transform: capitalize;
+    }
+
+    .tab-button:hover {
+      color: #e0e8f0;
+    }
+
+    .tab-button.active {
+      color: #f4efe3;
+      border-bottom-color: #f7c66f;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .chamber-control {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0;
+      padding: 0;
+      justify-content: flex-end;
+    }
+
+    .chamber-label {
+      color: #d7e2ed;
+      font-size: 0.8rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 70px;
+      height: 34px;
+    }
+
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #2a4a6a;
+      transition: 0.3s;
+      border-radius: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: #fff;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+
+    input:checked + .toggle-slider {
+      background-color: #3a86ff;
+    }
+
+    input:checked + .toggle-slider:before {
+      transform: translateX(36px);
+    }
+
+    .chamber-section {
+      display: block;
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .chamber-section.active {
+      position: absolute;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: none;
+      z-index: 1;
+    }
+
     @media (max-width: 980px) {
-      .scrolly {
-        grid-template-columns: 1fr;
-      }
-
       .chart-wrap {
-        position: relative;
-        top: auto;
-        height: 68vh;
+        height: 64vh;
       }
 
-      .card {
-        min-height: 36vh;
+      .chart-grid {
+        grid-template-columns: 1fr;
       }
 
       .hero h1 {
@@ -514,61 +647,110 @@
   <main class="shell">
     <section class="hero">
       <div>
-        <h1><span class="title-main">Congress Voting Atlas</span><span class="title-sub">119th Congress</span></h1>
+        <h1><span class="title-main">Congress Voting Atlas</span></h1>
         <div id="load-error" class="error" hidden></div>
       </div>
     </section>
 
-    <section class="scrolly" aria-label="House voting story">
-      <div class="chart-wrap">
-        <div id="house-chart" class="chart"></div>
-      </div>
-      <div class="story">
-        <article class="card observe" data-target="house" data-focus="all">
-          <p class="kicker">House</p>
-          <h2>House baseline map</h2>
-          <p>This projection compresses many roll call votes into two visual axes. Nearby points tended to vote similarly across the chamber.</p>
-          <div class="legend">
-            <span><span class="dot" style="background:#3a86ff"></span>Democratic</span>
-            <span><span class="dot" style="background:#ff6b35"></span>Republican</span>
-            <span><span class="dot" style="background:#7ef7b2"></span>Other</span>
+    <div class="chamber-stage">
+      <section class="section-block chamber-section active" id="house-section" aria-label="House voting story">
+        <div class="tabs">
+          <div class="tab-buttons">
+            <button class="tab-button active" data-tab="overall" onclick="switchTab(event, this)">Overall</button>
+            <button class="tab-button" data-tab="time" onclick="switchTab(event, this)">Time</button>
+            <button class="tab-button" data-tab="topic" onclick="switchTab(event, this)">Topic</button>
+            <button class="tab-button" data-tab="polarization" onclick="switchTab(event, this)">Polarization</button>
           </div>
-        </article>
-        <article class="card observe" data-target="house" data-focus="dem">
-          <p class="kicker">House</p>
-          <h2>House focus: Democratic bloc</h2>
-          <p>As this card enters, Democratic members are highlighted while the rest fade, making cluster shape and spread easier to read.</p>
-        </article>
-        <article class="card observe" data-target="house" data-focus="rep">
-          <p class="kicker">House</p>
-          <h2>House focus: Republican bloc</h2>
-          <p>You can compare compactness and separation from other groups as the emphasis shifts across the map.</p>
-        </article>
-      </div>
-    </section>
+          <div class="chamber-control">
+            <span class="chamber-label">House</span>
+            <label class="toggle-switch">
+              <input class="chamber-toggle" type="checkbox" onclick="switchChamber(this)">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="chamber-label">Senate</span>
+          </div>
+        </div>
+        <div class="chart-section">
+          <div class="tab-content active" data-tab-content="overall">
+            <div class="chart-wide">
+              <div class="chart-wrap"><div id="house-all-chart" class="chart"></div></div>
+            </div>
+            <div class="chart-grid">
+              <div class="chart-wrap"><div id="house-dem-chart" class="chart"></div></div>
+              <div class="chart-wrap"><div id="house-rep-chart" class="chart"></div></div>
+            </div>
+          </div>
+          <div class="tab-content" data-tab-content="time">
+            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Time-based analysis coming soon.</p>
+          </div>
+          <div class="tab-content" data-tab-content="topic">
+            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Topic-based analysis coming soon.</p>
+          </div>
+          <div class="tab-content" data-tab-content="polarization">
+            <div class="polarization-shell">
+              <div class="tab-buttons" style="margin-bottom: 0; border-bottom: none;">
+                <button class="tab-button active" data-polarization-tab="all-time" onclick="switchPolarizationTab(event, this)">All-time</button>
+                <button class="tab-button" data-polarization-tab="modern" onclick="switchPolarizationTab(event, this)">Modern</button>
+              </div>
+              <p class="polarization-note">All-time tracks the notebook’s congress-by-congress polarization line. Modern tracks Democrat-Republican centroid distance starting in the 1970s.</p>
+              <div class="polarization-summary" id="house-polarization-summary"></div>
+              <div class="chart-wrap polarization-chart-wrap"><div id="house-polarization-variance-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap secondary"><div id="house-polarization-explained-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap" style="display:none;"><div id="house-polarization-modern-chart" class="chart"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <section class="scrolly" aria-label="Senate voting story">
-      <div class="chart-wrap">
-        <div id="senate-chart" class="chart"></div>
-      </div>
-      <div class="story">
-        <article class="card observe" data-target="senate" data-focus="all">
-          <p class="kicker">Senate</p>
-          <h2>Senate baseline map</h2>
-          <p>The same vote-to-vector process is repeated for senators. Members with fewer than 100 cast votes are removed before normalization, and independents are grouped with Democrats in the Senate views.</p>
-        </article>
-        <article class="card observe" data-target="senate" data-focus="dem">
-          <p class="kicker">Senate</p>
-          <h2>Senate focus: Democratic senators</h2>
-          <p>As you scroll, color and opacity transitions highlight one party at a time to reveal internal variance.</p>
-        </article>
-        <article class="card observe" data-target="senate" data-focus="rep">
-          <p class="kicker">Senate</p>
-          <h2>Senate focus: Republican senators</h2>
-          <p>These transitions make it easier to inspect overlap and polarization without changing the projection itself.</p>
-        </article>
-      </div>
-    </section>
+      <section class="section-block chamber-section" id="senate-section" aria-label="Senate voting story">
+        <div class="tabs">
+          <div class="tab-buttons">
+            <button class="tab-button active" data-tab="overall" onclick="switchTab(event, this)">Overall</button>
+            <button class="tab-button" data-tab="time" onclick="switchTab(event, this)">Time</button>
+            <button class="tab-button" data-tab="topic" onclick="switchTab(event, this)">Topic</button>
+            <button class="tab-button" data-tab="polarization" onclick="switchTab(event, this)">Polarization</button>
+          </div>
+          <div class="chamber-control">
+            <span class="chamber-label">House</span>
+            <label class="toggle-switch">
+              <input class="chamber-toggle" type="checkbox" checked onclick="switchChamber(this)">
+              <span class="toggle-slider"></span>
+            </label>
+            <span class="chamber-label">Senate</span>
+          </div>
+        </div>
+        <div class="chart-section">
+          <div class="tab-content active" data-tab-content="overall">
+            <div class="chart-wide">
+              <div class="chart-wrap"><div id="senate-all-chart" class="chart"></div></div>
+            </div>
+            <div class="chart-grid">
+              <div class="chart-wrap"><div id="senate-dem-chart" class="chart"></div></div>
+              <div class="chart-wrap"><div id="senate-rep-chart" class="chart"></div></div>
+            </div>
+          </div>
+          <div class="tab-content" data-tab-content="time">
+            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Time-based analysis coming soon.</p>
+          </div>
+          <div class="tab-content" data-tab-content="topic">
+            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Topic-based analysis coming soon.</p>
+          </div>
+          <div class="tab-content" data-tab-content="polarization">
+            <div class="polarization-shell">
+              <div class="tab-buttons" style="margin-bottom: 0; border-bottom: none;">
+                <button class="tab-button active" data-polarization-tab="all-time" onclick="switchPolarizationTab(event, this)">All-time</button>
+                <button class="tab-button" data-polarization-tab="modern" onclick="switchPolarizationTab(event, this)">Modern</button>
+              </div>
+              <p class="polarization-note">All-time tracks the notebook’s congress-by-congress polarization line. Modern tracks Democrat-Republican centroid distance starting in the 1970s.</p>
+              <div class="polarization-summary" id="senate-polarization-summary"></div>
+              <div class="chart-wrap polarization-chart-wrap"><div id="senate-polarization-variance-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap secondary"><div id="senate-polarization-explained-chart" class="chart"></div></div>
+              <div class="chart-wrap polarization-chart-wrap" style="display:none;"><div id="senate-polarization-modern-chart" class="chart"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
 
     <section class="footer">
       Browser-native analysis with Plotly, CSV parsing, SVD projection, and scroll choreography.
@@ -578,9 +760,112 @@
   <script>
     const PARTY_COLORS = {
       dem: "#3a86ff",
-      rep: "#ff6b35",
+      rep: "#e63946",
       other: "#7ef7b2"
     };
+
+    function switchChamber(toggle) {
+      const houseSection = document.getElementById("house-section");
+      const senateSection = document.getElementById("senate-section");
+      const checked = toggle.checked;
+
+      document.querySelectorAll(".chamber-toggle").forEach((input) => {
+        input.checked = checked;
+      });
+
+      if (checked) {
+        houseSection.classList.remove("active");
+        senateSection.classList.add("active");
+      } else {
+        houseSection.classList.add("active");
+        senateSection.classList.remove("active");
+      }
+
+      requestAnimationFrame(() => {
+        const stage = document.querySelector(".chamber-stage");
+        const activeSection = document.querySelector(".chamber-section.active");
+        if (stage && activeSection) {
+          stage.style.setProperty("--chamber-stage-height", `${Math.ceil(activeSection.getBoundingClientRect().height)}px`);
+        }
+      });
+    }
+
+    function switchTab(event, button) {
+      event.preventDefault();
+      const tabName = button.dataset.tab;
+      const section = button.closest(".section-block");
+      
+      section.querySelectorAll(".tab-button").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+      section.querySelectorAll(".tab-content").forEach((content) => {
+        content.classList.remove("active");
+      });
+      
+      button.classList.add("active");
+      section.querySelector(`[data-tab-content="${tabName}"]`).classList.add("active");
+
+      requestAnimationFrame(() => {
+        const stage = document.querySelector(".chamber-stage");
+        if (stage) {
+          const activeSection = section.closest(".chamber-stage") ? section : document.querySelector(".chamber-section.active");
+          if (activeSection) {
+            stage.style.setProperty("--chamber-stage-height", `${Math.ceil(activeSection.getBoundingClientRect().height)}px`);
+          }
+        }
+
+        if (tabName === "polarization") {
+          if (renderedPolarizationSections.has(section.id)) {
+            resizePolarizationTab(section);
+          } else {
+            renderPolarizationTab(section).then(() => {
+              renderedPolarizationSections.add(section.id);
+            });
+          }
+        }
+      });
+    }
+
+    function switchPolarizationTab(event, button) {
+      event.preventDefault();
+      const tabName = button.dataset.polarizationTab;
+      const shell = button.closest(".polarization-shell");
+
+      shell.querySelectorAll("[data-polarization-tab]").forEach((tabButton) => {
+        tabButton.classList.remove("active");
+      });
+
+      button.classList.add("active");
+
+      const allTimeWraps = shell.querySelectorAll(".polarization-chart-wrap");
+      const primary = allTimeWraps[0];
+      const secondary = allTimeWraps[1];
+      const modern = allTimeWraps[2];
+
+      if (tabName === "all-time") {
+        if (primary) primary.style.display = "block";
+        if (secondary) secondary.style.display = "block";
+        if (modern) modern.style.display = "none";
+      } else {
+        if (primary) primary.style.display = "none";
+        if (secondary) secondary.style.display = "none";
+        if (modern) modern.style.display = "block";
+      }
+
+      requestAnimationFrame(() => {
+        const section = button.closest(".section-block");
+        const stage = document.querySelector(".chamber-stage");
+        if (section && stage) {
+          stage.style.setProperty("--chamber-stage-height", `${Math.ceil(section.getBoundingClientRect().height)}px`);
+        }
+        if (tabName === "all-time") {
+          resizePolarizationTab(section);
+        } else {
+          const prefix = section.id === "house-section" ? "house" : "senate";
+          Plotly.Plots.resize(`${prefix}-polarization-modern-chart`);
+        }
+      });
+    }
 
     function voteToNumeric(code) {
       if ([1, 2, 3].includes(code)) return 1;
@@ -622,6 +907,16 @@
           }
 
           return result.data.filter((row) => row && Object.keys(row).length > 0);
+        });
+    }
+
+    function parseJson(path) {
+      return fetch(path)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("HTTP " + response.status + " while loading " + path);
+          }
+          return response.json();
         });
     }
 
@@ -805,7 +1100,10 @@
       };
     }
 
-    function drawChart(targetId, data, title) {
+    function drawChart(targetId, data, title, focus, chamber) {
+      const visibleData = focus === "all"
+        ? data
+        : data.filter((item) => item.party === focus || (focus === "dem" && chamber === "Senate" && item.party_code === 328));
       const layout = {
         title: {
           text: title,
@@ -816,6 +1114,7 @@
         plot_bgcolor: "#112235",
         margin: { l: 22, r: 18, t: 68, b: 18 },
         hovermode: "closest",
+        dragmode: "pan",
         xaxis: {
           title: "",
           gridcolor: "rgba(255,255,255,0.08)",
@@ -848,21 +1147,443 @@
       const config = {
         responsive: true,
         displaylogo: false,
-        modeBarButtonsToRemove: ["select2d", "lasso2d", "toImage"],
+        modeBarButtonsToRemove: ["select2d", "lasso2d", "zoom2d", "toImage"],
         scrollZoom: true
       };
 
-      return Plotly.newPlot(targetId, [chartTrace(data)], layout, config);
+      const trace = chartTrace(visibleData);
+
+      if (visibleData.length > 0) {
+        const padding = focus === "all" ? 0.06 : 0.12;
+        const xRange = getAxisRange(visibleData.map((point) => point.x), padding);
+        const yRange = getAxisRange(visibleData.map((point) => point.y), padding);
+        layout.xaxis.range = xRange;
+        layout.yaxis.range = yRange;
+        layout.xaxis.autorange = false;
+        layout.yaxis.autorange = false;
+      }
+
+      return Plotly.newPlot(targetId, [trace], layout, config);
     }
 
-    function getPartyFilter(focus, chamber) {
-      if (focus === "dem") {
-        return (party, partyCode) => party === "dem" || (chamber === "Senate" && partyCode === 328);
+    function buildPolarizationSummaryWithPca(votes, rollcalls) {
+      const rollcallYears = new Map();
+
+      for (const row of rollcalls) {
+        const congress = row.congress;
+        const date = row.date ? new Date(String(row.date)) : null;
+        if (!Number.isFinite(congress) || !date || Number.isNaN(date.getTime())) continue;
+
+        const year = date.getFullYear();
+        const entry = rollcallYears.get(congress) || { min: year, max: year };
+        entry.min = Math.min(entry.min, year);
+        entry.max = Math.max(entry.max, year);
+        rollcallYears.set(congress, entry);
       }
-      if (focus === "rep") {
-        return (party) => party === "rep";
+
+      const results = [];
+
+      for (const congress of Array.from(new Set(votes.map((row) => row.congress))).filter((value) => Number.isFinite(value)).sort((a, b) => a - b)) {
+        const congressVotes = votes.filter((row) => row.congress === congress);
+        const byLegislator = new Map();
+        const rollSet = new Set();
+
+        for (const row of congressVotes) {
+          const icpsr = row.icpsr;
+          const roll = row.rollnumber;
+          const numericVote = voteToNumeric(row.cast_code);
+
+          if (icpsr == null || roll == null || Number.isNaN(numericVote)) continue;
+          rollSet.add(roll);
+
+          if (!byLegislator.has(icpsr)) byLegislator.set(icpsr, new Map());
+          byLegislator.get(icpsr).set(roll, numericVote);
+        }
+
+        const rollNumbers = Array.from(rollSet).sort((a, b) => a - b);
+        const rollIndex = new Map(rollNumbers.map((roll, index) => [roll, index]));
+
+        const vectors = [];
+
+        for (const rollMap of byLegislator.values()) {
+          const vec = new Array(rollNumbers.length).fill(0);
+          let nonZeroCount = 0;
+
+          for (const [roll, value] of rollMap.entries()) {
+            const idx = rollIndex.get(roll);
+            if (idx === undefined) continue;
+            vec[idx] = value;
+            if (value !== 0) nonZeroCount += 1;
+          }
+
+          if (nonZeroCount >= 100) {
+            const magnitude = Math.sqrt(vec.reduce((acc, value) => acc + value * value, 0)) || 1;
+            vectors.push(vec.map((value) => value / magnitude));
+          }
+        }
+
+        if (vectors.length < 3) continue;
+
+        const featureCount = vectors[0].length;
+        const means = new Array(featureCount).fill(0);
+
+        for (const vec of vectors) {
+          for (let j = 0; j < featureCount; j++) means[j] += vec[j];
+        }
+
+        for (let j = 0; j < featureCount; j++) means[j] /= vectors.length;
+
+        const centered = vectors.map((vec) => vec.map((value, index) => value - means[index]));
+        const covariance = Array.from({ length: featureCount }, () => new Array(featureCount).fill(0));
+
+        for (const row of centered) {
+          for (let i = 0; i < featureCount; i++) {
+            const valueI = row[i];
+            if (valueI === 0) continue;
+            for (let j = 0; j < featureCount; j++) covariance[i][j] += valueI * row[j];
+          }
+        }
+
+        const scale = 1 / Math.max(1, vectors.length - 1);
+        for (let i = 0; i < featureCount; i++) {
+          for (let j = 0; j < featureCount; j++) covariance[i][j] *= scale;
+        }
+
+        const primary = powerIterationSymmetric(covariance);
+        const totalVariance = covariance.reduce((acc, row, index) => acc + row[index], 0);
+
+        const yearEntry = rollcallYears.get(congress);
+        const yearLabel = yearEntry
+          ? (yearEntry.min === yearEntry.max ? String(yearEntry.min) : `${yearEntry.min}-${yearEntry.max}`)
+          : String(congress);
+
+        results.push({
+          congress: Number(congress),
+          year_label: yearLabel,
+          pc1_variance_polarization: Number(primary.eigenvalue),
+          pc1_explained_variance: Number(totalVariance > 0 ? primary.eigenvalue / totalVariance : 0),
+          num_legislators: vectors.length,
+          num_votes: rollNumbers.length
+        });
       }
-      return () => true;
+
+      return results;
+    }
+
+    function buildModernPolarizationSummary(votes, rollcalls) {
+      const modernStart = 93;
+      const minVotes = 100;
+      const rollcallYears = new Map();
+
+      for (const row of rollcalls) {
+        const congress = Number(row.congress);
+        const date = row.date ? new Date(String(row.date)) : null;
+        if (!Number.isFinite(congress) || !date || Number.isNaN(date.getTime())) continue;
+
+        const year = date.getFullYear();
+        const entry = rollcallYears.get(congress) || { min: year, max: year };
+        entry.min = Math.min(entry.min, year);
+        entry.max = Math.max(entry.max, year);
+        rollcallYears.set(congress, entry);
+      }
+
+      const results = [];
+
+      for (const congress of Array.from(new Set(votes.map((row) => Number(row.congress)))).filter((value) => Number.isFinite(value)).sort((a, b) => a - b)) {
+        if (congress < modernStart) continue;
+
+        const congressVotes = votes.filter((row) => Number(row.congress) === congress);
+        const byLegislator = new Map();
+        const rollSet = new Set();
+
+        for (const row of congressVotes) {
+          const icpsr = Number(row.icpsr);
+          const roll = Number(row.rollnumber);
+          const numericVote = voteToNumeric(row.cast_code);
+
+          if (!Number.isFinite(icpsr) || !Number.isFinite(roll) || Number.isNaN(numericVote)) continue;
+          rollSet.add(roll);
+
+          if (!byLegislator.has(icpsr)) byLegislator.set(icpsr, new Map());
+          byLegislator.get(icpsr).set(roll, numericVote);
+        }
+
+        const rollNumbers = Array.from(rollSet).sort((a, b) => a - b);
+        const rollIndex = new Map(rollNumbers.map((roll, index) => [roll, index]));
+
+        const vectors = [];
+        const keptIcpsr = [];
+
+        for (const [icpsr, rollMap] of byLegislator.entries()) {
+          const vec = new Array(rollNumbers.length).fill(0);
+          let nonZeroCount = 0;
+
+          for (const [roll, value] of rollMap.entries()) {
+            const idx = rollIndex.get(roll);
+            if (idx === undefined) continue;
+            vec[idx] = value;
+            if (value !== 0) nonZeroCount += 1;
+          }
+
+          if (nonZeroCount >= minVotes) {
+            const magnitude = Math.sqrt(vec.reduce((acc, value) => acc + value * value, 0)) || 1;
+            vectors.push(vec.map((value) => value / magnitude));
+            keptIcpsr.push(icpsr);
+          }
+        }
+
+        if (vectors.length < 10) continue;
+
+        const featureCount = vectors[0].length;
+        const means = new Array(featureCount).fill(0);
+
+        for (const vec of vectors) {
+          for (let j = 0; j < featureCount; j++) means[j] += vec[j];
+        }
+
+        for (let j = 0; j < featureCount; j++) means[j] /= vectors.length;
+
+        const centered = vectors.map((vec) => vec.map((value, index) => value - means[index]));
+        const coords = pca2D(centered);
+
+        const memberMap = new Map(members.map((member) => [Number(member.icpsr), member]));
+        const filtered = keptIcpsr.map((icpsr, index) => {
+          const member = memberMap.get(icpsr) || {};
+          return {
+            icpsr,
+            x: coords[index][0],
+            y: coords[index][1],
+            party_code: Number(member.party_code),
+            party: classifyParty(Number(member.party_code)),
+            bioname: member.bioname || "Unknown"
+          };
+        }).filter((row) => [100, 200].includes(row.party_code));
+
+        if (filtered.length < 2) continue;
+
+        const demPoints = filtered.filter((row) => row.party_code === 100);
+        const repPoints = filtered.filter((row) => row.party_code === 200);
+        if (!demPoints.length || !repPoints.length) continue;
+
+        const demCenter = {
+          x: demPoints.reduce((acc, row) => acc + row.x, 0) / demPoints.length,
+          y: demPoints.reduce((acc, row) => acc + row.y, 0) / demPoints.length
+        };
+        const repCenter = {
+          x: repPoints.reduce((acc, row) => acc + row.x, 0) / repPoints.length,
+          y: repPoints.reduce((acc, row) => acc + row.y, 0) / repPoints.length
+        };
+
+        const distance = Math.hypot(repCenter.x - demCenter.x, repCenter.y - demCenter.y);
+        const yearEntry = rollcallYears.get(congress);
+        const yearLabel = yearEntry ? (yearEntry.min === yearEntry.max ? String(yearEntry.min) : `${yearEntry.min}-${yearEntry.max}`) : String(congress);
+
+        results.push({
+          congress,
+          year_label: yearLabel,
+          party_centroid_distance: distance,
+          dem_pc1_mean: demCenter.x,
+          rep_pc1_mean: repCenter.x,
+          dem_pc2_mean: demCenter.y,
+          rep_pc2_mean: repCenter.y,
+          num_legislators: filtered.length,
+          num_votes: rollNumbers.length
+        });
+      }
+
+      return results;
+    }
+
+    function buildPolarizationTrace(summary, yKey, color, title, showFill = false) {
+      const tickEvery = Math.max(1, Math.round(summary.length / 12));
+      const tickvals = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => row.congress);
+      const ticktext = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => `${row.congress}<br>${row.year_label}`);
+
+      return {
+        data: [{
+          type: "scatter",
+          mode: "lines+markers",
+          x: summary.map((row) => row.congress),
+          y: summary.map((row) => row[yKey]),
+          line: { color, width: 3, shape: "spline", smoothing: 0.5 },
+          marker: {
+            color,
+            size: 8,
+            line: { color: "#09131d", width: 1.5 }
+          },
+          fill: showFill ? "tozeroy" : undefined,
+          fillcolor: showFill ? "rgba(247, 198, 111, 0.12)" : undefined,
+          hovertemplate:
+            "<b>Congress %{x}</b><br>Years: %{customdata[0]}<br>PC1 Variance: %{y:.4f}<br>Legislators: %{customdata[1]}<br>Votes: %{customdata[2]}<extra></extra>",
+          customdata: summary.map((row) => [row.year_label, row.num_legislators, row.num_votes]),
+          name: title,
+          showlegend: false
+        }],
+        layout: {
+          title: {
+            text: title,
+            font: { size: 22, color: "#f4efe3", family: "Fraunces, Georgia, serif" },
+            x: 0.02
+          },
+          paper_bgcolor: "#09131d",
+          plot_bgcolor: "#112235",
+          margin: { l: 24, r: 18, t: 62, b: 56 },
+          hovermode: "x unified",
+          xaxis: {
+            title: "Congress / years",
+            tickmode: "array",
+            tickvals,
+            ticktext,
+            tickangle: -35,
+            color: "#dce7f0",
+            gridcolor: "rgba(255,255,255,0.08)",
+            zerolinecolor: "rgba(255,255,255,0.15)"
+          },
+          yaxis: {
+            title: yKey === "pc1_variance_polarization" ? "PC1 variance" : "Explained variance",
+            color: "#dce7f0",
+            gridcolor: "rgba(255,255,255,0.08)",
+            zerolinecolor: "rgba(255,255,255,0.15)"
+          },
+          showlegend: false,
+          hoverlabel: {
+            bgcolor: "#07111b",
+            bordercolor: "rgba(255,255,255,0.18)",
+            font: { color: "#f6f2e8", size: 14 },
+            align: "left"
+          }
+        },
+        config: {
+          responsive: true,
+          displaylogo: false,
+          modeBarButtonsToRemove: ["select2d", "lasso2d", "zoom2d", "toImage"]
+        }
+      };
+    }
+
+    async function renderPolarizationTab(section) {
+      if (!polarizationSummary.length) return;
+
+      const prefix = section.id === "house-section" ? "house" : "senate";
+      const mainId = `${prefix}-polarization-variance-chart`;
+      const secondaryId = `${prefix}-polarization-explained-chart`;
+      const modernId = `${prefix}-polarization-modern-chart`;
+
+      const mainTarget = document.getElementById(mainId);
+      const secondaryTarget = document.getElementById(secondaryId);
+      const modernTarget = document.getElementById(modernId);
+      if (!mainTarget || !secondaryTarget || !modernTarget) return;
+
+      const mainPlot = buildPolarizationTrace(
+        polarizationSummary,
+        "pc1_variance_polarization",
+        "#f7c66f",
+        "Party-Independent Polarization Over Time",
+        true
+      );
+
+      const secondaryPlot = buildPolarizationTrace(
+        polarizationSummary,
+        "pc1_explained_variance",
+        "#3a86ff",
+        "PCA Explained Variance",
+        false
+      );
+
+      await Plotly.newPlot(mainTarget, mainPlot.data, mainPlot.layout, mainPlot.config);
+      await Plotly.newPlot(secondaryTarget, secondaryPlot.data, secondaryPlot.layout, secondaryPlot.config);
+
+      const modernData = modernPolarizationSummary;
+      const modernTrace = buildModernPolarizationTrace(modernData);
+      await Plotly.newPlot(modernTarget, modernTrace.data, modernTrace.layout, modernTrace.config);
+
+      const summaryTarget = document.getElementById(`${prefix}-polarization-summary`);
+      if (summaryTarget) {
+        const first = polarizationSummary[0];
+        const last = polarizationSummary[polarizationSummary.length - 1];
+        summaryTarget.innerHTML = `
+          <div class="polarization-stat"><span class="polarization-stat-label">Congress span</span><span class="polarization-stat-value">${first.congress} to ${last.congress}</span></div>
+          <div class="polarization-stat"><span class="polarization-stat-label">Years covered</span><span class="polarization-stat-value">${first.year_label} to ${last.year_label}</span></div>
+          <div class="polarization-stat"><span class="polarization-stat-label">Latest legislators</span><span class="polarization-stat-value">${last.num_legislators}</span></div>
+        `;
+      }
+    }
+
+    function buildModernPolarizationTrace(summary) {
+      const tickEvery = Math.max(1, Math.round(summary.length / 10));
+      const tickvals = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => row.congress);
+      const ticktext = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => `${row.congress}<br>${row.year_label}`);
+
+      const maxValue = Math.max(...summary.map((row) => row.party_centroid_distance));
+
+      return {
+        data: [{
+          type: "scatter",
+          mode: "lines+markers",
+          x: summary.map((row) => row.congress),
+          y: summary.map((row) => row.party_centroid_distance),
+          line: { color: "#ff7b54", width: 3, shape: "spline", smoothing: 0.55 },
+          marker: {
+            color: summary.map((row) => row.congress >= 93 ? "#e63946" : "#f7c66f"),
+            size: 8,
+            line: { color: "#09131d", width: 1.5 }
+          },
+          fill: "tozeroy",
+          fillcolor: "rgba(230, 57, 70, 0.12)",
+          hovertemplate:
+            "<b>Congress %{x}</b><br>Years: %{customdata[0]}<br>Party distance: %{y:.4f}<br>Legislators: %{customdata[1]}<br>Votes: %{customdata[2]}<extra></extra>",
+          customdata: summary.map((row) => [row.year_label, row.num_legislators, row.num_votes]),
+          showlegend: false
+        }],
+        layout: {
+          title: {
+            text: "Democrat-Republican Polarization Since Congress 93",
+            font: { size: 22, color: "#f4efe3", family: "Fraunces, Georgia, serif" },
+            x: 0.02
+          },
+          paper_bgcolor: "#09131d",
+          plot_bgcolor: "#112235",
+          margin: { l: 24, r: 18, t: 62, b: 56 },
+          hovermode: "x unified",
+          xaxis: {
+            title: "Congress / years",
+            tickmode: "array",
+            tickvals,
+            ticktext,
+            tickangle: -35,
+            color: "#dce7f0",
+            gridcolor: "rgba(255,255,255,0.08)",
+            zerolinecolor: "rgba(255,255,255,0.15)"
+          },
+          yaxis: {
+            title: "Party centroid distance",
+            color: "#dce7f0",
+            gridcolor: "rgba(255,255,255,0.08)",
+            zerolinecolor: "rgba(255,255,255,0.15)",
+            range: [0, maxValue * 1.1]
+          },
+          showlegend: false,
+          hoverlabel: {
+            bgcolor: "#07111b",
+            bordercolor: "rgba(255,255,255,0.18)",
+            font: { color: "#f6f2e8", size: 14 },
+            align: "left"
+          }
+        },
+        config: {
+          responsive: true,
+          displaylogo: false,
+          modeBarButtonsToRemove: ["select2d", "lasso2d", "zoom2d", "toImage"]
+        }
+      };
+    }
+
+    function resizePolarizationTab(section) {
+      const prefix = section.id === "house-section" ? "house" : "senate";
+      const mainId = `${prefix}-polarization-variance-chart`;
+      const secondaryId = `${prefix}-polarization-explained-chart`;
+      Plotly.Plots.resize(mainId);
+      Plotly.Plots.resize(secondaryId);
     }
 
     function getAxisRange(values, paddingRatio) {
@@ -871,76 +1592,6 @@
       const span = Math.max(max - min, 0.001);
       const padding = span * paddingRatio;
       return [min - padding, max + padding];
-    }
-
-    function focusGroup(targetId, focus) {
-      const graph = document.getElementById(targetId);
-      if (!graph || !graph.data || !graph.data[0]) return;
-
-      const trace = graph.data[0];
-      const chamber = targetId.indexOf("senate") !== -1 ? "Senate" : "House";
-      const partyList = trace.customdata.map((row) => row[0]);
-      const partyCodes = trace.customdata.map((row) => row[1]);
-      const xValues = trace.x || [];
-      const yValues = trace.y || [];
-      const filter = getPartyFilter(focus, chamber);
-      const selected = partyList.map((party, idx) => filter(party, partyCodes[idx]));
-
-      const focusIndices = selected
-        .map((isSelected, idx) => (isSelected ? idx : -1))
-        .filter((idx) => idx >= 0);
-
-      const opacities = selected.map((isSelected) => {
-        if (focus === "all") return 0.82;
-        return isSelected ? 0.95 : 0.12;
-      });
-
-      const sizes = selected.map((isSelected) => {
-        if (focus === "all") return 8;
-        return isSelected ? 10 : 6;
-      });
-
-      const relayout = {};
-      if (focus === "all" || focusIndices.length === 0) {
-        relayout["xaxis.autorange"] = true;
-        relayout["yaxis.autorange"] = true;
-      } else {
-        const focusedX = focusIndices.map((idx) => xValues[idx]);
-        const focusedY = focusIndices.map((idx) => yValues[idx]);
-        relayout["xaxis.range"] = getAxisRange(focusedX, 0.18);
-        relayout["yaxis.range"] = getAxisRange(focusedY, 0.18);
-        relayout["xaxis.autorange"] = false;
-        relayout["yaxis.autorange"] = false;
-      }
-
-      Plotly.restyle(graph, { "marker.opacity": [opacities], "marker.size": [sizes] }, [0]);
-      Plotly.relayout(graph, relayout);
-    }
-
-    function setScrollObservers() {
-      const cards = document.querySelectorAll(".observe");
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          for (const entry of entries) {
-            const el = entry.target;
-            if (entry.isIntersecting) {
-              el.classList.add("in-view");
-              const target = el.dataset.target;
-              const focus = el.dataset.focus || "all";
-              focusGroup(target + "-chart", focus);
-            } else {
-              el.classList.remove("in-view");
-            }
-          }
-        },
-        {
-          root: null,
-          threshold: 0.5
-        }
-      );
-
-      cards.forEach((card) => observer.observe(card));
     }
 
     function showError(message) {
@@ -972,23 +1623,42 @@
       setHeroAnimation();
 
       try {
-        const [votes, members] = await Promise.all([
-          parseCsv("data/HS119_votes.csv"),
-          parseCsv("data/HS119_members.csv")
+        const [votes, members, allTimeSummary, modernSummary] = await Promise.all([
+          parseCsv("data/HS119/HS119_votes.csv"),
+          parseCsv("data/HS119/HS119_members.csv"),
+          parseJson("data/polarization_summary.json"),
+          parseJson("data/polarization_modern_summary.json")
         ]);
 
         const houseData = buildChamberProjection(votes, members, "House");
         const senateData = buildChamberProjection(votes, members, "Senate");
+        polarizationSummary = allTimeSummary;
+        modernPolarizationSummary = modernSummary;
 
-        await drawChart("house-chart", houseData, "House Voting Space");
-        await drawChart("senate-chart", senateData, "Senate Voting Space");
+        await drawChart("house-all-chart", houseData, "House Voting Space", "all", "House");
+        await drawChart("house-dem-chart", houseData, "House Democratic Cluster", "dem", "House");
+        await drawChart("house-rep-chart", houseData, "House Republican Cluster", "rep", "House");
+        await drawChart("senate-all-chart", senateData, "Senate Voting Space", "all", "Senate");
+        await drawChart("senate-dem-chart", senateData, "Senate Democratic Cluster", "dem", "Senate");
+        await drawChart("senate-rep-chart", senateData, "Senate Republican Cluster", "rep", "Senate");
 
-        setScrollObservers();
+        requestAnimationFrame(() => {
+          const stage = document.querySelector(".chamber-stage");
+          const activeSection = document.querySelector(".chamber-section.active");
+          if (stage && activeSection) {
+            stage.style.setProperty("--chamber-stage-height", `${Math.ceil(activeSection.getBoundingClientRect().height)}px`);
+          }
+        });
+
       } catch (err) {
         console.error(err);
         showError(err.message || String(err));
       }
     }
+
+    let polarizationSummary = [];
+    let modernPolarizationSummary = [];
+    const renderedPolarizationSections = new Set();
 
     init();
   </script>
