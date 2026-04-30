@@ -1624,10 +1624,10 @@
 
       try {
         const [votes, members, allTimeSummary, modernSummary] = await Promise.all([
-          parseCsv("data/HS119/HS119_votes.csv"),
-          parseCsv("data/HS119/HS119_members.csv"),
-          parseJson("data/polarization_summary.json"),
-          parseJson("data/polarization_modern_summary.json")
+          parseCsv("site-data/HS119/HS119_votes.csv"),
+          parseCsv("site-data/HS119/HS119_members.csv"),
+          parseJson("site-data/polarization_summary.json"),
+          parseJson("site-data/polarization_modern_summary.json")
         ]);
 
         const houseData = buildChamberProjection(votes, members, "House");

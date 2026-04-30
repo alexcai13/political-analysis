@@ -1,0 +1,1142 @@
+[
+  {
+    "congress": 1,
+    "year_start": 1789,
+    "year_end": 1791,
+    "year_label": "1789-1791",
+    "pc1_variance_polarization": 0.24382590574171115,
+    "pc1_explained_variance": 0.2776069467019585,
+    "num_legislators": 30,
+    "num_votes": 109
+  },
+  {
+    "congress": 5,
+    "year_start": 1797,
+    "year_end": 1799,
+    "year_label": "1797-1799",
+    "pc1_variance_polarization": 0.4220472090747199,
+    "pc1_explained_variance": 0.4488160825445765,
+    "num_legislators": 114,
+    "num_votes": 202
+  },
+  {
+    "congress": 6,
+    "year_start": 1799,
+    "year_end": 1801,
+    "year_label": "1799-1801",
+    "pc1_variance_polarization": 0.5307140980726244,
+    "pc1_explained_variance": 0.6081923823566233,
+    "num_legislators": 19,
+    "num_votes": 120
+  },
+  {
+    "congress": 7,
+    "year_start": 1801,
+    "year_end": 1803,
+    "year_label": "1801-1803",
+    "pc1_variance_polarization": 0.4485679717788676,
+    "pc1_explained_variance": 0.5235013655466337,
+    "num_legislators": 73,
+    "num_votes": 142
+  },
+  {
+    "congress": 8,
+    "year_start": 1803,
+    "year_end": 1805,
+    "year_label": "1803-1805",
+    "pc1_variance_polarization": 0.25200813276049666,
+    "pc1_explained_variance": 0.2836325320411305,
+    "num_legislators": 110,
+    "num_votes": 150
+  },
+  {
+    "congress": 9,
+    "year_start": 1805,
+    "year_end": 1807,
+    "year_label": "1805-1807",
+    "pc1_variance_polarization": 0.18298433454953744,
+    "pc1_explained_variance": 0.2180762181123746,
+    "num_legislators": 107,
+    "num_votes": 158
+  },
+  {
+    "congress": 10,
+    "year_start": 1807,
+    "year_end": 1809,
+    "year_label": "1807-1809",
+    "pc1_variance_polarization": 0.23246584874505163,
+    "pc1_explained_variance": 0.27484380657333757,
+    "num_legislators": 132,
+    "num_votes": 237
+  },
+  {
+    "congress": 11,
+    "year_start": 1809,
+    "year_end": 1811,
+    "year_label": "1809-1811",
+    "pc1_variance_polarization": 0.30681973215100566,
+    "pc1_explained_variance": 0.3291762916075543,
+    "num_legislators": 165,
+    "num_votes": 293
+  },
+  {
+    "congress": 12,
+    "year_start": 1811,
+    "year_end": 1813,
+    "year_label": "1811-1813",
+    "pc1_variance_polarization": 0.28350589137598153,
+    "pc1_explained_variance": 0.3047235777986652,
+    "num_legislators": 167,
+    "num_votes": 314
+  },
+  {
+    "congress": 13,
+    "year_start": 1813,
+    "year_end": 1815,
+    "year_label": "1813-1815",
+    "pc1_variance_polarization": 0.3479807259564881,
+    "pc1_explained_variance": 0.3670288915626557,
+    "num_legislators": 218,
+    "num_votes": 352
+  },
+  {
+    "congress": 14,
+    "year_start": 1815,
+    "year_end": 1817,
+    "year_label": "1815-1817",
+    "pc1_variance_polarization": 0.12104440594939199,
+    "pc1_explained_variance": 0.13136618298186314,
+    "num_legislators": 73,
+    "num_votes": 189
+  },
+  {
+    "congress": 15,
+    "year_start": 1817,
+    "year_end": 1819,
+    "year_label": "1817-1819",
+    "pc1_variance_polarization": 0.1457055752609023,
+    "pc1_explained_variance": 0.17243014089640796,
+    "num_legislators": 55,
+    "num_votes": 132
+  },
+  {
+    "congress": 16,
+    "year_start": 1819,
+    "year_end": 1821,
+    "year_label": "1819-1821",
+    "pc1_variance_polarization": 0.21881677607154354,
+    "pc1_explained_variance": 0.23315481563915538,
+    "num_legislators": 173,
+    "num_votes": 147
+  },
+  {
+    "congress": 18,
+    "year_start": 1823,
+    "year_end": 1825,
+    "year_label": "1823-1825",
+    "pc1_variance_polarization": 0.25093496323001485,
+    "pc1_explained_variance": 0.2896841697603567,
+    "num_legislators": 48,
+    "num_votes": 178
+  },
+  {
+    "congress": 19,
+    "year_start": 1825,
+    "year_end": 1827,
+    "year_label": "1825-1827",
+    "pc1_variance_polarization": 0.13803944274469215,
+    "pc1_explained_variance": 0.14893525796967308,
+    "num_legislators": 102,
+    "num_votes": 234
+  },
+  {
+    "congress": 20,
+    "year_start": 1827,
+    "year_end": 1829,
+    "year_label": "1827-1829",
+    "pc1_variance_polarization": 0.21773782042802603,
+    "pc1_explained_variance": 0.22966950775522915,
+    "num_legislators": 252,
+    "num_votes": 238
+  },
+  {
+    "congress": 21,
+    "year_start": 1829,
+    "year_end": 1831,
+    "year_label": "1829-1831",
+    "pc1_variance_polarization": 0.2249583793571505,
+    "pc1_explained_variance": 0.24164274360681384,
+    "num_legislators": 253,
+    "num_votes": 277
+  },
+  {
+    "congress": 22,
+    "year_start": 1831,
+    "year_end": 1833,
+    "year_label": "1831-1833",
+    "pc1_variance_polarization": 0.2612697432903405,
+    "pc1_explained_variance": 0.2730592835938318,
+    "num_legislators": 261,
+    "num_votes": 462
+  },
+  {
+    "congress": 23,
+    "year_start": 1833,
+    "year_end": 1835,
+    "year_label": "1833-1835",
+    "pc1_variance_polarization": 0.2569339965761271,
+    "pc1_explained_variance": 0.2724251048036697,
+    "num_legislators": 282,
+    "num_votes": 327
+  },
+  {
+    "congress": 24,
+    "year_start": 1835,
+    "year_end": 1837,
+    "year_label": "1835-1837",
+    "pc1_variance_polarization": 0.19514582098623448,
+    "pc1_explained_variance": 0.20866825361822952,
+    "num_legislators": 297,
+    "num_votes": 459
+  },
+  {
+    "congress": 25,
+    "year_start": 1837,
+    "year_end": 1839,
+    "year_label": "1837-1839",
+    "pc1_variance_polarization": 0.25260654519020537,
+    "pc1_explained_variance": 0.270186273015806,
+    "num_legislators": 299,
+    "num_votes": 475
+  },
+  {
+    "congress": 26,
+    "year_start": 1839,
+    "year_end": 1841,
+    "year_label": "1839-1841",
+    "pc1_variance_polarization": 0.2914133940612762,
+    "pc1_explained_variance": 0.31047063580648954,
+    "num_legislators": 292,
+    "num_votes": 751
+  },
+  {
+    "congress": 27,
+    "year_start": 1841,
+    "year_end": 1843,
+    "year_label": "1841-1843",
+    "pc1_variance_polarization": 0.26831509765845357,
+    "pc1_explained_variance": 0.279600760037639,
+    "num_legislators": 311,
+    "num_votes": 974
+  },
+  {
+    "congress": 28,
+    "year_start": 1843,
+    "year_end": 1845,
+    "year_label": "1843-1845",
+    "pc1_variance_polarization": 0.22493394319921026,
+    "pc1_explained_variance": 0.2400827485339271,
+    "num_legislators": 277,
+    "num_votes": 597
+  },
+  {
+    "congress": 29,
+    "year_start": 1845,
+    "year_end": 1847,
+    "year_label": "1845-1847",
+    "pc1_variance_polarization": 0.23261158610986465,
+    "pc1_explained_variance": 0.24641662463949682,
+    "num_legislators": 288,
+    "num_votes": 642
+  },
+  {
+    "congress": 30,
+    "year_start": 1847,
+    "year_end": 1849,
+    "year_label": "1847-1849",
+    "pc1_variance_polarization": 0.23530573424873763,
+    "pc1_explained_variance": 0.2513509650044264,
+    "num_legislators": 287,
+    "num_votes": 478
+  },
+  {
+    "congress": 31,
+    "year_start": 1849,
+    "year_end": 1851,
+    "year_label": "1849-1851",
+    "pc1_variance_polarization": 0.1960475666197618,
+    "pc1_explained_variance": 0.2048545444995666,
+    "num_legislators": 292,
+    "num_votes": 572
+  },
+  {
+    "congress": 32,
+    "year_start": 1851,
+    "year_end": 1853,
+    "year_label": "1851-1853",
+    "pc1_variance_polarization": 0.08729120651761178,
+    "pc1_explained_variance": 0.09164878291177381,
+    "num_legislators": 292,
+    "num_votes": 455
+  },
+  {
+    "congress": 33,
+    "year_start": 1853,
+    "year_end": 1855,
+    "year_label": "1853-1855",
+    "pc1_variance_polarization": 0.17062282252999347,
+    "pc1_explained_variance": 0.17893006869135966,
+    "num_legislators": 299,
+    "num_votes": 607
+  },
+  {
+    "congress": 34,
+    "year_start": 1855,
+    "year_end": 1857,
+    "year_label": "1855-1857",
+    "pc1_variance_polarization": 0.28149757687224525,
+    "pc1_explained_variance": 0.29594429275160256,
+    "num_legislators": 293,
+    "num_votes": 729
+  },
+  {
+    "congress": 35,
+    "year_start": 1857,
+    "year_end": 1859,
+    "year_label": "1857-1859",
+    "pc1_variance_polarization": 0.24072230825699054,
+    "pc1_explained_variance": 0.2530752862224526,
+    "num_legislators": 306,
+    "num_votes": 702
+  },
+  {
+    "congress": 36,
+    "year_start": 1859,
+    "year_end": 1861,
+    "year_label": "1859-1861",
+    "pc1_variance_polarization": 0.26850550374127713,
+    "pc1_explained_variance": 0.28191513998237067,
+    "num_legislators": 303,
+    "num_votes": 607
+  },
+  {
+    "congress": 37,
+    "year_start": 1861,
+    "year_end": 1863,
+    "year_label": "1861-1863",
+    "pc1_variance_polarization": 0.21356371576919325,
+    "pc1_explained_variance": 0.2289723631645257,
+    "num_legislators": 234,
+    "num_votes": 801
+  },
+  {
+    "congress": 38,
+    "year_start": 1863,
+    "year_end": 1865,
+    "year_label": "1863-1865",
+    "pc1_variance_polarization": 0.28479374774398103,
+    "pc1_explained_variance": 0.30124410465872636,
+    "num_legislators": 235,
+    "num_votes": 600
+  },
+  {
+    "congress": 39,
+    "year_start": 1865,
+    "year_end": 1867,
+    "year_label": "1865-1867",
+    "pc1_variance_polarization": 0.19466942599769274,
+    "pc1_explained_variance": 0.21204674333679757,
+    "num_legislators": 248,
+    "num_votes": 613
+  },
+  {
+    "congress": 40,
+    "year_start": 1867,
+    "year_end": 1869,
+    "year_label": "1867-1869",
+    "pc1_variance_polarization": 0.17354901687179172,
+    "pc1_explained_variance": 0.18696037588130604,
+    "num_legislators": 289,
+    "num_votes": 717
+  },
+  {
+    "congress": 41,
+    "year_start": 1869,
+    "year_end": 1871,
+    "year_label": "1869-1871",
+    "pc1_variance_polarization": 0.18487396587661883,
+    "pc1_explained_variance": 0.19648507545822771,
+    "num_legislators": 319,
+    "num_votes": 742
+  },
+  {
+    "congress": 42,
+    "year_start": 1871,
+    "year_end": 1873,
+    "year_label": "1871-1873",
+    "pc1_variance_polarization": 0.20126070428982223,
+    "pc1_explained_variance": 0.2115689443482157,
+    "num_legislators": 321,
+    "num_votes": 803
+  },
+  {
+    "congress": 43,
+    "year_start": 1873,
+    "year_end": 1875,
+    "year_label": "1873-1875",
+    "pc1_variance_polarization": 0.24581950240586728,
+    "pc1_explained_variance": 0.2611877593019053,
+    "num_legislators": 363,
+    "num_votes": 475
+  },
+  {
+    "congress": 44,
+    "year_start": 1875,
+    "year_end": 1877,
+    "year_label": "1875-1877",
+    "pc1_variance_polarization": 0.2858927039665369,
+    "pc1_explained_variance": 0.3121955410969967,
+    "num_legislators": 352,
+    "num_votes": 434
+  },
+  {
+    "congress": 45,
+    "year_start": 1877,
+    "year_end": 1879,
+    "year_label": "1877-1879",
+    "pc1_variance_polarization": 0.3121732895428214,
+    "pc1_explained_variance": 0.332529321509298,
+    "num_legislators": 366,
+    "num_votes": 585
+  },
+  {
+    "congress": 46,
+    "year_start": 1879,
+    "year_end": 1881,
+    "year_label": "1879-1881",
+    "pc1_variance_polarization": 0.28794028760285395,
+    "pc1_explained_variance": 0.30737522398893313,
+    "num_legislators": 367,
+    "num_votes": 570
+  },
+  {
+    "congress": 47,
+    "year_start": 1881,
+    "year_end": 1883,
+    "year_label": "1881-1883",
+    "pc1_variance_polarization": 0.2778131499695163,
+    "pc1_explained_variance": 0.30288584897650184,
+    "num_legislators": 367,
+    "num_votes": 986
+  },
+  {
+    "congress": 48,
+    "year_start": 1883,
+    "year_end": 1885,
+    "year_label": "1883-1885",
+    "pc1_variance_polarization": 0.18894954084180668,
+    "pc1_explained_variance": 0.20695453482291754,
+    "num_legislators": 395,
+    "num_votes": 428
+  },
+  {
+    "congress": 49,
+    "year_start": 1885,
+    "year_end": 1887,
+    "year_label": "1885-1887",
+    "pc1_variance_polarization": 0.2219254977675605,
+    "pc1_explained_variance": 0.24250217450394976,
+    "num_legislators": 391,
+    "num_votes": 461
+  },
+  {
+    "congress": 50,
+    "year_start": 1887,
+    "year_end": 1889,
+    "year_label": "1887-1889",
+    "pc1_variance_polarization": 0.21200751729158698,
+    "pc1_explained_variance": 0.24032100902762218,
+    "num_legislators": 385,
+    "num_votes": 389
+  },
+  {
+    "congress": 51,
+    "year_start": 1889,
+    "year_end": 1891,
+    "year_label": "1889-1891",
+    "pc1_variance_polarization": 0.3528856967312022,
+    "pc1_explained_variance": 0.3722782699271699,
+    "num_legislators": 421,
+    "num_votes": 587
+  },
+  {
+    "congress": 52,
+    "year_start": 1891,
+    "year_end": 1893,
+    "year_label": "1891-1893",
+    "pc1_variance_polarization": 0.13432721280927837,
+    "pc1_explained_variance": 0.1544355263202146,
+    "num_legislators": 369,
+    "num_votes": 304
+  },
+  {
+    "congress": 53,
+    "year_start": 1893,
+    "year_end": 1895,
+    "year_label": "1893-1895",
+    "pc1_variance_polarization": 0.22419262195472886,
+    "pc1_explained_variance": 0.2567841760174502,
+    "num_legislators": 410,
+    "num_votes": 561
+  },
+  {
+    "congress": 54,
+    "year_start": 1895,
+    "year_end": 1897,
+    "year_label": "1895-1897",
+    "pc1_variance_polarization": 0.1934307049629055,
+    "pc1_explained_variance": 0.21248677561820323,
+    "num_legislators": 261,
+    "num_votes": 197
+  },
+  {
+    "congress": 55,
+    "year_start": 1897,
+    "year_end": 1899,
+    "year_label": "1897-1899",
+    "pc1_variance_polarization": 0.3550501737535154,
+    "pc1_explained_variance": 0.37919515167976797,
+    "num_legislators": 368,
+    "num_votes": 381
+  },
+  {
+    "congress": 56,
+    "year_start": 1899,
+    "year_end": 1901,
+    "year_label": "1899-1901",
+    "pc1_variance_polarization": 0.3877559328097979,
+    "pc1_explained_variance": 0.41257754856095713,
+    "num_legislators": 266,
+    "num_votes": 169
+  },
+  {
+    "congress": 57,
+    "year_start": 1901,
+    "year_end": 1903,
+    "year_label": "1901-1903",
+    "pc1_variance_polarization": 0.3235574503204564,
+    "pc1_explained_variance": 0.39901461717582953,
+    "num_legislators": 297,
+    "num_votes": 185
+  },
+  {
+    "congress": 59,
+    "year_start": 1905,
+    "year_end": 1907,
+    "year_label": "1905-1907",
+    "pc1_variance_polarization": 0.34686306159445024,
+    "pc1_explained_variance": 0.3993225155263597,
+    "num_legislators": 185,
+    "num_votes": 136
+  },
+  {
+    "congress": 60,
+    "year_start": 1907,
+    "year_end": 1909,
+    "year_label": "1907-1909",
+    "pc1_variance_polarization": 0.2914773204134755,
+    "pc1_explained_variance": 0.3861378155019954,
+    "num_legislators": 355,
+    "num_votes": 312
+  },
+  {
+    "congress": 61,
+    "year_start": 1909,
+    "year_end": 1911,
+    "year_label": "1909-1911",
+    "pc1_variance_polarization": 0.3515013513798994,
+    "pc1_explained_variance": 0.37431034090865745,
+    "num_legislators": 442,
+    "num_votes": 268
+  },
+  {
+    "congress": 62,
+    "year_start": 1911,
+    "year_end": 1913,
+    "year_label": "1911-1913",
+    "pc1_variance_polarization": 0.24016244299016903,
+    "pc1_explained_variance": 0.2672317880145736,
+    "num_legislators": 450,
+    "num_votes": 396
+  },
+  {
+    "congress": 63,
+    "year_start": 1913,
+    "year_end": 1915,
+    "year_label": "1913-1915",
+    "pc1_variance_polarization": 0.17684871517359602,
+    "pc1_explained_variance": 0.19708469127408454,
+    "num_legislators": 488,
+    "num_votes": 572
+  },
+  {
+    "congress": 64,
+    "year_start": 1915,
+    "year_end": 1917,
+    "year_label": "1915-1917",
+    "pc1_variance_polarization": 0.25006136278986874,
+    "pc1_explained_variance": 0.2851435632764671,
+    "num_legislators": 468,
+    "num_votes": 406
+  },
+  {
+    "congress": 65,
+    "year_start": 1917,
+    "year_end": 1919,
+    "year_label": "1917-1919",
+    "pc1_variance_polarization": 0.149534941636384,
+    "pc1_explained_variance": 0.18361709625026781,
+    "num_legislators": 509,
+    "num_votes": 384
+  },
+  {
+    "congress": 66,
+    "year_start": 1919,
+    "year_end": 1921,
+    "year_label": "1919-1921",
+    "pc1_variance_polarization": 0.1604445739070922,
+    "pc1_explained_variance": 0.19209905742657604,
+    "num_legislators": 514,
+    "num_votes": 407
+  },
+  {
+    "congress": 67,
+    "year_start": 1921,
+    "year_end": 1923,
+    "year_label": "1921-1923",
+    "pc1_variance_polarization": 0.23245642353102364,
+    "pc1_explained_variance": 0.2700915398255577,
+    "num_legislators": 522,
+    "num_votes": 751
+  },
+  {
+    "congress": 68,
+    "year_start": 1923,
+    "year_end": 1925,
+    "year_label": "1923-1925",
+    "pc1_variance_polarization": 0.22491789408092586,
+    "pc1_explained_variance": 0.27176926694097303,
+    "num_legislators": 515,
+    "num_votes": 235
+  },
+  {
+    "congress": 69,
+    "year_start": 1925,
+    "year_end": 1927,
+    "year_label": "1925-1927",
+    "pc1_variance_polarization": 0.18002459135596008,
+    "pc1_explained_variance": 0.21597921975212808,
+    "num_legislators": 437,
+    "num_votes": 236
+  },
+  {
+    "congress": 70,
+    "year_start": 1927,
+    "year_end": 1929,
+    "year_label": "1927-1929",
+    "pc1_variance_polarization": 0.21594201991989825,
+    "pc1_explained_variance": 0.2573869012254505,
+    "num_legislators": 90,
+    "num_votes": 191
+  },
+  {
+    "congress": 71,
+    "year_start": 1929,
+    "year_end": 1931,
+    "year_label": "1929-1931",
+    "pc1_variance_polarization": 0.21709415720338887,
+    "pc1_explained_variance": 0.23218264200386396,
+    "num_legislators": 143,
+    "num_votes": 436
+  },
+  {
+    "congress": 72,
+    "year_start": 1931,
+    "year_end": 1933,
+    "year_label": "1931-1933",
+    "pc1_variance_polarization": 0.21228337651393184,
+    "pc1_explained_variance": 0.24225694739559997,
+    "num_legislators": 409,
+    "num_votes": 280
+  },
+  {
+    "congress": 73,
+    "year_start": 1933,
+    "year_end": 1934,
+    "year_label": "1933-1934",
+    "pc1_variance_polarization": 0.28284263756296263,
+    "pc1_explained_variance": 0.3250812824307118,
+    "num_legislators": 502,
+    "num_votes": 228
+  },
+  {
+    "congress": 74,
+    "year_start": 1935,
+    "year_end": 1936,
+    "year_label": "1935-1936",
+    "pc1_variance_polarization": 0.2171010862838907,
+    "pc1_explained_variance": 0.2519612032209948,
+    "num_legislators": 522,
+    "num_votes": 212
+  },
+  {
+    "congress": 75,
+    "year_start": 1937,
+    "year_end": 1938,
+    "year_label": "1937-1938",
+    "pc1_variance_polarization": 0.20224917081311194,
+    "pc1_explained_variance": 0.23267322306112675,
+    "num_legislators": 508,
+    "num_votes": 174
+  },
+  {
+    "congress": 76,
+    "year_start": 1939,
+    "year_end": 1941,
+    "year_label": "1939-1941",
+    "pc1_variance_polarization": 0.29572470725850764,
+    "pc1_explained_variance": 0.331890101433455,
+    "num_legislators": 527,
+    "num_votes": 266
+  },
+  {
+    "congress": 77,
+    "year_start": 1941,
+    "year_end": 1942,
+    "year_label": "1941-1942",
+    "pc1_variance_polarization": 0.1779022702854353,
+    "pc1_explained_variance": 0.22207846850679974,
+    "num_legislators": 519,
+    "num_votes": 192
+  },
+  {
+    "congress": 78,
+    "year_start": 1943,
+    "year_end": 1944,
+    "year_label": "1943-1944",
+    "pc1_variance_polarization": 0.21719817271474498,
+    "pc1_explained_variance": 0.25764613265347525,
+    "num_legislators": 510,
+    "num_votes": 220
+  },
+  {
+    "congress": 79,
+    "year_start": 1945,
+    "year_end": 1946,
+    "year_label": "1945-1946",
+    "pc1_variance_polarization": 0.2052463499849627,
+    "pc1_explained_variance": 0.2437219975407532,
+    "num_legislators": 534,
+    "num_votes": 244
+  },
+  {
+    "congress": 80,
+    "year_start": 1947,
+    "year_end": 1948,
+    "year_label": "1947-1948",
+    "pc1_variance_polarization": 0.23980009441030545,
+    "pc1_explained_variance": 0.29338245961528225,
+    "num_legislators": 515,
+    "num_votes": 248
+  },
+  {
+    "congress": 81,
+    "year_start": 1949,
+    "year_end": 1951,
+    "year_label": "1949-1951",
+    "pc1_variance_polarization": 0.19849311741404313,
+    "pc1_explained_variance": 0.22969176906544642,
+    "num_legislators": 545,
+    "num_votes": 455
+  },
+  {
+    "congress": 82,
+    "year_start": 1951,
+    "year_end": 1952,
+    "year_label": "1951-1952",
+    "pc1_variance_polarization": 0.2674062601274055,
+    "pc1_explained_variance": 0.3044669299264901,
+    "num_legislators": 524,
+    "num_votes": 313
+  },
+  {
+    "congress": 83,
+    "year_start": 1953,
+    "year_end": 1954,
+    "year_label": "1953-1954",
+    "pc1_variance_polarization": 0.18742258792657152,
+    "pc1_explained_variance": 0.2335884431441766,
+    "num_legislators": 528,
+    "num_votes": 271
+  },
+  {
+    "congress": 84,
+    "year_start": 1955,
+    "year_end": 1956,
+    "year_label": "1955-1956",
+    "pc1_variance_polarization": 0.16953355364216446,
+    "pc1_explained_variance": 0.21406441907969254,
+    "num_legislators": 528,
+    "num_votes": 217
+  },
+  {
+    "congress": 85,
+    "year_start": 1957,
+    "year_end": 1958,
+    "year_label": "1957-1958",
+    "pc1_variance_polarization": 0.17973051163946757,
+    "pc1_explained_variance": 0.21092861756307354,
+    "num_legislators": 533,
+    "num_votes": 307
+  },
+  {
+    "congress": 86,
+    "year_start": 1959,
+    "year_end": 1960,
+    "year_label": "1959-1960",
+    "pc1_variance_polarization": 0.21790803768130762,
+    "pc1_explained_variance": 0.2623494697491667,
+    "num_legislators": 532,
+    "num_votes": 422
+  },
+  {
+    "congress": 87,
+    "year_start": 1961,
+    "year_end": 1962,
+    "year_label": "1961-1962",
+    "pc1_variance_polarization": 0.22319370383725232,
+    "pc1_explained_variance": 0.27687874961085585,
+    "num_legislators": 548,
+    "num_votes": 428
+  },
+  {
+    "congress": 88,
+    "year_start": 1963,
+    "year_end": 1964,
+    "year_label": "1963-1964",
+    "pc1_variance_polarization": 0.2490007058664756,
+    "pc1_explained_variance": 0.301474832762379,
+    "num_legislators": 538,
+    "num_votes": 534
+  },
+  {
+    "congress": 89,
+    "year_start": 1965,
+    "year_end": 1966,
+    "year_label": "1965-1966",
+    "pc1_variance_polarization": 0.22634356500987562,
+    "pc1_explained_variance": 0.29000222553552757,
+    "num_legislators": 539,
+    "num_votes": 497
+  },
+  {
+    "congress": 90,
+    "year_start": 1967,
+    "year_end": 1968,
+    "year_label": "1967-1968",
+    "pc1_variance_polarization": 0.17405164111521668,
+    "pc1_explained_variance": 0.22955666229689423,
+    "num_legislators": 536,
+    "num_votes": 596
+  },
+  {
+    "congress": 91,
+    "year_start": 1969,
+    "year_end": 1970,
+    "year_label": "1969-1970",
+    "pc1_variance_polarization": 0.12851170368625733,
+    "pc1_explained_variance": 0.17716029333726208,
+    "num_legislators": 531,
+    "num_votes": 666
+  },
+  {
+    "congress": 92,
+    "year_start": 1971,
+    "year_end": 1972,
+    "year_label": "1971-1972",
+    "pc1_variance_polarization": 0.1462461891703769,
+    "pc1_explained_variance": 0.189437316155823,
+    "num_legislators": 541,
+    "num_votes": 955
+  },
+  {
+    "congress": 93,
+    "year_start": 1973,
+    "year_end": 1974,
+    "year_label": "1973-1974",
+    "pc1_variance_polarization": 0.13864747767849017,
+    "pc1_explained_variance": 0.18284360412103298,
+    "num_legislators": 543,
+    "num_votes": 1138
+  },
+  {
+    "congress": 94,
+    "year_start": 1975,
+    "year_end": 1976,
+    "year_label": "1975-1976",
+    "pc1_variance_polarization": 0.16898569681020947,
+    "pc1_explained_variance": 0.2218075983047945,
+    "num_legislators": 539,
+    "num_votes": 1311
+  },
+  {
+    "congress": 95,
+    "year_start": 1977,
+    "year_end": 1978,
+    "year_label": "1977-1978",
+    "pc1_variance_polarization": 0.1421522933409845,
+    "pc1_explained_variance": 0.19401215366347443,
+    "num_legislators": 542,
+    "num_votes": 1540
+  },
+  {
+    "congress": 96,
+    "year_start": 1979,
+    "year_end": 1980,
+    "year_label": "1979-1980",
+    "pc1_variance_polarization": 0.1735368346332241,
+    "pc1_explained_variance": 0.22732260440588525,
+    "num_legislators": 540,
+    "num_votes": 1276
+  },
+  {
+    "congress": 97,
+    "year_start": 1981,
+    "year_end": 1982,
+    "year_label": "1981-1982",
+    "pc1_variance_polarization": 0.15413106268415397,
+    "pc1_explained_variance": 0.20928050045808058,
+    "num_legislators": 538,
+    "num_votes": 966
+  },
+  {
+    "congress": 98,
+    "year_start": 1983,
+    "year_end": 1984,
+    "year_label": "1983-1984",
+    "pc1_variance_polarization": 0.20859464783952889,
+    "pc1_explained_variance": 0.27462064185351776,
+    "num_legislators": 538,
+    "num_votes": 906
+  },
+  {
+    "congress": 99,
+    "year_start": 1985,
+    "year_end": 1986,
+    "year_label": "1985-1986",
+    "pc1_variance_polarization": 0.24250358534158697,
+    "pc1_explained_variance": 0.30501618745944997,
+    "num_legislators": 536,
+    "num_votes": 890
+  },
+  {
+    "congress": 100,
+    "year_start": 1987,
+    "year_end": 1988,
+    "year_label": "1987-1988",
+    "pc1_variance_polarization": 0.24176743363539863,
+    "pc1_explained_variance": 0.3278621422012756,
+    "num_legislators": 539,
+    "num_votes": 939
+  },
+  {
+    "congress": 101,
+    "year_start": 1989,
+    "year_end": 1990,
+    "year_label": "1989-1990",
+    "pc1_variance_polarization": 0.21871628497038237,
+    "pc1_explained_variance": 0.29357449139101166,
+    "num_legislators": 538,
+    "num_votes": 879
+  },
+  {
+    "congress": 102,
+    "year_start": 1991,
+    "year_end": 1992,
+    "year_label": "1991-1992",
+    "pc1_variance_polarization": 0.25737685925133397,
+    "pc1_explained_variance": 0.32864006067020984,
+    "num_legislators": 537,
+    "num_votes": 901
+  },
+  {
+    "congress": 103,
+    "year_start": 1993,
+    "year_end": 1994,
+    "year_label": "1993-1994",
+    "pc1_variance_polarization": 0.3229466298424437,
+    "pc1_explained_variance": 0.39460565783825785,
+    "num_legislators": 543,
+    "num_votes": 1094
+  },
+  {
+    "congress": 104,
+    "year_start": 1995,
+    "year_end": 1996,
+    "year_label": "1995-1996",
+    "pc1_variance_polarization": 0.35367170765519534,
+    "pc1_explained_variance": 0.41860556032621826,
+    "num_legislators": 547,
+    "num_votes": 1321
+  },
+  {
+    "congress": 105,
+    "year_start": 1997,
+    "year_end": 1998,
+    "year_label": "1997-1998",
+    "pc1_variance_polarization": 0.2752726738442066,
+    "pc1_explained_variance": 0.3625772027245889,
+    "num_legislators": 542,
+    "num_votes": 1166
+  },
+  {
+    "congress": 106,
+    "year_start": 1999,
+    "year_end": 2000,
+    "year_label": "1999-2000",
+    "pc1_variance_polarization": 0.24198781649026735,
+    "pc1_explained_variance": 0.33850329192119943,
+    "num_legislators": 540,
+    "num_votes": 1209
+  },
+  {
+    "congress": 107,
+    "year_start": 2001,
+    "year_end": 2002,
+    "year_label": "2001-2002",
+    "pc1_variance_polarization": 0.24647577920951022,
+    "pc1_explained_variance": 0.3696529718701673,
+    "num_legislators": 542,
+    "num_votes": 990
+  },
+  {
+    "congress": 108,
+    "year_start": 2003,
+    "year_end": 2004,
+    "year_label": "2003-2004",
+    "pc1_variance_polarization": 0.3031277825686324,
+    "pc1_explained_variance": 0.4259814918573205,
+    "num_legislators": 540,
+    "num_votes": 1218
+  },
+  {
+    "congress": 109,
+    "year_start": 2005,
+    "year_end": 2006,
+    "year_label": "2005-2006",
+    "pc1_variance_polarization": 0.3080846481494365,
+    "pc1_explained_variance": 0.4202588826287627,
+    "num_legislators": 539,
+    "num_votes": 1210
+  },
+  {
+    "congress": 110,
+    "year_start": 2007,
+    "year_end": 2008,
+    "year_label": "2007-2008",
+    "pc1_variance_polarization": 0.35701379835443603,
+    "pc1_explained_variance": 0.46475601501579306,
+    "num_legislators": 553,
+    "num_votes": 1865
+  },
+  {
+    "congress": 111,
+    "year_start": 2009,
+    "year_end": 2010,
+    "year_label": "2009-2010",
+    "pc1_variance_polarization": 0.2747259034950458,
+    "pc1_explained_variance": 0.4051249143824693,
+    "num_legislators": 552,
+    "num_votes": 1647
+  },
+  {
+    "congress": 112,
+    "year_start": 2011,
+    "year_end": 2013,
+    "year_label": "2011-2013",
+    "pc1_variance_polarization": 0.4497237465598704,
+    "pc1_explained_variance": 0.5168522196884681,
+    "num_legislators": 537,
+    "num_votes": 1602
+  },
+  {
+    "congress": 113,
+    "year_start": 2013,
+    "year_end": 2014,
+    "year_label": "2013-2014",
+    "pc1_variance_polarization": 0.44542481743562284,
+    "pc1_explained_variance": 0.5298463743681737,
+    "num_legislators": 541,
+    "num_votes": 1202
+  },
+  {
+    "congress": 114,
+    "year_start": 2015,
+    "year_end": 2016,
+    "year_label": "2015-2016",
+    "pc1_variance_polarization": 0.49189485745161327,
+    "pc1_explained_variance": 0.5785583754275655,
+    "num_legislators": 537,
+    "num_votes": 1322
+  },
+  {
+    "congress": 115,
+    "year_start": 2017,
+    "year_end": 2018,
+    "year_label": "2017-2018",
+    "pc1_variance_polarization": 0.45487142788666296,
+    "pc1_explained_variance": 0.553370994276545,
+    "num_legislators": 543,
+    "num_votes": 1207
+  },
+  {
+    "congress": 116,
+    "year_start": 2019,
+    "year_end": 2021,
+    "year_label": "2019-2021",
+    "pc1_variance_polarization": 0.45869175815565116,
+    "pc1_explained_variance": 0.5713986692383991,
+    "num_legislators": 547,
+    "num_votes": 952
+  },
+  {
+    "congress": 117,
+    "year_start": 2021,
+    "year_end": 2022,
+    "year_label": "2021-2022",
+    "pc1_variance_polarization": 0.4215074184742887,
+    "pc1_explained_variance": 0.5501694201277363,
+    "num_legislators": 544,
+    "num_votes": 996
+  },
+  {
+    "congress": 118,
+    "year_start": 2023,
+    "year_end": 2024,
+    "year_label": "2023-2024",
+    "pc1_variance_polarization": 0.47844424348528924,
+    "pc1_explained_variance": 0.5568618041861152,
+    "num_legislators": 549,
+    "num_votes": 1235
+  },
+  {
+    "congress": 119,
+    "year_start": 2025,
+    "year_end": 2026,
+    "year_label": "2025-2026",
+    "pc1_variance_polarization": 0.5180506058628811,
+    "pc1_explained_variance": 0.6162111280048129,
+    "num_legislators": 534,
+    "num_votes": 679
+  }
+]
