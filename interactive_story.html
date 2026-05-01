@@ -497,8 +497,7 @@
       display: block;
     }
 
-    .chamber-control,
-    .polarization-control {
+    .mode-control {
       display: flex;
       align-items: center;
       gap: 0.8rem;
@@ -625,21 +624,13 @@
             <button class="tab-button" data-tab="topic" onclick="switchTab(event, this)">Topic</button>
             <button class="tab-button" data-tab="polarization" onclick="switchTab(event, this)">Polarization</button>
           </div>
-          <div class="chamber-control">
-            <span class="chamber-label">House</span>
+          <div class="mode-control">
+            <span class="chamber-label mode-label-start">House</span>
             <label class="toggle-switch">
-              <input class="chamber-toggle" type="checkbox" onclick="switchChamber(this)">
+              <input class="mode-toggle" type="checkbox" onclick="switchMode(this)">
               <span class="toggle-slider"></span>
             </label>
-            <span class="chamber-label">Senate</span>
-          </div>
-          <div class="polarization-control" hidden>
-            <span class="chamber-label">All Time</span>
-            <label class="toggle-switch">
-              <input class="polarization-toggle" type="checkbox" onclick="switchPolarizationMode(this)">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="chamber-label">Modern</span>
+            <span class="chamber-label mode-label-end">Senate</span>
           </div>
         </div>
         <div class="chart-section">
@@ -675,21 +666,13 @@
             <button class="tab-button" data-tab="topic" onclick="switchTab(event, this)">Topic</button>
             <button class="tab-button" data-tab="polarization" onclick="switchTab(event, this)">Polarization</button>
           </div>
-          <div class="chamber-control">
-            <span class="chamber-label">House</span>
+          <div class="mode-control">
+            <span class="chamber-label mode-label-start">House</span>
             <label class="toggle-switch">
-              <input class="chamber-toggle" type="checkbox" checked onclick="switchChamber(this)">
+              <input class="mode-toggle" type="checkbox" checked onclick="switchMode(this)">
               <span class="toggle-slider"></span>
             </label>
-            <span class="chamber-label">Senate</span>
-          </div>
-          <div class="polarization-control" hidden>
-            <span class="chamber-label">All Time</span>
-            <label class="toggle-switch">
-              <input class="polarization-toggle" type="checkbox" onclick="switchPolarizationMode(this)">
-              <span class="toggle-slider"></span>
-            </label>
-            <span class="chamber-label">Modern</span>
+            <span class="chamber-label mode-label-end">Senate</span>
           </div>
         </div>
         <div class="chart-section">
@@ -730,16 +713,14 @@
       other: "#7ef7b2"
     };
 
-    function switchChamber(toggle) {
+    let isSenateView = false;
+    let isModernPolarization = false;
+
+    function applyChamberMode() {
       const houseSection = document.getElementById("house-section");
       const senateSection = document.getElementById("senate-section");
-      const checked = toggle.checked;
 
-      document.querySelectorAll(".chamber-toggle").forEach((input) => {
-        input.checked = checked;
-      });
-
-      if (checked) {
+      if (isSenateView) {
         houseSection.classList.remove("active");
         senateSection.classList.add("active");
       } else {
@@ -756,6 +737,43 @@
       });
     }
 
+    function syncModeControls() {
+      document.querySelectorAll(".section-block").forEach((section) => {
+        const activeTab = section.querySelector(".tab-button.active")?.dataset.tab;
+        const startLabel = section.querySelector(".mode-label-start");
+        const endLabel = section.querySelector(".mode-label-end");
+        const toggle = section.querySelector(".mode-toggle");
+        if (!startLabel || !endLabel || !toggle) return;
+
+        if (activeTab === "polarization") {
+          startLabel.textContent = "All Time";
+          endLabel.textContent = "Modern";
+          toggle.checked = isModernPolarization;
+        } else {
+          startLabel.textContent = "House";
+          endLabel.textContent = "Senate";
+          toggle.checked = isSenateView;
+        }
+      });
+    }
+
+    function switchMode(toggle) {
+      const section = toggle.closest(".section-block");
+      const activeTab = section?.querySelector(".tab-button.active")?.dataset.tab;
+
+      if (activeTab === "polarization") {
+        isModernPolarization = toggle.checked;
+        syncModeControls();
+        document.querySelectorAll(".chamber-section").forEach((chamberSection) => {
+          applyPolarizationMode(chamberSection);
+        });
+      } else {
+        isSenateView = toggle.checked;
+        syncModeControls();
+        applyChamberMode();
+      }
+    }
+
     function switchTab(event, button) {
       event.preventDefault();
       const tabName = button.dataset.tab;
@@ -770,7 +788,7 @@
       
       button.classList.add("active");
       section.querySelector(`[data-tab-content="${tabName}"]`).classList.add("active");
-      syncSectionControls(section);
+      syncModeControls();
 
       requestAnimationFrame(() => {
         const stage = document.querySelector(".chamber-stage");
@@ -783,7 +801,7 @@
 
         if (tabName === "polarization") {
           if (renderedPolarizationSections.has(section.id)) {
-            resizePolarizationTab(section);
+            applyPolarizationMode(section);
           } else {
             renderPolarizationTab(section).then(() => {
               renderedPolarizationSections.add(section.id);
@@ -794,29 +812,21 @@
       });
     }
 
-    function syncSectionControls(section) {
-      const activeTab = section.querySelector(".tab-button.active")?.dataset.tab;
-      const chamberControl = section.querySelector(".chamber-control");
-      const polarizationControl = section.querySelector(".polarization-control");
-      const isPolarization = activeTab === "polarization";
-
-      if (chamberControl) chamberControl.hidden = isPolarization;
-      if (polarizationControl) polarizationControl.hidden = !isPolarization;
-    }
-
     function applyPolarizationMode(section) {
       if (!section) return;
 
       const shell = section.querySelector(".polarization-shell");
-      const toggle = section.querySelector(".polarization-toggle");
-      if (!shell || !toggle) return;
+      if (!shell) return;
 
       const allTime = shell.querySelector(".polarization-all-time-wrap");
       const modern = shell.querySelector(".polarization-modern-wrap");
-      const showModern = toggle.checked;
+      const showModern = isModernPolarization;
+      const isActiveSection = section.classList.contains("active");
 
       if (allTime) allTime.style.display = showModern ? "none" : "block";
       if (modern) modern.style.display = showModern ? "block" : "none";
+
+      if (!isActiveSection) return;
 
       requestAnimationFrame(() => {
         const stage = document.querySelector(".chamber-stage");
@@ -824,18 +834,6 @@
           stage.style.setProperty("--chamber-stage-height", `${Math.ceil(section.getBoundingClientRect().height)}px`);
         }
         resizePolarizationTab(section);
-      });
-    }
-
-    function switchPolarizationMode(toggle) {
-      const checked = toggle.checked;
-
-      document.querySelectorAll(".polarization-toggle").forEach((input) => {
-        input.checked = checked;
-      });
-
-      document.querySelectorAll(".chamber-section").forEach((section) => {
-        applyPolarizationMode(section);
       });
     }
 
@@ -1367,7 +1365,7 @@
     }
 
     function buildPolarizationTrace(summary, yKey, color, title, showFill = false) {
-      const tickEvery = Math.max(1, Math.round(summary.length / 12));
+      const tickEvery = Math.max(1, Math.ceil(summary.length / (window.innerWidth < 900 ? 6 : 8)));
       const tickvals = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => row.congress);
       const ticktext = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => `${row.congress}<br>${row.year_label}`);
 
@@ -1399,20 +1397,30 @@
           },
           paper_bgcolor: "#09131d",
           plot_bgcolor: "#112235",
-          margin: { l: 24, r: 18, t: 62, b: 56 },
+          margin: { l: 72, r: 24, t: 62, b: 104 },
           hovermode: "x unified",
           xaxis: {
-            title: "Congress / years",
+            title: {
+              text: "Congress / years",
+              font: { size: 14 },
+              standoff: 16
+            },
             tickmode: "array",
             tickvals,
             ticktext,
-            tickangle: -35,
+            tickangle: 0,
+            tickfont: { size: 11 },
+            automargin: true,
             color: "#dce7f0",
             gridcolor: "rgba(255,255,255,0.08)",
             zerolinecolor: "rgba(255,255,255,0.15)"
           },
           yaxis: {
-            title: yKey === "pc1_variance_polarization" ? "PC1 variance" : "Explained variance",
+            title: {
+              text: yKey === "pc1_variance_polarization" ? "PC1 variance" : "Explained variance",
+              standoff: 16
+            },
+            automargin: true,
             color: "#dce7f0",
             gridcolor: "rgba(255,255,255,0.08)",
             zerolinecolor: "rgba(255,255,255,0.15)"
@@ -1460,7 +1468,7 @@
     }
 
     function buildModernPolarizationTrace(summary) {
-      const tickEvery = Math.max(1, Math.round(summary.length / 10));
+      const tickEvery = Math.max(1, Math.ceil(summary.length / (window.innerWidth < 900 ? 5 : 7)));
       const tickvals = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => row.congress);
       const ticktext = summary.filter((_, index) => index % tickEvery === 0 || index === summary.length - 1).map((row) => `${row.congress}<br>${row.year_label}`);
 
@@ -1493,20 +1501,30 @@
           },
           paper_bgcolor: "#09131d",
           plot_bgcolor: "#112235",
-          margin: { l: 24, r: 18, t: 62, b: 56 },
+          margin: { l: 72, r: 24, t: 62, b: 104 },
           hovermode: "x unified",
           xaxis: {
-            title: "Congress / years",
+            title: {
+              text: "Congress / years",
+              font: { size: 14 },
+              standoff: 16
+            },
             tickmode: "array",
             tickvals,
             ticktext,
-            tickangle: -35,
+            tickangle: 0,
+            tickfont: { size: 11 },
+            automargin: true,
             color: "#dce7f0",
             gridcolor: "rgba(255,255,255,0.08)",
             zerolinecolor: "rgba(255,255,255,0.15)"
           },
           yaxis: {
-            title: "Party centroid distance",
+            title: {
+              text: "Party centroid distance",
+              standoff: 16
+            },
+            automargin: true,
             color: "#dce7f0",
             gridcolor: "rgba(255,255,255,0.08)",
             zerolinecolor: "rgba(255,255,255,0.15)",
@@ -1532,7 +1550,7 @@
       const prefix = section.id === "house-section" ? "house" : "senate";
       const mainId = `${prefix}-polarization-variance-chart`;
       const modernId = `${prefix}-polarization-modern-chart`;
-      const showModern = !!section.querySelector(".polarization-toggle")?.checked;
+      const showModern = isModernPolarization;
       const target = document.getElementById(showModern ? modernId : mainId);
       if (target && target.data) {
         Plotly.Plots.resize(target);
@@ -1594,6 +1612,8 @@
         await drawChart("senate-all-chart", senateData, "Senate Voting Space", "all", "Senate");
         await drawChart("senate-dem-chart", senateData, "Senate Democratic Cluster", "dem", "Senate");
         await drawChart("senate-rep-chart", senateData, "Senate Republican Cluster", "rep", "Senate");
+        syncModeControls();
+        applyChamberMode();
 
         requestAnimationFrame(() => {
           const stage = document.querySelector(".chamber-stage");
