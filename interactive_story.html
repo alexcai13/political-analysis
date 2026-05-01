@@ -427,52 +427,11 @@
       gap: 1rem;
     }
 
-    .polarization-summary {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 0.75rem;
-    }
-
-    .polarization-stat {
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      background: rgba(6, 18, 28, 0.45);
-      padding: 0.9rem 1rem;
-    }
-
-    .polarization-stat-label {
-      display: block;
-      color: #a8b5c5;
-      font-size: 0.74rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 0.35rem;
-    }
-
-    .polarization-stat-value {
-      display: block;
-      color: #f4efe3;
-      font-size: 1.18rem;
-      font-weight: 600;
-      line-height: 1.15;
-    }
-
-    .polarization-note {
-      color: #c8d8e6;
-      font-size: 0.93rem;
-      line-height: 1.6;
-      margin: 0;
-    }
-
     .polarization-chart-wrap {
       position: relative;
       top: auto;
       width: 100%;
-      height: min(52vh, 620px);
-    }
-
-    .polarization-chart-wrap.secondary {
-      height: min(36vh, 420px);
+      height: min(76vh, 900px);
     }
 
     .footer {
@@ -624,6 +583,10 @@
     @media (max-width: 980px) {
       .chart-wrap {
         height: 64vh;
+      }
+
+      .polarization-chart-wrap {
+        height: 78vh;
       }
 
       .chart-grid {
