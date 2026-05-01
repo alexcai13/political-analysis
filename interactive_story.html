@@ -434,6 +434,91 @@
       height: min(76vh, 900px);
     }
 
+    .member-shell {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .member-controls {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      align-items: end;
+    }
+
+    .member-field {
+      display: grid;
+      gap: 0.38rem;
+    }
+
+    .member-field-label {
+      color: #dbe6f0;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .member-input,
+    .member-select {
+      width: 100%;
+      padding: 0.82rem 0.92rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: #112235;
+      color: #f4efe3;
+      font-size: 0.97rem;
+      outline: none;
+    }
+
+    .member-input:focus,
+    .member-select:focus {
+      border-color: rgba(247, 198, 111, 0.7);
+      box-shadow: 0 0 0 3px rgba(247, 198, 111, 0.12);
+    }
+
+    .member-note {
+      margin: 0;
+      color: #c8d8e6;
+      font-size: 0.93rem;
+      line-height: 1.6;
+    }
+
+    .member-summary {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    }
+
+    .member-card {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(6, 18, 28, 0.45);
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+    }
+
+    .member-card-label {
+      display: block;
+      color: #a8b5c5;
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    .member-card-value {
+      display: block;
+      color: #f4efe3;
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.15;
+    }
+
+    .member-chart-wrap {
+      position: relative;
+      top: auto;
+      width: 100%;
+      height: min(76vh, 900px);
+    }
+
     .footer {
       padding: 2.5rem 0 4.2rem;
       color: #d2deea;
@@ -588,6 +673,10 @@
         height: 78vh;
       }
 
+      .member-chart-wrap {
+        height: 78vh;
+      }
+
       .chart-grid {
         grid-template-columns: 1fr;
       }
@@ -644,7 +733,22 @@
             </div>
           </div>
           <div class="tab-content" data-tab-content="time">
-            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Time-based analysis coming soon.</p>
+            <div class="member-shell">
+              <div class="member-controls">
+                <label class="member-field">
+                  <span class="member-field-label">Member</span>
+                  <input id="house-member-search" class="member-input" list="house-member-options" placeholder="Search House member" />
+                  <datalist id="house-member-options"></datalist>
+                </label>
+                <label class="member-field">
+                  <span class="member-field-label">Quick Picks</span>
+                  <select id="house-member-picks" class="member-select"></select>
+                </label>
+              </div>
+              <p class="member-note" id="house-member-note">Run the member ideology notebook cell in <b>code.ipynb</b> after updating the data, then use this tab to inspect how a member's ideology score changes across Congresses.</p>
+              <div class="member-summary" id="house-member-summary"></div>
+              <div class="chart-wrap member-chart-wrap"><div id="house-member-chart" class="chart"></div></div>
+            </div>
           </div>
           <div class="tab-content" data-tab-content="topic">
             <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Topic-based analysis coming soon.</p>
@@ -686,7 +790,22 @@
             </div>
           </div>
           <div class="tab-content" data-tab-content="time">
-            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Time-based analysis coming soon.</p>
+            <div class="member-shell">
+              <div class="member-controls">
+                <label class="member-field">
+                  <span class="member-field-label">Member</span>
+                  <input id="senate-member-search" class="member-input" list="senate-member-options" placeholder="Search Senate member" />
+                  <datalist id="senate-member-options"></datalist>
+                </label>
+                <label class="member-field">
+                  <span class="member-field-label">Quick Picks</span>
+                  <select id="senate-member-picks" class="member-select"></select>
+                </label>
+              </div>
+              <p class="member-note" id="senate-member-note">Run the member ideology notebook cell in <b>code.ipynb</b> after updating the data, then use this tab to inspect how a member's ideology score changes across Congresses.</p>
+              <div class="member-summary" id="senate-member-summary"></div>
+              <div class="chart-wrap member-chart-wrap"><div id="senate-member-chart" class="chart"></div></div>
+            </div>
           </div>
           <div class="tab-content" data-tab-content="topic">
             <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Topic-based analysis coming soon.</p>
@@ -712,9 +831,18 @@
       rep: "#e63946",
       other: "#7ef7b2"
     };
+    const PARTY_LABELS = {
+      100: "Democrat",
+      200: "Republican",
+      328: "Democrat"
+    };
 
     let isSenateView = false;
     let isModernPolarization = false;
+    let memberIdeologyData = null;
+    let memberIdeologyPromise = null;
+    const renderedMemberSections = new Set();
+    const selectedMemberByChamber = { House: null, Senate: null };
 
     function applyChamberMode() {
       const houseSection = document.getElementById("house-section");
@@ -806,6 +934,14 @@
             renderPolarizationTab(section).then(() => {
               renderedPolarizationSections.add(section.id);
               applyPolarizationMode(section);
+            });
+          }
+        } else if (tabName === "time") {
+          if (renderedMemberSections.has(section.id)) {
+            resizeMemberTab(section);
+          } else {
+            renderMemberTab(section).then(() => {
+              renderedMemberSections.add(section.id);
             });
           }
         }
@@ -1546,8 +1682,295 @@
       };
     }
 
+    function getChamberFromSection(section) {
+      return section.id === "house-section" ? "House" : "Senate";
+    }
+
+    function chamberPrefix(section) {
+      return section.id === "house-section" ? "house" : "senate";
+    }
+
+    function formatSignedNumber(value) {
+      if (!Number.isFinite(value)) return "n/a";
+      return `${value > 0 ? "+" : ""}${value.toFixed(2)}`;
+    }
+
+    function formatUnsignedNumber(value) {
+      if (!Number.isFinite(value)) return "n/a";
+      return value.toFixed(2);
+    }
+
+    function buildMemberTrajectorySummary(rows) {
+      const ordered = rows
+        .slice()
+        .sort((a, b) => Number(a.congress) - Number(b.congress));
+      const scores = ordered.map((row) => Number(row.display_ideology_score));
+      const deltas = [];
+      for (let i = 1; i < scores.length; i++) {
+        deltas.push(scores[i] - scores[i - 1]);
+      }
+
+      return {
+        bioname: ordered[0].bioname,
+        chamber: ordered[0].chamber,
+        appearances: ordered.length,
+        firstCongress: Number(ordered[0].congress),
+        lastCongress: Number(ordered[ordered.length - 1].congress),
+        firstYearLabel: ordered[0].year_label,
+        lastYearLabel: ordered[ordered.length - 1].year_label,
+        startIdeology: scores[0],
+        endIdeology: scores[scores.length - 1],
+        netShift: scores[scores.length - 1] - scores[0],
+        cumulativeShift: deltas.reduce((sum, value) => sum + Math.abs(value), 0),
+        maxSingleStepShift: deltas.length ? Math.max(...deltas.map((value) => Math.abs(value))) : 0,
+        latestPartyCode: Number(ordered[ordered.length - 1].party_code),
+        rows: ordered
+      };
+    }
+
+    async function loadMemberIdeologyData() {
+      if (memberIdeologyData) return memberIdeologyData;
+      if (!memberIdeologyPromise) {
+        memberIdeologyPromise = parseJson("data/derived/member_ideology_records.json").then((records) => {
+          const byChamber = {
+            House: new Map(),
+            Senate: new Map()
+          };
+
+          for (const row of records) {
+            if (!row || !byChamber[row.chamber] || !row.bioname) continue;
+            if (!byChamber[row.chamber].has(row.bioname)) {
+              byChamber[row.chamber].set(row.bioname, []);
+            }
+            byChamber[row.chamber].get(row.bioname).push(row);
+          }
+
+          const summariesByChamber = {
+            House: [],
+            Senate: []
+          };
+
+          for (const chamber of Object.keys(byChamber)) {
+            for (const rows of byChamber[chamber].values()) {
+              summariesByChamber[chamber].push(buildMemberTrajectorySummary(rows));
+            }
+            summariesByChamber[chamber].sort((a, b) => {
+              if (b.appearances !== a.appearances) return b.appearances - a.appearances;
+              return Math.abs(b.netShift) - Math.abs(a.netShift);
+            });
+          }
+
+          memberIdeologyData = { byChamber, summariesByChamber };
+          return memberIdeologyData;
+        });
+      }
+      return memberIdeologyPromise;
+    }
+
+    function memberTicks(rows) {
+      const tickEvery = Math.max(1, Math.ceil(rows.length / (window.innerWidth < 900 ? 5 : 8)));
+      const points = rows.filter((_, index) => index % tickEvery === 0 || index === rows.length - 1);
+      return {
+        tickvals: points.map((row) => Number(row.congress)),
+        ticktext: points.map((row) => `${row.congress}<br>${row.year_label}`)
+      };
+    }
+
+    function renderMemberSummaryCards(section, summary) {
+      const summaryTarget = document.getElementById(`${chamberPrefix(section)}-member-summary`);
+      if (!summaryTarget) return;
+
+      summaryTarget.innerHTML = `
+        <div class="member-card"><span class="member-card-label">Congress Span</span><span class="member-card-value">${summary.firstCongress} to ${summary.lastCongress}</span></div>
+        <div class="member-card"><span class="member-card-label">Years Covered</span><span class="member-card-value">${summary.firstYearLabel} to ${summary.lastYearLabel}</span></div>
+        <div class="member-card"><span class="member-card-label">Appearances</span><span class="member-card-value">${summary.appearances}</span></div>
+        <div class="member-card"><span class="member-card-label">Net Shift</span><span class="member-card-value">${formatSignedNumber(summary.netShift)}</span></div>
+        <div class="member-card"><span class="member-card-label">Cumulative Shift</span><span class="member-card-value">${formatUnsignedNumber(summary.cumulativeShift)}</span></div>
+        <div class="member-card"><span class="member-card-label">Largest Single Step</span><span class="member-card-value">${formatUnsignedNumber(summary.maxSingleStepShift)}</span></div>
+      `;
+    }
+
+    function renderMemberChart(section, summary) {
+      const prefix = chamberPrefix(section);
+      const target = document.getElementById(`${prefix}-member-chart`);
+      if (!target) return;
+
+      const rows = summary.rows;
+      const ticks = memberTicks(rows);
+      const pointColors = rows.map((row) => {
+        const partyCode = Number(row.party_code);
+        if (partyCode === 200) return "#e63946";
+        if (partyCode === 100 || partyCode === 328) return "#3a86ff";
+        return "#f7c66f";
+      });
+
+      const trace = {
+        type: "scatter",
+        mode: "lines+markers",
+        x: rows.map((row) => Number(row.congress)),
+        y: rows.map((row) => Number(row.display_ideology_score)),
+        line: {
+          color: "#f7c66f",
+          width: 3,
+          shape: "spline",
+          smoothing: 0.45
+        },
+        marker: {
+          color: pointColors,
+          size: 10,
+          line: { color: "#09131d", width: 1.5 }
+        },
+        customdata: rows.map((row) => [
+          row.year_label,
+          PARTY_LABELS[Number(row.party_code)] || String(row.party_code ?? "Unknown"),
+          Number(row.cast_vote_count),
+          Number(row.party_gap_score)
+        ]),
+        hovertemplate:
+          `<b>${summary.bioname}</b><br>` +
+          "Congress %{x} (%{customdata[0]})<br>" +
+          "Party: %{customdata[1]}<br>" +
+          "Ideology score: %{y:.2f}<br>" +
+          "Party-gap score: %{customdata[3]:.2f}<br>" +
+          "Cast votes: %{customdata[2]}<extra></extra>"
+      };
+
+      const layout = {
+        title: {
+          text: `${summary.bioname} Ideology Over Time`,
+          x: 0.02,
+          font: { size: 24, color: "#f4efe3", family: "Fraunces, Georgia, serif" }
+        },
+        paper_bgcolor: "#09131d",
+        plot_bgcolor: "#112235",
+        margin: { l: 72, r: 24, t: 62, b: 98 },
+        xaxis: {
+          title: { text: "Congress / years", standoff: 14 },
+          tickmode: "array",
+          tickvals: ticks.tickvals,
+          ticktext: ticks.ticktext,
+          tickfont: { size: 11 },
+          automargin: true,
+          color: "#dce7f0",
+          gridcolor: "rgba(255,255,255,0.08)",
+          zerolinecolor: "rgba(255,255,255,0.15)"
+        },
+        yaxis: {
+          title: { text: "Aligned ideology z-score", standoff: 14 },
+          automargin: true,
+          color: "#dce7f0",
+          gridcolor: "rgba(255,255,255,0.08)",
+          zerolinecolor: "rgba(255,255,255,0.15)"
+        },
+        hoverlabel: {
+          bgcolor: "#07111b",
+          bordercolor: "rgba(255,255,255,0.18)",
+          font: { color: "#f6f2e8", size: 14 }
+        },
+        showlegend: false
+      };
+
+      return Plotly.newPlot(target, [trace], layout, {
+        responsive: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ["select2d", "lasso2d", "zoom2d", "toImage"]
+      });
+    }
+
+    function renderMemberSelection(section, chamber, memberName) {
+      const data = memberIdeologyData;
+      if (!data || !data.byChamber[chamber].has(memberName)) return;
+
+      const summary = buildMemberTrajectorySummary(data.byChamber[chamber].get(memberName));
+      selectedMemberByChamber[chamber] = memberName;
+
+      const prefix = chamberPrefix(section);
+      const note = document.getElementById(`${prefix}-member-note`);
+      const search = document.getElementById(`${prefix}-member-search`);
+      const picks = document.getElementById(`${prefix}-member-picks`);
+
+      if (note) {
+        note.innerHTML = `${summary.appearances} Congresses in the ${summary.chamber}. Start score ${formatSignedNumber(summary.startIdeology)}, end score ${formatSignedNumber(summary.endIdeology)}.`;
+      }
+      if (search) search.value = memberName;
+      if (picks) picks.value = memberName;
+
+      renderMemberSummaryCards(section, summary);
+      renderMemberChart(section, summary).then(() => {
+        requestAnimationFrame(() => {
+          const stage = document.querySelector(".chamber-stage");
+          if (stage) {
+            stage.style.setProperty("--chamber-stage-height", `${Math.ceil(section.getBoundingClientRect().height)}px`);
+          }
+        });
+      });
+    }
+
+    function wireMemberControls(section, chamber) {
+      if (section.dataset.membersBound === "true") return;
+      const prefix = chamberPrefix(section);
+      const search = document.getElementById(`${prefix}-member-search`);
+      const options = document.getElementById(`${prefix}-member-options`);
+      const picks = document.getElementById(`${prefix}-member-picks`);
+      const summaries = memberIdeologyData.summariesByChamber[chamber];
+      const names = summaries.map((item) => item.bioname);
+
+      if (options) {
+        options.innerHTML = names.map((name) => `<option value="${name}"></option>`).join("");
+      }
+
+      if (picks) {
+        picks.innerHTML = summaries
+          .slice(0, 30)
+          .map((item) => `<option value="${item.bioname}">${item.bioname} (${item.appearances} congresses)</option>`)
+          .join("");
+        picks.addEventListener("change", (event) => {
+          renderMemberSelection(section, chamber, event.target.value);
+        });
+      }
+
+      if (search) {
+        search.addEventListener("change", (event) => {
+          const value = event.target.value.trim();
+          if (memberIdeologyData.byChamber[chamber].has(value)) {
+            renderMemberSelection(section, chamber, value);
+          }
+        });
+      }
+
+      section.dataset.membersBound = "true";
+    }
+
+    async function renderMemberTab(section) {
+      const chamber = getChamberFromSection(section);
+      const prefix = chamberPrefix(section);
+      const note = document.getElementById(`${prefix}-member-note`);
+      try {
+        await loadMemberIdeologyData();
+      } catch (err) {
+        if (note) {
+          note.innerHTML = `Could not load member ideology data. Run the member ideology notebook cell in <b>code.ipynb</b> first. Details: ${err.message || String(err)}`;
+        }
+        return;
+      }
+
+      wireMemberControls(section, chamber);
+      const fallback = memberIdeologyData.summariesByChamber[chamber][0]?.bioname;
+      const chosen = selectedMemberByChamber[chamber] || fallback;
+      if (chosen) {
+        renderMemberSelection(section, chamber, chosen);
+      }
+    }
+
+    function resizeMemberTab(section) {
+      const target = document.getElementById(`${chamberPrefix(section)}-member-chart`);
+      if (target && target.data) {
+        Plotly.Plots.resize(target);
+      }
+    }
+
     function resizePolarizationTab(section) {
-      const prefix = section.id === "house-section" ? "house" : "senate";
+      const prefix = chamberPrefix(section);
       const mainId = `${prefix}-polarization-variance-chart`;
       const modernId = `${prefix}-polarization-modern-chart`;
       const showModern = isModernPolarization;
