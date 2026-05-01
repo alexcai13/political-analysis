@@ -724,6 +724,13 @@
         </div>
         <div class="chart-section">
           <div class="tab-content active" data-tab-content="overall">
+            <div class="member-controls overall-controls">
+              <label class="member-field">
+                <span class="member-field-label">Highlight Member</span>
+                <select id="house-overall-member-search" class="member-select"></select>
+              </label>
+            </div>
+            <p class="member-note" id="house-overall-member-note">Choose a House member to highlight them in the full voting map and in their party cluster.</p>
             <div class="chart-wide">
               <div class="chart-wrap"><div id="house-all-chart" class="chart"></div></div>
             </div>
@@ -781,6 +788,13 @@
         </div>
         <div class="chart-section">
           <div class="tab-content active" data-tab-content="overall">
+            <div class="member-controls overall-controls">
+              <label class="member-field">
+                <span class="member-field-label">Highlight Member</span>
+                <select id="senate-overall-member-search" class="member-select"></select>
+              </label>
+            </div>
+            <p class="member-note" id="senate-overall-member-note">Choose a Senate member to highlight them in the full voting map and in their party cluster.</p>
             <div class="chart-wide">
               <div class="chart-wrap"><div id="senate-all-chart" class="chart"></div></div>
             </div>
@@ -841,6 +855,8 @@
     let isModernPolarization = false;
     let memberIdeologyData = null;
     let memberIdeologyPromise = null;
+    const projectionDataByChamber = { House: [], Senate: [] };
+    const selectedOverallMemberByChamber = { House: "", Senate: "" };
     const renderedMemberSections = new Set();
     let selectedMemberName = null;
 
@@ -1211,10 +1227,47 @@
       };
     }
 
-    function drawChart(targetId, data, title, focus, chamber) {
-      const visibleData = focus === "all"
+    function filterProjectionData(data, focus, chamber) {
+      return focus === "all"
         ? data
         : data.filter((item) => item.party === focus || (focus === "dem" && chamber === "Senate" && item.party_code === 328));
+    }
+
+    function selectedMemberTrace(member) {
+      return {
+        type: "scattergl",
+        mode: "markers",
+        x: [member.x],
+        y: [member.y],
+        text: [member.bioname],
+        customdata: [[member.party, member.party_code, member.icpsr]],
+        marker: {
+          color: "#f7c66f",
+          size: 19,
+          opacity: 1,
+          line: { color: "#fff4cf", width: 2.2 }
+        },
+        hovertemplate:
+          "<b>%{text}</b><br>Highlighted member<br>Party: %{customdata[0]}<br>ICPSR: %{customdata[2]}<br>PC1: %{x:.3f}<br>PC2: %{y:.3f}<extra></extra>"
+      };
+    }
+
+    function buildChartTraces(data, focus, chamber, selectedIcpsr = "") {
+      const visibleData = filterProjectionData(data, focus, chamber);
+      const traces = [chartTrace(visibleData)];
+      const selectedMember = selectedIcpsr
+        ? data.find((item) => String(item.icpsr) === String(selectedIcpsr))
+        : null;
+
+      if (selectedMember && visibleData.some((item) => String(item.icpsr) === String(selectedMember.icpsr))) {
+        traces.push(selectedMemberTrace(selectedMember));
+      }
+
+      return { visibleData, traces, selectedMember };
+    }
+
+    function drawChart(targetId, data, title, focus, chamber, selectedIcpsr = "") {
+      const { visibleData, traces } = buildChartTraces(data, focus, chamber, selectedIcpsr);
       const layout = {
         title: {
           text: title,
@@ -1262,8 +1315,6 @@
         scrollZoom: true
       };
 
-      const trace = chartTrace(visibleData);
-
       if (visibleData.length > 0) {
         const padding = focus === "all" ? 0.06 : 0.12;
         const xRange = getAxisRange(visibleData.map((point) => point.x), padding);
@@ -1274,7 +1325,7 @@
         layout.yaxis.autorange = false;
       }
 
-      return Plotly.newPlot(targetId, [trace], layout, config);
+      return Plotly.newPlot(targetId, traces, layout, config);
     }
 
     function buildPolarizationSummaryWithPca(votes, rollcalls) {
@@ -1695,6 +1746,97 @@
       return section.id === "house-section" ? "house" : "senate";
     }
 
+    function getSelectedOverallMember(chamber) {
+      const selectedIcpsr = selectedOverallMemberByChamber[chamber];
+      if (!selectedIcpsr) return null;
+      return (projectionDataByChamber[chamber] || []).find((item) => String(item.icpsr) === String(selectedIcpsr)) || null;
+    }
+
+    function describeProjectionParty(member) {
+      if (!member) return "other";
+      if (member.party === "dem") return "the Democratic cluster";
+      if (member.party === "rep") return "the Republican cluster";
+      return "the full voting map only";
+    }
+
+    function updateOverallSelectionNote(section) {
+      const chamber = getChamberFromSection(section);
+      const prefix = chamberPrefix(section);
+      const note = document.getElementById(`${prefix}-overall-member-note`);
+      const search = document.getElementById(`${prefix}-overall-member-search`);
+      const selectedMember = getSelectedOverallMember(chamber);
+
+      if (search) {
+        search.value = selectedOverallMemberByChamber[chamber] || "";
+      }
+
+      if (!note) return;
+
+      if (!selectedMember) {
+        note.textContent = `Choose a ${chamber.toLowerCase()} member to highlight them in the full voting map and in their party cluster.`;
+        return;
+      }
+
+      if (selectedMember.party === "dem" || selectedMember.party === "rep") {
+        note.textContent = `${selectedMember.bioname} is highlighted in the full voting map and in ${describeProjectionParty(selectedMember)}.`;
+      } else {
+        note.textContent = `${selectedMember.bioname} is highlighted in the full voting map. This member is not in the Democratic or Republican party cluster views.`;
+      }
+    }
+
+    async function renderOverallCharts(chamber) {
+      const data = projectionDataByChamber[chamber] || [];
+      if (!data.length) return;
+
+      const prefix = chamber === "House" ? "house" : "senate";
+      const selectedIcpsr = selectedOverallMemberByChamber[chamber] || "";
+      const section = document.getElementById(`${prefix}-section`);
+
+      await Promise.all([
+        drawChart(`${prefix}-all-chart`, data, `${chamber} Voting Space`, "all", chamber, selectedIcpsr),
+        drawChart(`${prefix}-dem-chart`, data, `${chamber} Democratic Cluster`, "dem", chamber, selectedIcpsr),
+        drawChart(`${prefix}-rep-chart`, data, `${chamber} Republican Cluster`, "rep", chamber, selectedIcpsr)
+      ]);
+
+      if (section) {
+        updateOverallSelectionNote(section);
+      }
+    }
+
+    function wireOverallControls(section) {
+      if (section.dataset.overallBound === "true") {
+        updateOverallSelectionNote(section);
+        return;
+      }
+
+      const chamber = getChamberFromSection(section);
+      const prefix = chamberPrefix(section);
+      const search = document.getElementById(`${prefix}-overall-member-search`);
+      const data = (projectionDataByChamber[chamber] || [])
+        .slice()
+        .sort((a, b) => a.bioname.localeCompare(b.bioname));
+
+      if (search) {
+        search.innerHTML = ['<option value="">Choose a member</option>']
+          .concat(data.map((item) => `<option value="${item.icpsr}">${item.bioname}</option>`))
+          .join("");
+        search.addEventListener("change", (event) => {
+          selectedOverallMemberByChamber[chamber] = event.target.value || "";
+          renderOverallCharts(chamber).then(() => {
+            requestAnimationFrame(() => {
+              const stage = document.querySelector(".chamber-stage");
+              if (stage && section.classList.contains("active")) {
+                stage.style.setProperty("--chamber-stage-height", `${Math.ceil(section.getBoundingClientRect().height)}px`);
+              }
+            });
+          });
+        });
+      }
+
+      section.dataset.overallBound = "true";
+      updateOverallSelectionNote(section);
+    }
+
     function formatSignedNumber(value) {
       if (!Number.isFinite(value)) return "n/a";
       return `${value > 0 ? "+" : ""}${value.toFixed(2)}`;
@@ -2046,13 +2188,14 @@
         const senateData = buildChamberProjection(votes, members, "Senate");
         polarizationSummary = allTimeSummary;
         modernPolarizationSummary = modernSummary;
+        projectionDataByChamber.House = houseData;
+        projectionDataByChamber.Senate = senateData;
 
-        await drawChart("house-all-chart", houseData, "House Voting Space", "all", "House");
-        await drawChart("house-dem-chart", houseData, "House Democratic Cluster", "dem", "House");
-        await drawChart("house-rep-chart", houseData, "House Republican Cluster", "rep", "House");
-        await drawChart("senate-all-chart", senateData, "Senate Voting Space", "all", "Senate");
-        await drawChart("senate-dem-chart", senateData, "Senate Democratic Cluster", "dem", "Senate");
-        await drawChart("senate-rep-chart", senateData, "Senate Republican Cluster", "rep", "Senate");
+        wireOverallControls(document.getElementById("house-section"));
+        wireOverallControls(document.getElementById("senate-section"));
+
+        await renderOverallCharts("House");
+        await renderOverallCharts("Senate");
         syncModeControls();
         applyChamberMode();
 
