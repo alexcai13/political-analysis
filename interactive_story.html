@@ -737,8 +737,7 @@
               <div class="member-controls">
                 <label class="member-field">
                   <span class="member-field-label">Member</span>
-                  <input id="house-member-search" class="member-input" list="house-member-options" placeholder="Search House member" />
-                  <datalist id="house-member-options"></datalist>
+                  <select id="house-member-search" class="member-select"></select>
                 </label>
                 <label class="member-field">
                   <span class="member-field-label">Quick Picks</span>
@@ -746,6 +745,7 @@
                 </label>
               </div>
               <p class="member-note" id="house-member-note">Run the member ideology notebook cell in <b>code.ipynb</b> after updating the data, then use this tab to inspect how a member's ideology score changes across Congresses.</p>
+              <p class="member-note" id="house-member-point-detail">Click a point on the chart to see the chamber and Congress details for that stop in the timeline.</p>
               <div class="member-summary" id="house-member-summary"></div>
               <div class="chart-wrap member-chart-wrap"><div id="house-member-chart" class="chart"></div></div>
             </div>
@@ -794,8 +794,7 @@
               <div class="member-controls">
                 <label class="member-field">
                   <span class="member-field-label">Member</span>
-                  <input id="senate-member-search" class="member-input" list="senate-member-options" placeholder="Search Senate member" />
-                  <datalist id="senate-member-options"></datalist>
+                  <select id="senate-member-search" class="member-select"></select>
                 </label>
                 <label class="member-field">
                   <span class="member-field-label">Quick Picks</span>
@@ -803,6 +802,7 @@
                 </label>
               </div>
               <p class="member-note" id="senate-member-note">Run the member ideology notebook cell in <b>code.ipynb</b> after updating the data, then use this tab to inspect how a member's ideology score changes across Congresses.</p>
+              <p class="member-note" id="senate-member-point-detail">Click a point on the chart to see the chamber and Congress details for that stop in the timeline.</p>
               <div class="member-summary" id="senate-member-summary"></div>
               <div class="chart-wrap member-chart-wrap"><div id="senate-member-chart" class="chart"></div></div>
             </div>
@@ -842,7 +842,7 @@
     let memberIdeologyData = null;
     let memberIdeologyPromise = null;
     const renderedMemberSections = new Set();
-    const selectedMemberByChamber = { House: null, Senate: null };
+    let selectedMemberName = null;
 
     function applyChamberMode() {
       const houseSection = document.getElementById("house-section");
@@ -871,7 +871,12 @@
         const startLabel = section.querySelector(".mode-label-start");
         const endLabel = section.querySelector(".mode-label-end");
         const toggle = section.querySelector(".mode-toggle");
+        const modeControl = section.querySelector(".mode-control");
         if (!startLabel || !endLabel || !toggle) return;
+
+        if (modeControl) {
+          modeControl.hidden = activeTab === "time";
+        }
 
         if (activeTab === "polarization") {
           startLabel.textContent = "All Time";
@@ -1712,7 +1717,7 @@
 
       return {
         bioname: ordered[0].bioname,
-        chamber: ordered[0].chamber,
+        chambersServed: Array.from(new Set(ordered.map((row) => row.chamber))).join(", "),
         appearances: ordered.length,
         firstCongress: Number(ordered[0].congress),
         lastCongress: Number(ordered[ordered.length - 1].congress),
@@ -1732,35 +1737,26 @@
       if (memberIdeologyData) return memberIdeologyData;
       if (!memberIdeologyPromise) {
         memberIdeologyPromise = parseJson("site-data/member_ideology_records.json").then((records) => {
-          const byChamber = {
-            House: new Map(),
-            Senate: new Map()
-          };
+          const byName = new Map();
 
           for (const row of records) {
-            if (!row || !byChamber[row.chamber] || !row.bioname) continue;
-            if (!byChamber[row.chamber].has(row.bioname)) {
-              byChamber[row.chamber].set(row.bioname, []);
+            if (!row || !row.bioname) continue;
+            if (!byName.has(row.bioname)) {
+              byName.set(row.bioname, []);
             }
-            byChamber[row.chamber].get(row.bioname).push(row);
+            byName.get(row.bioname).push(row);
           }
 
-          const summariesByChamber = {
-            House: [],
-            Senate: []
-          };
-
-          for (const chamber of Object.keys(byChamber)) {
-            for (const rows of byChamber[chamber].values()) {
-              summariesByChamber[chamber].push(buildMemberTrajectorySummary(rows));
-            }
-            summariesByChamber[chamber].sort((a, b) => {
-              if (b.appearances !== a.appearances) return b.appearances - a.appearances;
-              return Math.abs(b.netShift) - Math.abs(a.netShift);
-            });
+          const summariesOverall = [];
+          for (const rows of byName.values()) {
+            summariesOverall.push(buildMemberTrajectorySummary(rows));
           }
+          summariesOverall.sort((a, b) => {
+            if (b.appearances !== a.appearances) return b.appearances - a.appearances;
+            return Math.abs(b.netShift) - Math.abs(a.netShift);
+          });
 
-          memberIdeologyData = { byChamber, summariesByChamber };
+          memberIdeologyData = { byName, summariesOverall };
           return memberIdeologyData;
         });
       }
@@ -1788,6 +1784,13 @@
         <div class="member-card"><span class="member-card-label">Cumulative Shift</span><span class="member-card-value">${formatUnsignedNumber(summary.cumulativeShift)}</span></div>
         <div class="member-card"><span class="member-card-label">Largest Single Step</span><span class="member-card-value">${formatUnsignedNumber(summary.maxSingleStepShift)}</span></div>
       `;
+    }
+
+    function renderMemberPointDetail(section, row) {
+      const detailTarget = document.getElementById(`${chamberPrefix(section)}-member-point-detail`);
+      if (!detailTarget || !row) return;
+
+      detailTarget.innerHTML = `Selected point: Congress <b>${row.congress}</b> (${row.year_label}), <b>${row.chamber}</b>, ${PARTY_LABELS[Number(row.party_code)] || String(row.party_code ?? "Unknown")}, ideology score <b>${formatSignedNumber(Number(row.display_ideology_score))}</b>.`;
     }
 
     function renderMemberChart(section, summary) {
@@ -1822,6 +1825,7 @@
         },
         customdata: rows.map((row) => [
           row.year_label,
+          row.chamber,
           PARTY_LABELS[Number(row.party_code)] || String(row.party_code ?? "Unknown"),
           Number(row.cast_vote_count),
           Number(row.party_gap_score)
@@ -1829,10 +1833,11 @@
         hovertemplate:
           `<b>${summary.bioname}</b><br>` +
           "Congress %{x} (%{customdata[0]})<br>" +
-          "Party: %{customdata[1]}<br>" +
+          "Chamber: %{customdata[1]}<br>" +
+          "Party: %{customdata[2]}<br>" +
           "Ideology score: %{y:.2f}<br>" +
-          "Party-gap score: %{customdata[3]:.2f}<br>" +
-          "Cast votes: %{customdata[2]}<extra></extra>"
+          "Party-gap score: %{customdata[4]:.2f}<br>" +
+          "Cast votes: %{customdata[3]}<extra></extra>"
       };
 
       const layout = {
@@ -1874,15 +1879,24 @@
         responsive: true,
         displaylogo: false,
         modeBarButtonsToRemove: ["select2d", "lasso2d", "zoom2d", "toImage"]
+      }).then(() => {
+        if (typeof target.removeAllListeners === "function") {
+          target.removeAllListeners("plotly_click");
+        }
+        target.on("plotly_click", (event) => {
+          const pointIndex = event?.points?.[0]?.pointIndex;
+          if (pointIndex == null) return;
+          renderMemberPointDetail(section, rows[pointIndex]);
+        });
       });
     }
 
-    function renderMemberSelection(section, chamber, memberName) {
+    function renderMemberSelection(section, memberName) {
       const data = memberIdeologyData;
-      if (!data || !data.byChamber[chamber].has(memberName)) return;
+      if (!data || !data.byName.has(memberName)) return;
 
-      const summary = buildMemberTrajectorySummary(data.byChamber[chamber].get(memberName));
-      selectedMemberByChamber[chamber] = memberName;
+      const summary = buildMemberTrajectorySummary(data.byName.get(memberName));
+      selectedMemberName = memberName;
 
       const prefix = chamberPrefix(section);
       const note = document.getElementById(`${prefix}-member-note`);
@@ -1890,12 +1904,13 @@
       const picks = document.getElementById(`${prefix}-member-picks`);
 
       if (note) {
-        note.innerHTML = `${summary.appearances} Congresses in the ${summary.chamber}. Start score ${formatSignedNumber(summary.startIdeology)}, end score ${formatSignedNumber(summary.endIdeology)}.`;
+        note.innerHTML = `${summary.appearances} Congresses across ${summary.chambersServed}. Start score ${formatSignedNumber(summary.startIdeology)}, end score ${formatSignedNumber(summary.endIdeology)}.`;
       }
       if (search) search.value = memberName;
       if (picks) picks.value = memberName;
 
       renderMemberSummaryCards(section, summary);
+      renderMemberPointDetail(section, summary.rows[summary.rows.length - 1]);
       renderMemberChart(section, summary).then(() => {
         requestAnimationFrame(() => {
           const stage = document.querySelector(".chamber-stage");
@@ -1906,17 +1921,21 @@
       });
     }
 
-    function wireMemberControls(section, chamber) {
+    function wireMemberControls(section) {
       if (section.dataset.membersBound === "true") return;
       const prefix = chamberPrefix(section);
       const search = document.getElementById(`${prefix}-member-search`);
-      const options = document.getElementById(`${prefix}-member-options`);
       const picks = document.getElementById(`${prefix}-member-picks`);
-      const summaries = memberIdeologyData.summariesByChamber[chamber];
-      const names = summaries.map((item) => item.bioname);
+      const summaries = memberIdeologyData.summariesOverall;
+      const alphabetical = summaries
+        .map((item) => item.bioname)
+        .slice()
+        .sort((a, b) => a.localeCompare(b));
 
-      if (options) {
-        options.innerHTML = names.map((name) => `<option value="${name}"></option>`).join("");
+      if (search) {
+        search.innerHTML = ['<option value="">Choose a member</option>']
+          .concat(alphabetical.map((name) => `<option value="${name}">${name}</option>`))
+          .join("");
       }
 
       if (picks) {
@@ -1925,15 +1944,15 @@
           .map((item) => `<option value="${item.bioname}">${item.bioname} (${item.appearances} congresses)</option>`)
           .join("");
         picks.addEventListener("change", (event) => {
-          renderMemberSelection(section, chamber, event.target.value);
+          renderMemberSelection(section, event.target.value);
         });
       }
 
       if (search) {
         search.addEventListener("change", (event) => {
           const value = event.target.value.trim();
-          if (memberIdeologyData.byChamber[chamber].has(value)) {
-            renderMemberSelection(section, chamber, value);
+          if (memberIdeologyData.byName.has(value)) {
+            renderMemberSelection(section, value);
           }
         });
       }
@@ -1942,7 +1961,6 @@
     }
 
     async function renderMemberTab(section) {
-      const chamber = getChamberFromSection(section);
       const prefix = chamberPrefix(section);
       const note = document.getElementById(`${prefix}-member-note`);
       try {
@@ -1954,11 +1972,11 @@
         return;
       }
 
-      wireMemberControls(section, chamber);
-      const fallback = memberIdeologyData.summariesByChamber[chamber][0]?.bioname;
-      const chosen = selectedMemberByChamber[chamber] || fallback;
+      wireMemberControls(section);
+      const fallback = memberIdeologyData.summariesOverall[0]?.bioname;
+      const chosen = selectedMemberName || fallback;
       if (chosen) {
-        renderMemberSelection(section, chamber, chosen);
+        renderMemberSelection(section, chosen);
       }
     }
 
