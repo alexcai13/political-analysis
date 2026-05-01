@@ -1731,7 +1731,7 @@
     async function loadMemberIdeologyData() {
       if (memberIdeologyData) return memberIdeologyData;
       if (!memberIdeologyPromise) {
-        memberIdeologyPromise = parseJson("data/derived/member_ideology_records.json").then((records) => {
+        memberIdeologyPromise = parseJson("site-data/member_ideology_records.json").then((records) => {
           const byChamber = {
             House: new Map(),
             Senate: new Map()
