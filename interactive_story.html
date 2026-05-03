@@ -519,6 +519,102 @@
       height: min(76vh, 900px);
     }
 
+    .topic-layout {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.9fr);
+      align-items: stretch;
+    }
+
+    .topic-similarity-panel {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: linear-gradient(145deg, rgba(5, 12, 19, 0.82), rgba(12, 24, 37, 0.92));
+      border-radius: 24px;
+      padding: 1rem 1rem 1.1rem;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+      display: grid;
+      gap: 0.9rem;
+      align-content: start;
+      min-height: min(76vh, 900px);
+    }
+
+    .topic-similarity-header {
+      display: grid;
+      gap: 0.3rem;
+    }
+
+    .topic-similarity-title {
+      margin: 0;
+      color: #f4efe3;
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .topic-similarity-copy {
+      margin: 0;
+      color: #c8d8e6;
+      font-size: 0.88rem;
+      line-height: 1.55;
+    }
+
+    .topic-similarity-list {
+      display: grid;
+      gap: 0.7rem;
+    }
+
+    .topic-similarity-item {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 0.8rem;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(8, 21, 33, 0.55);
+      border-radius: 16px;
+      padding: 0.75rem 0.82rem;
+    }
+
+    .topic-similarity-rank {
+      color: #f7c66f;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .topic-similarity-member {
+      min-width: 0;
+    }
+
+    .topic-similarity-name {
+      color: #f4efe3;
+      font-size: 0.96rem;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .topic-similarity-meta {
+      color: #a9bbcb;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      margin-top: 0.18rem;
+    }
+
+    .topic-similarity-score {
+      color: #dce7f0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    .topic-similarity-empty {
+      color: #c8d8e6;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      padding: 0.3rem 0;
+    }
+
     .footer {
       padding: 2.5rem 0 4.2rem;
       color: #d2deea;
@@ -677,6 +773,14 @@
         height: 78vh;
       }
 
+      .topic-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .topic-similarity-panel {
+        min-height: auto;
+      }
+
       .chart-grid {
         grid-template-columns: 1fr;
       }
@@ -765,9 +869,12 @@
                   <select id="house-topic-member-search" class="member-select"></select>
                 </label>
               </div>
-              <p class="member-note" id="house-topic-note">Run the topic analysis notebook cell in <b>code.ipynb</b> after updating the categorized roll calls, then use this tab to compare a member's topic-specific ideology profile against their party average.</p>
+              <p class="member-note" id="house-topic-note">Run the topic analysis notebook cell in <b>code.ipynb</b> after updating the categorized roll calls, then use this tab to compare a member's topic-specific ideology profile against their party average and see their closest cosine-similarity matches.</p>
               <div class="member-summary" id="house-topic-summary"></div>
-              <div class="chart-wrap member-chart-wrap"><div id="house-topic-profile-chart" class="chart"></div></div>
+              <div class="topic-layout">
+                <div class="chart-wrap member-chart-wrap"><div id="house-topic-profile-chart" class="chart"></div></div>
+                <aside class="topic-similarity-panel" id="house-topic-similarity-panel"></aside>
+              </div>
             </div>
           </div>
           <div class="tab-content" data-tab-content="polarization">
@@ -839,9 +946,12 @@
                   <select id="senate-topic-member-search" class="member-select"></select>
                 </label>
               </div>
-              <p class="member-note" id="senate-topic-note">Run the topic analysis notebook cell in <b>code.ipynb</b> after updating the categorized roll calls, then use this tab to compare a member's topic-specific ideology profile against their party average.</p>
+              <p class="member-note" id="senate-topic-note">Run the topic analysis notebook cell in <b>code.ipynb</b> after updating the categorized roll calls, then use this tab to compare a member's topic-specific ideology profile against their party average and see their closest cosine-similarity matches.</p>
               <div class="member-summary" id="senate-topic-summary"></div>
-              <div class="chart-wrap member-chart-wrap"><div id="senate-topic-profile-chart" class="chart"></div></div>
+              <div class="topic-layout">
+                <div class="chart-wrap member-chart-wrap"><div id="senate-topic-profile-chart" class="chart"></div></div>
+                <aside class="topic-similarity-panel" id="senate-topic-similarity-panel"></aside>
+              </div>
             </div>
           </div>
           <div class="tab-content" data-tab-content="polarization">
@@ -1116,15 +1226,20 @@
       return out;
     }
 
+    function deterministicUnitVector(n) {
+      const v = Array.from({ length: n }, (_, index) => index + 1);
+      const vNorm = norm(v) || 1;
+      return v.map((value) => value / vNorm);
+    }
+
     function powerIterationSymmetric(M, iterations = 120) {
       const n = M.length;
-      let v = Array.from({ length: n }, () => Math.random() - 0.5);
-      let vNorm = norm(v) || 1;
-      v = v.map((x) => x / vNorm);
+      let v = deterministicUnitVector(n);
 
       for (let k = 0; k < iterations; k++) {
         const Mv = matVecMul(M, v);
-        const mNorm = norm(Mv) || 1;
+        const mNorm = norm(Mv);
+        if (!mNorm) break;
         v = Mv.map((x) => x / mNorm);
       }
 
@@ -1158,6 +1273,48 @@
 
       const coords = centered.map((row) => [dot(row, e1.eigenvector), dot(row, e2.eigenvector)]);
       return coords;
+    }
+
+    function meanOf(values) {
+      return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : NaN;
+    }
+
+    function orientProjectionRows(rows) {
+      if (!rows.length) return rows;
+
+      const demXs = rows
+        .filter((row) => row.party_code === 100 || row.party_code === 328)
+        .map((row) => row.x)
+        .filter((value) => Number.isFinite(value));
+      const repXs = rows
+        .filter((row) => row.party_code === 200)
+        .map((row) => row.x)
+        .filter((value) => Number.isFinite(value));
+
+      const demMeanX = meanOf(demXs);
+      const repMeanX = meanOf(repXs);
+      if (Number.isFinite(demMeanX) && Number.isFinite(repMeanX) && repMeanX < demMeanX) {
+        for (const row of rows) {
+          row.x *= -1;
+        }
+      }
+
+      const anchor = rows.reduce((best, row) => {
+        if (!best) return row;
+        const rowAbs = Math.abs(row.y);
+        const bestAbs = Math.abs(best.y);
+        if (rowAbs > bestAbs) return row;
+        if (rowAbs < bestAbs) return best;
+        return Number(row.icpsr) < Number(best.icpsr) ? row : best;
+      }, null);
+
+      if (anchor && Number.isFinite(anchor.y) && anchor.y < 0) {
+        for (const row of rows) {
+          row.y *= -1;
+        }
+      }
+
+      return rows;
     }
 
     function buildChamberProjection(votes, members, chamber) {
@@ -1226,7 +1383,7 @@
 
       const memberByIcpsr = new Map(chamberMembers.map((m) => [m.icpsr, m]));
 
-      return keptIcpsr.map((icpsr, idx) => {
+      const rows = keptIcpsr.map((icpsr, idx) => {
         const member = memberByIcpsr.get(icpsr) || {};
         const party = classifyMemberParty(member);
         return {
@@ -1238,6 +1395,8 @@
           bioname: member.bioname || "Unknown"
         };
       });
+
+      return orientProjectionRows(rows);
     }
 
     function chartTrace(data) {
@@ -2037,6 +2196,75 @@
       `;
     }
 
+    function computeTopicCosineSimilarity(left, right, topics) {
+      const x = [];
+      const y = [];
+      for (const topic of topics) {
+        const leftValue = Number(left.topic_scores?.[topic]);
+        const rightValue = Number(right.topic_scores?.[topic]);
+        if (Number.isFinite(leftValue) && Number.isFinite(rightValue)) {
+          x.push(leftValue);
+          y.push(rightValue);
+        }
+      }
+      if (x.length < 3) return { score: NaN, overlap: x.length };
+
+      let dot = 0;
+      let leftNorm = 0;
+      let rightNorm = 0;
+      for (let i = 0; i < x.length; i += 1) {
+        dot += x[i] * y[i];
+        leftNorm += x[i] * x[i];
+        rightNorm += y[i] * y[i];
+      }
+      const denom = Math.sqrt(leftNorm) * Math.sqrt(rightNorm);
+      return {
+        score: denom ? dot / denom : NaN,
+        overlap: x.length
+      };
+    }
+
+    function renderTopicSimilarityPanel(section, legislator, data) {
+      const target = document.getElementById(`${chamberPrefix(section)}-topic-similarity-panel`);
+      if (!target || !legislator || !data) return;
+
+      const topics = (data.topics || []).map((item) => item.topic);
+      const rows = (data.legislators || [])
+        .filter((peer) => peer.bioname !== legislator.bioname)
+        .map((peer) => {
+          const similarity = computeTopicCosineSimilarity(legislator, peer, topics);
+          return {
+            ...peer,
+            similarity: similarity.score,
+            overlap: similarity.overlap
+          };
+        })
+        .filter((peer) => Number.isFinite(peer.similarity))
+        .sort((a, b) => b.similarity - a.similarity)
+        .slice(0, 10);
+
+      const items = rows.length
+        ? `<div class="topic-similarity-list">${rows.map((peer, index) => `
+            <div class="topic-similarity-item">
+              <div class="topic-similarity-rank">#${index + 1}</div>
+              <div class="topic-similarity-member">
+                <div class="topic-similarity-name">${peer.bioname}</div>
+                <div class="topic-similarity-meta">${peer.party}, ${peer.state_abbrev || "n/a"} • ${peer.overlap} shared topics</div>
+              </div>
+              <div class="topic-similarity-score">${peer.similarity.toFixed(3)}</div>
+            </div>
+          `).join("")}</div>`
+        : `<div class="topic-similarity-empty">Not enough overlapping topic scores were available to compute similarities for this member.</div>`;
+
+      target.innerHTML = `
+        <div class="topic-similarity-header">
+          <h3 class="topic-similarity-title">Top 10 Similar Legislators</h3>
+          <p class="topic-similarity-copy">Cosine similarity is computed from the selected member's topic-score vector against every other scored legislator in this chamber.</p>
+        </div>
+        ${items}
+      `;
+    }
+
     function renderTopicProfile(section, legislator, data) {
       const prefix = chamberPrefix(section);
       const target = document.getElementById(`${prefix}-topic-profile-chart`);
@@ -2161,10 +2389,11 @@
 
       if (search) search.value = memberName;
       if (note) {
-        note.innerHTML = `${data.explanation} Selected member: <b>${legislator.bioname}</b> (${legislator.party}, ${legislator.state_abbrev || "n/a"}). The paired bars compare this member's topic scores with their party average on each topic.`;
+        note.innerHTML = `${data.explanation} Selected member: <b>${legislator.bioname}</b> (${legislator.party}, ${legislator.state_abbrev || "n/a"}). The paired bars compare this member's topic scores with their party average on each topic, and the panel lists the closest topic-profile matches in this chamber by cosine similarity.`;
       }
 
       renderTopicSummary(section, legislator, data.topics || []);
+      renderTopicSimilarityPanel(section, legislator, data);
       return renderTopicProfile(section, legislator, data).then(() => {
         requestAnimationFrame(() => {
           const stage = document.querySelector(".chamber-stage");
