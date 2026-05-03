@@ -758,7 +758,17 @@
             </div>
           </div>
           <div class="tab-content" data-tab-content="topic">
-            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Topic-based analysis coming soon.</p>
+            <div class="member-shell">
+              <div class="member-controls">
+                <label class="member-field">
+                  <span class="member-field-label">Member</span>
+                  <select id="house-topic-member-search" class="member-select"></select>
+                </label>
+              </div>
+              <p class="member-note" id="house-topic-note">Run the topic analysis notebook cell in <b>code.ipynb</b> after updating the categorized roll calls, then use this tab to compare a member's topic-specific ideology profile against their party average.</p>
+              <div class="member-summary" id="house-topic-summary"></div>
+              <div class="chart-wrap member-chart-wrap"><div id="house-topic-profile-chart" class="chart"></div></div>
+            </div>
           </div>
           <div class="tab-content" data-tab-content="polarization">
             <div class="polarization-shell">
@@ -822,7 +832,17 @@
             </div>
           </div>
           <div class="tab-content" data-tab-content="topic">
-            <p style="color: #a8b5c5; text-align: center; padding: 2rem;">Topic-based analysis coming soon.</p>
+            <div class="member-shell">
+              <div class="member-controls">
+                <label class="member-field">
+                  <span class="member-field-label">Member</span>
+                  <select id="senate-topic-member-search" class="member-select"></select>
+                </label>
+              </div>
+              <p class="member-note" id="senate-topic-note">Run the topic analysis notebook cell in <b>code.ipynb</b> after updating the categorized roll calls, then use this tab to compare a member's topic-specific ideology profile against their party average.</p>
+              <div class="member-summary" id="senate-topic-summary"></div>
+              <div class="chart-wrap member-chart-wrap"><div id="senate-topic-profile-chart" class="chart"></div></div>
+            </div>
           </div>
           <div class="tab-content" data-tab-content="polarization">
             <div class="polarization-shell">
@@ -855,9 +875,13 @@
     let isModernPolarization = false;
     let memberIdeologyData = null;
     let memberIdeologyPromise = null;
+    const topicAnalysisDataByChamber = { House: null, Senate: null };
+    const topicAnalysisPromiseByChamber = { House: null, Senate: null };
     const projectionDataByChamber = { House: [], Senate: [] };
     const selectedOverallMemberByChamber = { House: "", Senate: "" };
     const renderedMemberSections = new Set();
+    const renderedTopicSections = new Set();
+    const selectedTopicMemberByChamber = { House: "", Senate: "" };
     let selectedMemberName = null;
 
     function applyChamberMode() {
@@ -963,6 +987,14 @@
           } else {
             renderMemberTab(section).then(() => {
               renderedMemberSections.add(section.id);
+            });
+          }
+        } else if (tabName === "topic") {
+          if (renderedTopicSections.has(section.id)) {
+            resizeTopicTab(section);
+          } else {
+            renderTopicTab(section).then(() => {
+              renderedTopicSections.add(section.id);
             });
           }
         }
@@ -1905,6 +1937,30 @@
       return memberIdeologyPromise;
     }
 
+    async function loadTopicAnalysisData(chamber) {
+      if (topicAnalysisDataByChamber[chamber]) return topicAnalysisDataByChamber[chamber];
+      if (!topicAnalysisPromiseByChamber[chamber]) {
+        const path = `site-data/topic_analysis_${chamber.toLowerCase()}.json`;
+        topicAnalysisPromiseByChamber[chamber] = parseJson(path).then((payload) => {
+          const legislators = Array.isArray(payload.legislators) ? payload.legislators.slice() : [];
+          const byName = new Map();
+          for (const legislator of legislators) {
+            if (!legislator || !legislator.bioname) continue;
+            byName.set(legislator.bioname, legislator);
+          }
+          payload.legislators = legislators;
+          payload.byName = byName;
+          payload.alphabeticalNames = legislators
+            .map((item) => item.bioname)
+            .slice()
+            .sort((a, b) => a.localeCompare(b));
+          topicAnalysisDataByChamber[chamber] = payload;
+          return payload;
+        });
+      }
+      return topicAnalysisPromiseByChamber[chamber];
+    }
+
     function memberTicks(rows) {
       const tickEvery = Math.max(1, Math.ceil(rows.length / (window.innerWidth < 900 ? 5 : 8)));
       const points = rows.filter((_, index) => index % tickEvery === 0 || index === rows.length - 1);
@@ -1933,6 +1989,210 @@
       if (!detailTarget || !row) return;
 
       detailTarget.innerHTML = `Selected point: Congress <b>${row.congress}</b> (${row.year_label}), <b>${row.chamber}</b>, ${PARTY_LABELS[Number(row.party_code)] || String(row.party_code ?? "Unknown")}, ideology score <b>${formatSignedNumber(Number(row.display_ideology_score))}</b>.`;
+    }
+
+    function renderTopicSummary(section, legislator, topics) {
+      const target = document.getElementById(`${chamberPrefix(section)}-topic-summary`);
+      if (!target || !legislator) return;
+
+      const entries = topics
+        .map((topic) => ({
+          topic: topic.topic,
+          score: Number(legislator.topic_scores?.[topic.topic])
+        }))
+        .filter((item) => Number.isFinite(item.score));
+
+      const chamber = getChamberFromSection(section);
+      const data = topicAnalysisDataByChamber[chamber];
+      const partyPeers = (data?.legislators || []).filter((item) => item.party === legislator.party);
+      const divergenceRows = entries.map((item) => {
+        const peerValues = partyPeers
+          .map((peer) => Number(peer.topic_scores?.[item.topic]))
+          .filter((value) => Number.isFinite(value));
+        const mean = peerValues.length
+          ? peerValues.reduce((sum, value) => sum + value, 0) / peerValues.length
+          : NaN;
+        return {
+          topic: item.topic,
+          delta: Number.isFinite(mean) ? item.score - mean : NaN
+        };
+      }).filter((item) => Number.isFinite(item.delta));
+
+      const strongest = entries.length
+        ? entries.slice().sort((a, b) => Math.abs(b.score) - Math.abs(a.score))[0]
+        : null;
+      const mostDivergent = divergenceRows.length
+        ? divergenceRows.slice().sort((a, b) => Math.abs(b.delta) - Math.abs(a.delta))[0]
+        : null;
+
+      target.innerHTML = `
+        <div class="member-card"><span class="member-card-label">Member</span><span class="member-card-value">${legislator.bioname}</span></div>
+        <div class="member-card"><span class="member-card-label">Party</span><span class="member-card-value">${legislator.party}</span></div>
+        <div class="member-card"><span class="member-card-label">State</span><span class="member-card-value">${legislator.state_abbrev || "n/a"}</span></div>
+        <div class="member-card"><span class="member-card-label">Topics Scored</span><span class="member-card-value">${entries.length}</span></div>
+        <div class="member-card"><span class="member-card-label">Strongest Topic</span><span class="member-card-value">${strongest ? strongest.topic : "n/a"}</span></div>
+        <div class="member-card"><span class="member-card-label">Largest Score</span><span class="member-card-value">${strongest ? formatSignedNumber(strongest.score) : "n/a"}</span></div>
+        <div class="member-card"><span class="member-card-label">Most Divergent Topic</span><span class="member-card-value">${mostDivergent ? mostDivergent.topic : "n/a"}</span></div>
+        <div class="member-card"><span class="member-card-label">Vs Party Mean</span><span class="member-card-value">${mostDivergent ? formatSignedNumber(mostDivergent.delta) : "n/a"}</span></div>
+      `;
+    }
+
+    function renderTopicProfile(section, legislator, data) {
+      const prefix = chamberPrefix(section);
+      const target = document.getElementById(`${prefix}-topic-profile-chart`);
+      if (!target || !legislator) return;
+
+      const partyPeers = (data.legislators || []).filter((item) => item.party === legislator.party);
+      const plotRows = (data.topics || [])
+        .map((topic) => ({
+          topic: topic.topic,
+          score: Number(legislator.topic_scores?.[topic.topic]),
+          partyMean: (() => {
+            const values = partyPeers
+              .map((peer) => Number(peer.topic_scores?.[topic.topic]))
+              .filter((value) => Number.isFinite(value));
+            return values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : NaN;
+          })(),
+          numRollcalls: Number(topic.num_rollcalls),
+          explainedVarianceRatio: Number(topic.explained_variance_ratio)
+        }))
+        .filter((item) => Number.isFinite(item.score));
+      const memberTrace = {
+        type: "bar",
+        x: plotRows.map((row) => row.topic),
+        y: plotRows.map((row) => row.score),
+        name: `${legislator.bioname}`,
+        marker: {
+          color: legislator.party === "Republican" ? "#e63946" : legislator.party === "Democrat" ? "#3a86ff" : "#f7c66f"
+        },
+        customdata: plotRows.map((row) => [
+          legislator.bioname,
+          legislator.party,
+          legislator.state_abbrev || "n/a",
+          row.numRollcalls,
+          row.explainedVarianceRatio,
+          Number.isFinite(row.partyMean) ? row.partyMean : null
+        ]),
+        hovertemplate:
+          "<b>%{customdata[0]}</b><br>" +
+          "Party: %{customdata[1]}<br>" +
+          "State: %{customdata[2]}<br>" +
+          "Topic: %{x}<br>" +
+          "Member score: %{y:.2f}<br>" +
+          "Party mean: %{customdata[5]:.2f}<br>" +
+          "Roll calls in topic: %{customdata[3]}<br>" +
+          "PC1 explained variance: %{customdata[4]:.2f}<extra></extra>"
+      };
+      const partyTrace = {
+        type: "bar",
+        x: plotRows.map((row) => row.topic),
+        y: plotRows.map((row) => row.partyMean),
+        name: `${legislator.party} average`,
+        marker: {
+          color: "#f7c66f",
+          line: { color: "#09131d", width: 1.25 }
+        },
+        customdata: plotRows.map((row) => [
+          legislator.party,
+          row.numRollcalls,
+          row.explainedVarianceRatio
+        ]),
+        hovertemplate:
+          "<b>%{customdata[0]} average</b><br>" +
+          "Topic: %{x}<br>" +
+          "Party mean score: %{y:.2f}<br>" +
+          "Roll calls in topic: %{customdata[1]}<br>" +
+          "PC1 explained variance: %{customdata[2]:.2f}<extra></extra>"
+      };
+
+      const layout = {
+        title: {
+          text: `${legislator.bioname} Topic Ideology vs ${legislator.party} Average`,
+          x: 0.02,
+          font: { size: 24, color: "#f4efe3", family: "Fraunces, Georgia, serif" }
+        },
+        paper_bgcolor: "#09131d",
+        plot_bgcolor: "#112235",
+        margin: { l: 78, r: 24, t: 62, b: 120 },
+        barmode: "group",
+        xaxis: {
+          tickangle: -28,
+          automargin: true,
+          color: "#dce7f0"
+        },
+        yaxis: {
+          title: { text: "Standardized PC1 score", standoff: 14 },
+          automargin: true,
+          color: "#dce7f0",
+          gridcolor: "rgba(255,255,255,0.08)",
+          zerolinecolor: "rgba(255,255,255,0.15)"
+        },
+        hoverlabel: {
+          bgcolor: "#07111b",
+          bordercolor: "rgba(255,255,255,0.18)",
+          font: { color: "#f6f2e8", size: 14 }
+        },
+        legend: {
+          orientation: "h",
+          x: 0.02,
+          y: 1.08,
+          font: { color: "#dce7f0" }
+        }
+      };
+
+      return Plotly.newPlot(target, [memberTrace, partyTrace], layout, {
+        responsive: true,
+        displaylogo: false,
+        modeBarButtonsToRemove: ["select2d", "lasso2d", "zoom2d", "toImage"]
+      });
+    }
+
+    function renderTopicSelection(section, memberName) {
+      const chamber = getChamberFromSection(section);
+      const data = topicAnalysisDataByChamber[chamber];
+      if (!data || !data.byName.has(memberName)) return;
+
+      const legislator = data.byName.get(memberName);
+      selectedTopicMemberByChamber[chamber] = memberName;
+
+      const prefix = chamberPrefix(section);
+      const note = document.getElementById(`${prefix}-topic-note`);
+      const search = document.getElementById(`${prefix}-topic-member-search`);
+
+      if (search) search.value = memberName;
+      if (note) {
+        note.innerHTML = `${data.explanation} Selected member: <b>${legislator.bioname}</b> (${legislator.party}, ${legislator.state_abbrev || "n/a"}). The paired bars compare this member's topic scores with their party average on each topic.`;
+      }
+
+      renderTopicSummary(section, legislator, data.topics || []);
+      return renderTopicProfile(section, legislator, data).then(() => {
+        requestAnimationFrame(() => {
+          const stage = document.querySelector(".chamber-stage");
+          if (stage) {
+            stage.style.setProperty("--chamber-stage-height", `${Math.ceil(section.getBoundingClientRect().height)}px`);
+          }
+        });
+      });
+    }
+
+    function wireTopicControls(section, data) {
+      if (section.dataset.topicBound === "true") return;
+      const prefix = chamberPrefix(section);
+      const search = document.getElementById(`${prefix}-topic-member-search`);
+
+      if (search) {
+        search.innerHTML = ['<option value="">Choose a member</option>']
+          .concat((data.alphabeticalNames || []).map((name) => `<option value="${name}">${name}</option>`))
+          .join("");
+        search.addEventListener("change", (event) => {
+          const value = event.target.value.trim();
+          if (data.byName.has(value)) {
+            renderTopicSelection(section, value);
+          }
+        });
+      }
+
+      section.dataset.topicBound = "true";
     }
 
     function renderMemberChart(section, summary) {
@@ -2122,10 +2382,43 @@
       }
     }
 
+    async function renderTopicTab(section) {
+      const chamber = getChamberFromSection(section);
+      const prefix = chamberPrefix(section);
+      const note = document.getElementById(`${prefix}-topic-note`);
+
+      try {
+        const data = await loadTopicAnalysisData(chamber);
+        wireTopicControls(section, data);
+
+        const fallback = data.alphabeticalNames?.[0];
+        const chosen = selectedTopicMemberByChamber[chamber] || fallback;
+        if (chosen) {
+          await renderTopicSelection(section, chosen);
+        } else if (note) {
+          note.innerHTML = `${data.explanation} No scored legislators were available for this chamber.`;
+        }
+      } catch (err) {
+        if (note) {
+          note.innerHTML = `Could not load topic analysis data. Run the topic analysis notebook cell in <b>code.ipynb</b> first. Details: ${err.message || String(err)}`;
+        }
+      }
+    }
+
     function resizeMemberTab(section) {
       const target = document.getElementById(`${chamberPrefix(section)}-member-chart`);
       if (target && target.data) {
         Plotly.Plots.resize(target);
+      }
+    }
+
+    function resizeTopicTab(section) {
+      const prefix = chamberPrefix(section);
+      for (const suffix of ["topic-profile-chart"]) {
+        const target = document.getElementById(`${prefix}-${suffix}`);
+        if (target && target.data) {
+          Plotly.Plots.resize(target);
+        }
       }
     }
 

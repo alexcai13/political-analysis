@@ -1,0 +1,1746 @@
+{
+  "chamber": "Senate",
+  "topics": [
+    {
+      "topic": "Other",
+      "score_column": "other_score",
+      "num_rollcalls": 3027,
+      "num_legislators": 102,
+      "mean_vote_count": 1930.0098039215686,
+      "explained_variance_ratio": 0.6049995494090776
+    },
+    {
+      "topic": "Economy / Budget / Taxes",
+      "score_column": "economy_score",
+      "num_rollcalls": 1372,
+      "num_legislators": 102,
+      "mean_vote_count": 740.0196078431372,
+      "explained_variance_ratio": 0.5458904762831649
+    },
+    {
+      "topic": "Defense / Military",
+      "score_column": "defense_score",
+      "num_rollcalls": 556,
+      "num_legislators": 102,
+      "mean_vote_count": 360.5098039215686,
+      "explained_variance_ratio": 0.5081248147497387
+    },
+    {
+      "topic": "Foreign Policy",
+      "score_column": "foreign_policy_score",
+      "num_rollcalls": 369,
+      "num_legislators": 102,
+      "mean_vote_count": 245.8921568627451,
+      "explained_variance_ratio": 0.5490234512603188
+    },
+    {
+      "topic": "Social Policy",
+      "score_column": "social_policy_score",
+      "num_rollcalls": 329,
+      "num_legislators": 101,
+      "mean_vote_count": 196.990099009901,
+      "explained_variance_ratio": 0.6035968837173157
+    },
+    {
+      "topic": "Healthcare",
+      "score_column": "healthcare_score",
+      "num_rollcalls": 324,
+      "num_legislators": 101,
+      "mean_vote_count": 192.66336633663366,
+      "explained_variance_ratio": 0.6087453525912874
+    }
+  ],
+  "similarity_topics": [
+    "Other",
+    "Economy / Budget / Taxes",
+    "Defense / Military",
+    "Foreign Policy",
+    "Social Policy",
+    "Healthcare"
+  ],
+  "similarity_matrix": [
+    [
+      1.0,
+      0.9926262164644387,
+      0.9852774203523965,
+      0.9902894467894557,
+      0.9975306249767375,
+      0.9939718329560504
+    ],
+    [
+      0.9926262164644387,
+      1.0,
+      0.9956530470315957,
+      0.9966224183047029,
+      0.995900020818731,
+      0.9980926774330642
+    ],
+    [
+      0.9852774203523965,
+      0.9956530470315957,
+      1.0,
+      0.9958914268538936,
+      0.9890381854550515,
+      0.9937573160881901
+    ],
+    [
+      0.9902894467894557,
+      0.9966224183047029,
+      0.9958914268538936,
+      1.0,
+      0.9922019380754573,
+      0.9951465018208677
+    ],
+    [
+      0.9975306249767375,
+      0.995900020818731,
+      0.9890381854550515,
+      0.9922019380754573,
+      1.0,
+      0.9966346475355249
+    ],
+    [
+      0.9939718329560504,
+      0.9980926774330642,
+      0.9937573160881901,
+      0.9951465018208677,
+      0.9966346475355249,
+      1.0
+    ]
+  ],
+  "legislators": [
+    {
+      "icpsr": 42500,
+      "bioname": "ALSOBROOKS, Angela Deneece",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MD",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0188766758149288,
+        "Economy / Budget / Taxes": 0.8810231478117176,
+        "Defense / Military": 0.9656083128712231,
+        "Foreign Policy": 0.9815087913952026,
+        "Social Policy": 1.0382040017852783,
+        "Healthcare": 0.9591870485403979
+      }
+    },
+    {
+      "icpsr": 29940,
+      "bioname": "BALDWIN, Tammy",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "WI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6475439112318931,
+        "Economy / Budget / Taxes": 0.8971756995648682,
+        "Defense / Military": 1.024616362312655,
+        "Foreign Policy": 0.9597078916821539,
+        "Social Policy": 0.7172110788517858,
+        "Healthcare": 0.887245049540475
+      }
+    },
+    {
+      "icpsr": 21702,
+      "bioname": "BANKS, James E.",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "IN",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.5755304034660551,
+        "Economy / Budget / Taxes": -0.8469770832077959,
+        "Defense / Military": -0.8156497811322424,
+        "Foreign Policy": -0.7395082032991285,
+        "Social Policy": -0.7174540685415376,
+        "Healthcare": -0.8785011382393
+      }
+    },
+    {
+      "icpsr": 40707,
+      "bioname": "BARRASSO, John A.",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "WY",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.19819900837893392,
+        "Economy / Budget / Taxes": 0.4379360051479186,
+        "Defense / Military": 0.489070444897545,
+        "Foreign Policy": 0.31270214328406226,
+        "Social Policy": 0.4502847135187786,
+        "Healthcare": 0.22511569380719945
+      }
+    },
+    {
+      "icpsr": 40910,
+      "bioname": "BENNET, Michael F.",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "CO",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0543142046383414,
+        "Economy / Budget / Taxes": 1.0072138670520694,
+        "Defense / Military": 1.0319721298878788,
+        "Foreign Policy": 1.0216192402928708,
+        "Social Policy": 1.028915384307264,
+        "Healthcare": 0.999139775348239
+      }
+    },
+    {
+      "icpsr": 20351,
+      "bioname": "BLACKBURN, Marsha",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "TN",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9664840169435758,
+        "Economy / Budget / Taxes": 1.0064598135411857,
+        "Defense / Military": 0.9379194489043337,
+        "Foreign Policy": 0.8999097576241891,
+        "Social Policy": 0.9840381322401073,
+        "Healthcare": 0.9776565137255321
+      }
+    },
+    {
+      "icpsr": 41101,
+      "bioname": "BLUMENTHAL, Richard",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "CT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1118040627487804,
+        "Economy / Budget / Taxes": -1.070360477984201,
+        "Defense / Military": -1.0361356034115023,
+        "Foreign Policy": -1.1397730121187528,
+        "Social Policy": -1.1489114042183979,
+        "Healthcare": -1.1045827514265198
+      }
+    },
+    {
+      "icpsr": 21706,
+      "bioname": "BLUNT ROCHESTER, Lisa",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "DE",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.9191631743001654,
+        "Economy / Budget / Taxes": -0.9341966303762872,
+        "Defense / Military": -1.0063866862448596,
+        "Foreign Policy": -0.9238763833166305,
+        "Social Policy": -0.8118829334483982,
+        "Healthcare": -0.8874304938720845
+      }
+    },
+    {
+      "icpsr": 41308,
+      "bioname": "BOOKER, Cory Anthony",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NJ",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0895206506056405,
+        "Economy / Budget / Taxes": 0.9973879769023739,
+        "Defense / Military": 1.034513888390303,
+        "Foreign Policy": 1.0771729998314616,
+        "Social Policy": 1.0299835959248087,
+        "Healthcare": 1.0652198975802003
+      }
+    },
+    {
+      "icpsr": 20101,
+      "bioname": "BOOZMAN, John",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "AR",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.1063375020920978,
+        "Economy / Budget / Taxes": 1.0170119620974474,
+        "Defense / Military": 1.0074313051384594,
+        "Foreign Policy": 1.046809678278826,
+        "Social Policy": 1.0833004164457583,
+        "Healthcare": 1.0325057931475958
+      }
+    },
+    {
+      "icpsr": 42300,
+      "bioname": "BRITT, Katie Elizabeth",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "AL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1235266066608425,
+        "Economy / Budget / Taxes": -1.1385055353600058,
+        "Defense / Military": -1.011313031133229,
+        "Foreign Policy": -1.1751901366413302,
+        "Social Policy": -1.1806446112205764,
+        "Healthcare": -1.092883493931888
+      }
+    },
+    {
+      "icpsr": 21708,
+      "bioname": "BUDD, Theodore Paul",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "NC",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1270151181364405,
+        "Economy / Budget / Taxes": -1.1477406176554914,
+        "Defense / Military": -1.060072364069709,
+        "Foreign Policy": -1.0945166143769962,
+        "Social Policy": -1.1659260350255425,
+        "Healthcare": -1.157989745633051
+      }
+    },
+    {
+      "icpsr": 39310,
+      "bioname": "CANTWELL, Maria E.",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "WA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6480527698782846,
+        "Economy / Budget / Taxes": 0.9003280213863608,
+        "Defense / Military": 0.9946451314945628,
+        "Foreign Policy": 0.8994333964458638,
+        "Social Policy": 0.7017578857132581,
+        "Healthcare": 0.887245049540475
+      }
+    },
+    {
+      "icpsr": 20146,
+      "bioname": "CAPITO, Shelley Moore",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "WV",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6445022940750181,
+        "Economy / Budget / Taxes": 0.8752973578713736,
+        "Defense / Military": 1.0149751323407294,
+        "Foreign Policy": 0.9464524753673643,
+        "Social Policy": 0.7160836194785004,
+        "Healthcare": 0.8648264929118278
+      }
+    },
+    {
+      "icpsr": 20919,
+      "bioname": "CASSIDY, Bill",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "LA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.6810817476590398,
+        "Economy / Budget / Taxes": -0.8879606172097351,
+        "Defense / Military": -0.8765533088147272,
+        "Foreign Policy": -0.9591904370475479,
+        "Social Policy": -0.7629428998401455,
+        "Healthcare": -0.8896396501411197
+      }
+    },
+    {
+      "icpsr": 49703,
+      "bioname": "COLLINS, Susan Margaret",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "ME",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.037529664741844,
+        "Economy / Budget / Taxes": -0.9853596884687741,
+        "Defense / Military": -0.872200912683923,
+        "Foreign Policy": -0.9271963552964303,
+        "Social Policy": -1.0941544857975911,
+        "Healthcare": -0.9075272429026002
+      }
+    },
+    {
+      "icpsr": 40916,
+      "bioname": "COONS, Christopher A.",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "DE",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.041301747021217,
+        "Economy / Budget / Taxes": 1.0034704123732625,
+        "Defense / Military": 0.9308800583910161,
+        "Foreign Policy": 0.9960367407119114,
+        "Social Policy": 1.0451440723114982,
+        "Healthcare": 0.9604306544668871
+      }
+    },
+    {
+      "icpsr": 40305,
+      "bioname": "CORNYN, John",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "TX",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.098648349154366,
+        "Economy / Budget / Taxes": -1.1503820486312664,
+        "Defense / Military": -1.1115441357238418,
+        "Foreign Policy": -1.165862162298233,
+        "Social Policy": -1.089800948371521,
+        "Healthcare": -1.0792653294598444
+      }
+    },
+    {
+      "icpsr": 41700,
+      "bioname": "CORTEZ MASTO, Catherine Marie",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NV",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1552770749948789,
+        "Economy / Budget / Taxes": -1.1338828356405672,
+        "Defense / Military": -1.1049789066335283,
+        "Foreign Policy": -1.0355991617051497,
+        "Social Policy": -1.1702637876807522,
+        "Healthcare": -1.1132308129802626
+      }
+    },
+    {
+      "icpsr": 21301,
+      "bioname": "COTTON, Tom",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "AR",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.6517061214420333,
+        "Economy / Budget / Taxes": -0.875931852753517,
+        "Defense / Military": -0.9438595443179995,
+        "Foreign Policy": -0.9798443621310619,
+        "Social Policy": -0.717129983343991,
+        "Healthcare": -0.8656574115876086
+      }
+    },
+    {
+      "icpsr": 21350,
+      "bioname": "CRAMER, Kevin",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "ND",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0577501082245888,
+        "Economy / Budget / Taxes": 0.9863741697214008,
+        "Defense / Military": 0.8915601128141177,
+        "Foreign Policy": 1.0279746145386366,
+        "Social Policy": 1.0234527489795464,
+        "Healthcare": 0.9826929693221205
+      }
+    },
+    {
+      "icpsr": 29345,
+      "bioname": "CRAPO, Michael Dean",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "ID",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.1129466247187263,
+        "Economy / Budget / Taxes": 1.0594166632619075,
+        "Defense / Military": 1.0489795334469554,
+        "Foreign Policy": 1.0406913742922113,
+        "Social Policy": 1.0999911323173883,
+        "Healthcare": 1.060757671550747
+      }
+    },
+    {
+      "icpsr": 41304,
+      "bioname": "CRUZ, Rafael Edward (Ted)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "TX",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.0873096068633352,
+        "Economy / Budget / Taxes": -1.098020372606861,
+        "Defense / Military": -1.1414492334295396,
+        "Foreign Policy": -1.1592120140235258,
+        "Social Policy": -1.0054046013926983,
+        "Healthcare": -1.0373428596718448
+      }
+    },
+    {
+      "icpsr": 21755,
+      "bioname": "CURTIS, John R.",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "UT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.8506379652239561,
+        "Economy / Budget / Taxes": 0.9079232534004353,
+        "Defense / Military": 0.999493890371973,
+        "Foreign Policy": 0.9658280176311153,
+        "Social Policy": 0.805392762226538,
+        "Healthcare": 0.879297766161412
+      }
+    },
+    {
+      "icpsr": 21338,
+      "bioname": "DAINES, Steve",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "MT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0332797276673935,
+        "Economy / Budget / Taxes": 0.9332620975271498,
+        "Defense / Military": 0.9898234185691724,
+        "Foreign Policy": 0.9243390211125087,
+        "Social Policy": 1.0142698307345095,
+        "Healthcare": 0.9842564916100534
+      }
+    },
+    {
+      "icpsr": 21325,
+      "bioname": "DUCKWORTH, Tammy",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "IL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0026567765836074,
+        "Economy / Budget / Taxes": 1.0051734613535621,
+        "Defense / Military": 0.9994168578559612,
+        "Foreign Policy": 0.9841887948118888,
+        "Social Policy": 1.0265362260588196,
+        "Healthcare": 1.0444213426146387
+      }
+    },
+    {
+      "icpsr": 15021,
+      "bioname": "DURBIN, Richard Joseph",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "IL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.1015417746541776,
+        "Economy / Budget / Taxes": 1.0644379385429357,
+        "Defense / Military": 0.9849660940950908,
+        "Foreign Policy": 1.00264534917236,
+        "Social Policy": 1.071203722285484,
+        "Healthcare": 1.06881225071093
+      }
+    },
+    {
+      "icpsr": 41502,
+      "bioname": "ERNST, Joni",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "IA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.6764789178644388,
+        "Economy / Budget / Taxes": -0.9153489848535175,
+        "Defense / Military": -1.0537894236961696,
+        "Foreign Policy": -0.979844362131062,
+        "Social Policy": -0.7583425771894662,
+        "Healthcare": -0.8656574115876086
+      }
+    },
+    {
+      "icpsr": 42301,
+      "bioname": "FETTERMAN, John Karl",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "PA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0135170854654534,
+        "Economy / Budget / Taxes": 1.0356821058944872,
+        "Defense / Military": 0.9473004734205306,
+        "Foreign Policy": 0.9636622499475331,
+        "Social Policy": 1.052534152024268,
+        "Healthcare": 0.9998495322718536
+      }
+    },
+    {
+      "icpsr": 41302,
+      "bioname": "FISCHER, Debra (Deb)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "NE",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1373792552884154,
+        "Economy / Budget / Taxes": -1.0864729414409788,
+        "Defense / Military": -1.0284298201851585,
+        "Foreign Policy": -1.1544165268636766,
+        "Social Policy": -1.1575763012948783,
+        "Healthcare": -1.0528490536651605
+      }
+    },
+    {
+      "icpsr": 21502,
+      "bioname": "GALLEGO, Ruben",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "AZ",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9667759405904394,
+        "Economy / Budget / Taxes": 0.8458507418949824,
+        "Defense / Military": 0.8202537333332326,
+        "Foreign Policy": 0.7593401785251734,
+        "Social Policy": 0.932745077351655,
+        "Healthcare": 0.9022531032429262
+      }
+    },
+    {
+      "icpsr": 20735,
+      "bioname": "GILLIBRAND, Kirsten",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NY",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.0993742936310846,
+        "Economy / Budget / Taxes": -0.9846142772693155,
+        "Defense / Military": -0.9778706264972667,
+        "Foreign Policy": -0.9688198096610136,
+        "Social Policy": -1.0795745054736958,
+        "Healthcare": -1.0974677295745743
+      }
+    },
+    {
+      "icpsr": 29566,
+      "bioname": "GRAHAM, Lindsey O.",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "SC",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.0557055486148794,
+        "Economy / Budget / Taxes": -1.095266735624206,
+        "Defense / Military": -0.943690994552919,
+        "Foreign Policy": -0.962645475324247,
+        "Social Policy": -1.0304189503583439,
+        "Healthcare": -1.0727525412410255
+      }
+    },
+    {
+      "icpsr": 14226,
+      "bioname": "GRASSLEY, Charles Ernest",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "IA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6495626306020416,
+        "Economy / Budget / Taxes": 0.879407641982124,
+        "Defense / Military": 1.0083543699982733,
+        "Foreign Policy": 0.9445310114339027,
+        "Social Policy": 0.7298617950428121,
+        "Healthcare": 0.887245049540475
+      }
+    },
+    {
+      "icpsr": 42100,
+      "bioname": "HAGERTY, William Francis (Bill)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "TN",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.0838741756743353,
+        "Economy / Budget / Taxes": -1.0941175273504933,
+        "Defense / Military": -1.14863275495504,
+        "Foreign Policy": -1.1291436376332742,
+        "Social Policy": -1.0235635688280662,
+        "Healthcare": -1.014043927668895
+      }
+    },
+    {
+      "icpsr": 41702,
+      "bioname": "HASSAN, Margaret (Maggie)",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NH",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.870935407918469,
+        "Economy / Budget / Taxes": 0.7015854702883023,
+        "Defense / Military": 0.6174910459818495,
+        "Foreign Policy": 0.668707493745507,
+        "Social Policy": 0.7999965446752534,
+        "Healthcare": 0.7063160219446306
+      }
+    },
+    {
+      "icpsr": 41901,
+      "bioname": "HAWLEY, Joshua David",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "MO",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1474444063161342,
+        "Economy / Budget / Taxes": -1.118689190967535,
+        "Defense / Military": -1.1656219952764335,
+        "Foreign Policy": -1.1174624917945908,
+        "Social Policy": -1.1353936475052842,
+        "Healthcare": -1.1145360083137235
+      }
+    },
+    {
+      "icpsr": 20930,
+      "bioname": "HEINRICH, Martin",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NM",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9946551313816363,
+        "Economy / Budget / Taxes": 0.8770211599419878,
+        "Defense / Military": 0.580527925537532,
+        "Foreign Policy": 0.9261804336346061,
+        "Social Policy": 0.9480077458637156,
+        "Healthcare": 0.8575454058012258
+      }
+    },
+    {
+      "icpsr": 42101,
+      "bioname": "HICKENLOOPER, John Wright",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "CO",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1614238936515964,
+        "Economy / Budget / Taxes": -1.2035200911386879,
+        "Defense / Military": -1.1977298566243242,
+        "Foreign Policy": -1.1129973884806288,
+        "Social Policy": -1.1766907184921342,
+        "Healthcare": -1.1766847223971015
+      }
+    },
+    {
+      "icpsr": 20713,
+      "bioname": "HIRONO, Mazie",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "HI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.1046877567198525,
+        "Economy / Budget / Taxes": 1.0643959162269987,
+        "Defense / Military": 1.0642302032419055,
+        "Foreign Policy": 1.0755214032720664,
+        "Social Policy": 1.1147593289626954,
+        "Healthcare": 1.0847115726841985
+      }
+    },
+    {
+      "icpsr": 41107,
+      "bioname": "HOEVEN, John",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "ND",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1559463318075396,
+        "Economy / Budget / Taxes": -1.127942488056346,
+        "Defense / Military": -1.0468781582041748,
+        "Foreign Policy": -1.0228102850885195,
+        "Social Policy": -1.1636865646081327,
+        "Healthcare": -1.1718237509565708
+      }
+    },
+    {
+      "icpsr": 42505,
+      "bioname": "HUSTED, Jon Allen",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "OH",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.089454428436986,
+        "Economy / Budget / Taxes": 1.1083861741645726,
+        "Defense / Military": 1.0065510728429028,
+        "Foreign Policy": 1.0601691042967052,
+        "Social Policy": 1.0640606221912483,
+        "Healthcare": 1.0462502084919845
+      }
+    },
+    {
+      "icpsr": 41707,
+      "bioname": "HYDE-SMITH, Cindy",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "MS",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1432127101687768,
+        "Economy / Budget / Taxes": -1.092328906134942,
+        "Defense / Military": -1.13420290751721,
+        "Foreign Policy": -1.0764087116387488,
+        "Social Policy": -1.1056891306861614,
+        "Healthcare": -1.0884881916983833
+      }
+    },
+    {
+      "icpsr": 41111,
+      "bioname": "JOHNSON, Ron",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "WI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6470204796746072,
+        "Economy / Budget / Taxes": 0.8773504237338957,
+        "Defense / Military": 1.0240558564696032,
+        "Foreign Policy": 0.9533539431871072,
+        "Social Policy": 0.7172110788517858,
+        "Healthcare": 0.887245049540475
+      }
+    },
+    {
+      "icpsr": 42504,
+      "bioname": "JUSTICE, James Conley, II",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "WV",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6401399234878251,
+        "Economy / Budget / Taxes": 0.8755349018242453,
+        "Defense / Military": 1.00397670612395,
+        "Foreign Policy": 0.9531893318537347,
+        "Social Policy": 0.7047755742983477,
+        "Healthcare": 0.8752440977648421
+      }
+    },
+    {
+      "icpsr": 41305,
+      "bioname": "KAINE, Timothy Michael (Tim)",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "VA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.6721658949181833,
+        "Economy / Budget / Taxes": -0.8601183543111722,
+        "Defense / Military": -1.0382248850099607,
+        "Foreign Policy": -0.979844362131062,
+        "Social Policy": -0.7583425771894662,
+        "Healthcare": -0.8656574115876086
+      }
+    },
+    {
+      "icpsr": 41905,
+      "bioname": "KELLY, Mark Edward",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "AZ",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1504554821011477,
+        "Economy / Budget / Taxes": -1.0785152568661989,
+        "Defense / Military": -1.1346410404127436,
+        "Foreign Policy": -1.184568194701665,
+        "Social Policy": -1.158027361928001,
+        "Healthcare": -1.0343556183578488
+      }
+    },
+    {
+      "icpsr": 41703,
+      "bioname": "KENNEDY, John Neely",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "LA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.6494368883307777,
+        "Economy / Budget / Taxes": -0.8722754382044371,
+        "Defense / Military": -0.746333395746397,
+        "Foreign Policy": -0.8394189135274498,
+        "Social Policy": -0.7029616231832059,
+        "Healthcare": -0.8896396501411197
+      }
+    },
+    {
+      "icpsr": 21937,
+      "bioname": "KIM, Andy",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NJ",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9413808305950087,
+        "Economy / Budget / Taxes": 0.647945484754314,
+        "Defense / Military": 0.4467555054174426,
+        "Foreign Policy": 0.67564483585824,
+        "Social Policy": 0.8937682095055233,
+        "Healthcare": 0.8926115038170734
+      }
+    },
+    {
+      "icpsr": 41300,
+      "bioname": "KING, Angus Stanley, Jr.",
+      "party": "Democrat",
+      "party_code": 328,
+      "state_abbrev": "ME",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1750990499708491,
+        "Economy / Budget / Taxes": -1.1169237381337274,
+        "Defense / Military": -1.0118046166207828,
+        "Foreign Policy": -1.157273082145953,
+        "Social Policy": -1.1559061386080143,
+        "Healthcare": -1.125698957964054
+      }
+    },
+    {
+      "icpsr": 40700,
+      "bioname": "KLOBUCHAR, Amy",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MN",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1732951132332843,
+        "Economy / Budget / Taxes": -1.1079963551751009,
+        "Defense / Military": -1.2251512860854512,
+        "Foreign Policy": -1.2017232867342889,
+        "Social Policy": -1.1588415337200193,
+        "Healthcare": -1.1152594786792072
+      }
+    },
+    {
+      "icpsr": 21166,
+      "bioname": "LANKFORD, James",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "OK",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.8387472704944293,
+        "Economy / Budget / Taxes": 0.9796458826274251,
+        "Defense / Military": 0.9163878801973635,
+        "Foreign Policy": 0.8451278691358526,
+        "Social Policy": 1.037712654560371,
+        "Healthcare": 0.9985261000804139
+      }
+    },
+    {
+      "icpsr": 41110,
+      "bioname": "LEE, Mike",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "UT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -0.826525372550799,
+        "Economy / Budget / Taxes": -0.6547282172385455,
+        "Defense / Military": -0.7143324484085096,
+        "Foreign Policy": -0.6227718533451895,
+        "Social Policy": -0.8300428135240839,
+        "Healthcare": -0.9323033039653625
+      }
+    },
+    {
+      "icpsr": 20932,
+      "bioname": "LUJ\u00c1N, Ben Ray",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NM",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0836745986540093,
+        "Economy / Budget / Taxes": 0.9847203032919725,
+        "Defense / Military": 1.0216025016094663,
+        "Foreign Policy": 1.0486662709164525,
+        "Social Policy": 1.025850694327665,
+        "Healthcare": 1.060905077765654
+      }
+    },
+    {
+      "icpsr": 20953,
+      "bioname": "LUMMIS, Cynthia M.",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "WY",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1682642869130004,
+        "Economy / Budget / Taxes": -1.1264565325883966,
+        "Defense / Military": -1.2228490418556088,
+        "Foreign Policy": -1.1914441920618608,
+        "Social Policy": -1.1190260907834864,
+        "Healthcare": -1.0511606385740075
+      }
+    },
+    {
+      "icpsr": 14435,
+      "bioname": "MARKEY, Edward John",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.5869941240778563,
+        "Economy / Budget / Taxes": 0.8175519140298028,
+        "Defense / Military": 0.8257050377078445,
+        "Foreign Policy": 0.6864327472204507,
+        "Social Policy": 0.9326196527031358,
+        "Healthcare": 0.8857136901065454
+      }
+    },
+    {
+      "icpsr": 21734,
+      "bioname": "MARSHALL, Roger Wayne",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "KS",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.8597593356556235,
+        "Economy / Budget / Taxes": 0.8772383961460855,
+        "Defense / Military": 0.9391056971540801,
+        "Foreign Policy": 0.9536832908391154,
+        "Social Policy": 0.7666837333662796,
+        "Healthcare": 0.8831258507276418
+      }
+    },
+    {
+      "icpsr": 42501,
+      "bioname": "MCCORMICK, David Harold",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "PA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1482343949512481,
+        "Economy / Budget / Taxes": -1.1741690928462858,
+        "Defense / Military": -1.2057103067319794,
+        "Foreign Policy": -1.1731489328931368,
+        "Social Policy": -1.1025081359457705,
+        "Healthcare": -1.088664925097365
+      }
+    },
+    {
+      "icpsr": 40908,
+      "bioname": "MERKLEY, Jeff",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "OR",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1283755943201714,
+        "Economy / Budget / Taxes": -1.0810987219529602,
+        "Defense / Military": -1.0376777203826963,
+        "Foreign Policy": -0.8719601385163114,
+        "Social Policy": -1.0796491037654519,
+        "Healthcare": -1.0633810916873665
+      }
+    },
+    {
+      "icpsr": 42506,
+      "bioname": "MOODY, Ashley Brooke",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "FL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.0979792381771196,
+        "Economy / Budget / Taxes": -1.1423720624442053,
+        "Defense / Military": -1.183747512129931,
+        "Foreign Policy": -1.1712343517364527,
+        "Social Policy": -1.0468708824502733,
+        "Healthcare": -1.0790093835243721
+      }
+    },
+    {
+      "icpsr": 29722,
+      "bioname": "MORAN, Jerry",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "KS",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.97541611781516,
+        "Economy / Budget / Taxes": 1.0438766202418697,
+        "Defense / Military": 0.8995533506382946,
+        "Foreign Policy": 0.9068163975026904,
+        "Social Policy": 0.9913023793775657,
+        "Healthcare": 0.9663573501223991
+      }
+    },
+    {
+      "icpsr": 42502,
+      "bioname": "MORENO, Bernardo (Bernie)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "OH",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0451744477765157,
+        "Economy / Budget / Taxes": 0.9813261881445983,
+        "Defense / Military": 1.0354306883386468,
+        "Foreign Policy": 0.9805497891218131,
+        "Social Policy": 0.8780235840658435,
+        "Healthcare": 0.8804999173353287
+      }
+    },
+    {
+      "icpsr": 21355,
+      "bioname": "MULLIN, Markwayne",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "OK",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9081301869133738,
+        "Economy / Budget / Taxes": 0.9575459200279317,
+        "Defense / Military": 0.9796809026936749,
+        "Foreign Policy": 0.969857407723274,
+        "Social Policy": 1.040804954550848,
+        "Healthcare": 0.9528926812307
+      }
+    },
+    {
+      "icpsr": 40300,
+      "bioname": "MURKOWSKI, Lisa",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "AK",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.160639862807714,
+        "Economy / Budget / Taxes": -1.1107114133608558,
+        "Defense / Military": -1.1790235168374148,
+        "Foreign Policy": -1.2171558437189889,
+        "Social Policy": -1.1357247892118087,
+        "Healthcare": -1.075130976731075
+      }
+    },
+    {
+      "icpsr": 20707,
+      "bioname": "MURPHY, Christopher",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "CT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1491559389293864,
+        "Economy / Budget / Taxes": -1.2032449870661823,
+        "Defense / Military": -1.2163828220615516,
+        "Foreign Policy": -1.1646800213038324,
+        "Social Policy": -1.1902520730140662,
+        "Healthcare": -1.1594509530024333
+      }
+    },
+    {
+      "icpsr": 49308,
+      "bioname": "MURRAY, Patty",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "WA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6553232302803477,
+        "Economy / Budget / Taxes": 0.8876907607433672,
+        "Defense / Military": 1.024616362312655,
+        "Foreign Policy": 0.9597078916821539,
+        "Social Policy": 0.7298617950428121,
+        "Healthcare": 0.887245049540475
+      }
+    },
+    {
+      "icpsr": 14921,
+      "bioname": "McCONNELL, Addison Mitchell (Mitch)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "KY",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1148664070765306,
+        "Economy / Budget / Taxes": -1.0908166533867596,
+        "Defense / Military": -0.8716330115348294,
+        "Foreign Policy": -1.0675362988910015,
+        "Social Policy": -1.0674017303666026,
+        "Healthcare": -1.104766758374239
+      }
+    },
+    {
+      "icpsr": 42103,
+      "bioname": "OSSOFF, Thomas Jonathan (Jon)",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "GA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9765394357129856,
+        "Economy / Budget / Taxes": 1.0039925758427886,
+        "Defense / Military": 0.9141369002964387,
+        "Foreign Policy": 0.9470875850859561,
+        "Social Policy": 0.9598217780103238,
+        "Healthcare": 0.9913209400828565
+      }
+    },
+    {
+      "icpsr": 42104,
+      "bioname": "PADILLA, Alejandro (Alex)",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "CA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1477890044707024,
+        "Economy / Budget / Taxes": -1.1820110910772978,
+        "Defense / Military": -1.180224425891144,
+        "Foreign Policy": -1.1846159360489794,
+        "Social Policy": -1.1336686832263518,
+        "Healthcare": -1.1542986201368475
+      }
+    },
+    {
+      "icpsr": 41104,
+      "bioname": "PAUL, Rand",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "KY",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.6500816599713619,
+        "Economy / Budget / Taxes": 0.8632584908265232,
+        "Defense / Military": 1.0189258381551567,
+        "Foreign Policy": 0.9597078916821539,
+        "Social Policy": 0.7026771751965017,
+        "Healthcare": 0.7884217051029262
+      }
+    },
+    {
+      "icpsr": 20923,
+      "bioname": "PETERS, Gary C.",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0774866462390111,
+        "Economy / Budget / Taxes": 0.915067841074669,
+        "Defense / Military": 0.9668618400840038,
+        "Foreign Policy": 1.0411101860913805,
+        "Social Policy": 1.0253711608043412,
+        "Healthcare": 0.9482304963103763
+      }
+    },
+    {
+      "icpsr": 29142,
+      "bioname": "REED, John F. (Jack)",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "RI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0692275751333098,
+        "Economy / Budget / Taxes": 1.032331114531575,
+        "Defense / Military": 1.0427895739271087,
+        "Foreign Policy": 1.0449209506565331,
+        "Social Policy": 1.0526931417997305,
+        "Healthcare": 1.016283066611506
+      }
+    },
+    {
+      "icpsr": 42302,
+      "bioname": "RICKETTS, John Peter (Pete)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "NE",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1210291781088495,
+        "Economy / Budget / Taxes": -1.0022593275753087,
+        "Defense / Military": -1.0082220684570304,
+        "Foreign Policy": -0.9654369697158475,
+        "Social Policy": -1.0809011650177296,
+        "Healthcare": -1.0608943096101437
+      }
+    },
+    {
+      "icpsr": 40902,
+      "bioname": "RISCH, James",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "ID",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1533106369494095,
+        "Economy / Budget / Taxes": -1.1838297514547798,
+        "Defense / Military": -1.1305245829136212,
+        "Foreign Policy": -1.1126585971329033,
+        "Social Policy": -1.1118284958861937,
+        "Healthcare": -1.1476138221105892
+      }
+    },
+    {
+      "icpsr": 21743,
+      "bioname": "ROSEN, Jacklyn Sheryl",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NV",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.152360855573938,
+        "Economy / Budget / Taxes": -1.0528392976303513,
+        "Defense / Military": -1.1703531143564156,
+        "Foreign Policy": -1.1254868590807472,
+        "Social Policy": -1.0816680298945038,
+        "Healthcare": -1.0723199456747807
+      }
+    },
+    {
+      "icpsr": 41505,
+      "bioname": "ROUNDS, Marion Michael (Mike)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "SD",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.0891206744759991,
+        "Economy / Budget / Taxes": -1.1236232817323457,
+        "Defense / Military": -1.1500032962747837,
+        "Foreign Policy": -1.0559970675732737,
+        "Social Policy": -1.0636963222528422,
+        "Healthcare": -1.1138033270256773
+      }
+    },
+    {
+      "icpsr": 41102,
+      "bioname": "RUBIO, Marco",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "FL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.158795193239646,
+        "Economy / Budget / Taxes": -1.1615348660800706,
+        "Defense / Military": -1.112535341479602,
+        "Foreign Policy": -1.134832303812704,
+        "Social Policy": -1.1415599183774283,
+        "Healthcare": -1.1728931706065586
+      }
+    },
+    {
+      "icpsr": 29147,
+      "bioname": "SANDERS, Bernard",
+      "party": "Democrat",
+      "party_code": 328,
+      "state_abbrev": "VT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.8398842258071157,
+        "Economy / Budget / Taxes": 0.8856348380244061,
+        "Defense / Military": 0.8954999999556279,
+        "Foreign Policy": 0.9680500128088818,
+        "Social Policy": 0.7786229650276854,
+        "Healthcare": 0.8316484991535935
+      }
+    },
+    {
+      "icpsr": 41112,
+      "bioname": "SCHATZ, Brian Emanuel",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "HI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.079319968186865,
+        "Economy / Budget / Taxes": 1.025259789810272,
+        "Defense / Military": 1.0737238269129792,
+        "Foreign Policy": 1.0209727308697805,
+        "Social Policy": 1.0438225694053314,
+        "Healthcare": 1.0621920776147111
+      }
+    },
+    {
+      "icpsr": 20104,
+      "bioname": "SCHIFF, Adam",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "CA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9840851325646546,
+        "Economy / Budget / Taxes": 1.0071450019113464,
+        "Defense / Military": 1.0019216274540876,
+        "Foreign Policy": 0.8809731056159082,
+        "Social Policy": 0.9318394596574389,
+        "Healthcare": 0.96465814612901
+      }
+    },
+    {
+      "icpsr": 42303,
+      "bioname": "SCHMITT, Eric Stephen",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "MO",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0548196378628512,
+        "Economy / Budget / Taxes": 0.9418022576774494,
+        "Defense / Military": 1.003132049798594,
+        "Foreign Policy": 0.9880029823612685,
+        "Social Policy": 1.0321847367999533,
+        "Healthcare": 0.9647663321616121
+      }
+    },
+    {
+      "icpsr": 14858,
+      "bioname": "SCHUMER, Charles Ellis (Chuck)",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NY",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1734432291792893,
+        "Economy / Budget / Taxes": -1.1899435647865904,
+        "Defense / Military": -1.2241963915136922,
+        "Foreign Policy": -1.213911073787622,
+        "Social Policy": -1.1802519403488723,
+        "Healthcare": -1.1677053384422376
+      }
+    },
+    {
+      "icpsr": 41903,
+      "bioname": "SCOTT, Richard Lynn (Rick)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "FL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1529040816770326,
+        "Economy / Budget / Taxes": -1.2015818398057556,
+        "Defense / Military": -1.1912426333339863,
+        "Foreign Policy": -1.1863590317382722,
+        "Social Policy": -1.144570156954592,
+        "Healthcare": -1.1367683450831512
+      }
+    },
+    {
+      "icpsr": 21173,
+      "bioname": "SCOTT, Tim",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "SC",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0403035716147802,
+        "Economy / Budget / Taxes": 0.975131037974523,
+        "Defense / Military": 1.0356772749900005,
+        "Foreign Policy": 1.0108176128869633,
+        "Social Policy": 1.0339309791134144,
+        "Healthcare": 1.0295957203952844
+      }
+    },
+    {
+      "icpsr": 40906,
+      "bioname": "SHAHEEN, Jeanne",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "NH",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1714583595887682,
+        "Economy / Budget / Taxes": -1.1714347209369735,
+        "Defense / Military": -1.1945650663856904,
+        "Foreign Policy": -1.2373472798485585,
+        "Social Policy": -1.1831795206237254,
+        "Healthcare": -1.1267956687934222
+      }
+    },
+    {
+      "icpsr": 42503,
+      "bioname": "SHEEHY, Timothy Patrick",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "MT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1134138110929679,
+        "Economy / Budget / Taxes": -1.0307658754258417,
+        "Defense / Military": -1.0358712554412826,
+        "Foreign Policy": -0.7324269208506129,
+        "Social Policy": -1.1098873524671342,
+        "Healthcare": -1.0741353470531498
+      }
+    },
+    {
+      "icpsr": 21965,
+      "bioname": "SLOTKIN, Elissa",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1968153452255428,
+        "Economy / Budget / Taxes": -1.2111845882239383,
+        "Defense / Military": -1.2037017937104924,
+        "Foreign Policy": -1.1917069782640082,
+        "Social Policy": -1.189101405988451,
+        "Healthcare": -1.1612351960936673
+      }
+    },
+    {
+      "icpsr": 41706,
+      "bioname": "SMITH, Tina",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MN",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.3475000826613971,
+        "Economy / Budget / Taxes": 0.6136860795272473,
+        "Defense / Military": 0.43737374957232783,
+        "Foreign Policy": 0.38845374292878326,
+        "Social Policy": 0.4361458493817152,
+        "Healthcare": 0.492953608491343
+      }
+    },
+    {
+      "icpsr": 41500,
+      "bioname": "SULLIVAN, Daniel Scott",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "AK",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.155916736431395,
+        "Economy / Budget / Taxes": -1.1120612408681685,
+        "Defense / Military": -1.015302658595938,
+        "Foreign Policy": -1.1697068029854736,
+        "Social Policy": -1.1463583613983472,
+        "Healthcare": -1.083443380106007
+      }
+    },
+    {
+      "icpsr": 29754,
+      "bioname": "THUNE, John",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "SD",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9783187917663028,
+        "Economy / Budget / Taxes": 1.01391535894129,
+        "Defense / Military": 0.9924163867405787,
+        "Foreign Policy": 0.8742440784792138,
+        "Social Policy": 0.9887209965467746,
+        "Healthcare": 1.005136776524281
+      }
+    },
+    {
+      "icpsr": 41504,
+      "bioname": "TILLIS, Thomas Roland (Thom)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "NC",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.1102185465297134,
+        "Economy / Budget / Taxes": 1.0756043010214236,
+        "Defense / Military": 1.0597422508703307,
+        "Foreign Policy": 1.058609679595478,
+        "Social Policy": 1.0237006822866583,
+        "Healthcare": 1.1058170564201104
+      }
+    },
+    {
+      "icpsr": 42102,
+      "bioname": "TUBERVILLE, Thomas Hawley (Tommy)",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "AL",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9670366580583669,
+        "Economy / Budget / Taxes": 0.9122987561325473,
+        "Defense / Military": 0.8709430840956955,
+        "Foreign Policy": 0.9505270313876307,
+        "Social Policy": 1.0109007109098318,
+        "Healthcare": 0.9578970765722087
+      }
+    },
+    {
+      "icpsr": 20330,
+      "bioname": "VAN HOLLEN, Christopher",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MD",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0419639851413127,
+        "Economy / Budget / Taxes": 0.9329855913301436,
+        "Defense / Military": 0.9942857714311808,
+        "Foreign Policy": 0.8982303012923462,
+        "Social Policy": 1.0219949256945189,
+        "Healthcare": 0.968307339437582
+      }
+    },
+    {
+      "icpsr": 42304,
+      "bioname": "VANCE, James David",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "OH",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1330231153735377,
+        "Economy / Budget / Taxes": -1.1291734463742502,
+        "Defense / Military": -1.0736048282316684,
+        "Foreign Policy": -1.0750043891072412,
+        "Social Policy": -1.152021717355657,
+        "Healthcare": -1.1547584422830381
+      }
+    },
+    {
+      "icpsr": 40909,
+      "bioname": "WARNER, Mark",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "VA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.4923313958723034,
+        "Economy / Budget / Taxes": 0.22539704702531627,
+        "Defense / Military": 0.1877491204969245,
+        "Foreign Policy": 0.28726463384251094,
+        "Social Policy": null,
+        "Healthcare": null
+      }
+    },
+    {
+      "icpsr": 42105,
+      "bioname": "WARNOCK, Raphael Gamaliel",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "GA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0231063211477218,
+        "Economy / Budget / Taxes": 1.042239883954853,
+        "Defense / Military": 0.7840849456053771,
+        "Foreign Policy": 0.8756972973509519,
+        "Social Policy": 1.022968690037612,
+        "Healthcare": 1.0444401763328894
+      }
+    },
+    {
+      "icpsr": 41301,
+      "bioname": "WARREN, Elizabeth",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "MA",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0231568491726315,
+        "Economy / Budget / Taxes": 0.962543207285083,
+        "Defense / Military": 0.7098594594636333,
+        "Foreign Policy": 0.9256511266387685,
+        "Social Policy": 0.9888404882025276,
+        "Healthcare": 0.9298136759744604
+      }
+    },
+    {
+      "icpsr": 20750,
+      "bioname": "WELCH, Peter",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "VT",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.872421645339769,
+        "Economy / Budget / Taxes": 0.8734923344685415,
+        "Defense / Military": 0.9686907463416188,
+        "Foreign Policy": 0.8870768362407326,
+        "Social Policy": 0.7727908886632464,
+        "Healthcare": 0.8805708502532099
+      }
+    },
+    {
+      "icpsr": 40704,
+      "bioname": "WHITEHOUSE, Sheldon",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "RI",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 1.0196915381794702,
+        "Economy / Budget / Taxes": 0.854734914737757,
+        "Defense / Military": 0.8112876445198277,
+        "Foreign Policy": 0.9443787011097425,
+        "Social Policy": 0.9540715146202707,
+        "Healthcare": 0.7450810795641164
+      }
+    },
+    {
+      "icpsr": 29534,
+      "bioname": "WICKER, Roger F.",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "MS",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.9907828263957346,
+        "Economy / Budget / Taxes": 0.9267390368338493,
+        "Defense / Military": 0.9583709675236374,
+        "Foreign Policy": 0.9466392464851237,
+        "Social Policy": 1.0194422850055018,
+        "Healthcare": 0.9128852908303212
+      }
+    },
+    {
+      "icpsr": 14871,
+      "bioname": "WYDEN, Ronald Lee",
+      "party": "Democrat",
+      "party_code": 100,
+      "state_abbrev": "OR",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": -1.1595438450309592,
+        "Economy / Budget / Taxes": -1.0100958877042159,
+        "Defense / Military": -1.053278840484865,
+        "Foreign Policy": -1.1818652700402126,
+        "Social Policy": -1.0787286721374951,
+        "Healthcare": -1.1180591069409331
+      }
+    },
+    {
+      "icpsr": 21133,
+      "bioname": "YOUNG, Todd",
+      "party": "Republican",
+      "party_code": 200,
+      "state_abbrev": "IN",
+      "district_code": "0",
+      "topic_scores": {
+        "Other": 0.8392778762335529,
+        "Economy / Budget / Taxes": 0.8634771935347055,
+        "Defense / Military": 0.9732034529555142,
+        "Foreign Policy": 0.9178548127850795,
+        "Social Policy": 0.8015384218323637,
+        "Healthcare": 0.8241897980454544
+      }
+    }
+  ],
+  "explanation": "Each topic defines its own legislator-by-rollcall matrix. After column-centering observed votes, each legislator vector is L2-normalized so PCA emphasizes voting pattern rather than vote count. PC1 is the dominant topic-specific voting axis, and each legislator's topic score is their projection onto that axis, standardized within topic for comparability across topics."
+}

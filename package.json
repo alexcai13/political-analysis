@@ -1,0 +1,9 @@
+{
+  "name": "political-analysis",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@openrouter/sdk": "latest",
+    "papaparse": "^5.5.3"
+  }
+}
